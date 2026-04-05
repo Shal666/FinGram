@@ -21,6 +21,7 @@ const translations = {
 
     // В объект translations добавь:
     learning: "Обучение",
+    tools: "Инструменты",
     quiz: "Квиз",
     yourProgress: "Ваш прогресс",
     lessonsCompleted: "Уроков",

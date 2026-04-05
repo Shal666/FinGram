@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Инструменты — BayQadam</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/advanced.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+    <style>
+      .tools-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .tools-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .tools-header h1 {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+
+      .tools-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+
+      .tab-btn {
+        padding: 12px 25px;
+        border: 2px solid #667eea;
+        background: white;
+        color: #667eea;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .tab-btn:hover,
+      .tab-btn.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: transparent;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .calculator-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .calculator-card h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .form-group input[type="number"],
+      .form-group input[type="text"] {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .slider-group {
+        margin-bottom: 25px;
+      }
+
+      .slider-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .slider-value {
+        color: #667eea;
+        font-weight: 700;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        height: 8px;
+        border-radius: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        outline: none;
+        -webkit-appearance: none;
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        border: 3px solid #667eea;
+      }
+
+      .btn-calculate {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-calculate:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+      }
+
+      .result-box {
+        margin-top: 30px;
+        padding: 25px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 15px;
+        color: white;
+      }
+
+      .result-box h3 {
+        margin: 0 0 15px 0;
+        font-size: 18px;
+      }
+
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .result-item:last-child {
+        border-bottom: none;
+      }
+
+      .result-value {
+        font-weight: 700;
+        font-size: 20px;
+      }
+
+      /* Video Grid */
+      .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+      }
+
+      .video-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s;
+      }
+
+      .video-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      }
+
+      .video-card iframe {
+        width: 100%;
+        height: 180px;
+        border: none;
+      }
+
+      .video-card-content {
+        padding: 20px;
+      }
+
+      .video-card h3 {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .video-duration {
+        color: #999;
+        font-size: 14px;
+      }
+
+      /* Advice box */
+      .advice-box {
+        margin-top: 20px;
+        padding: 20px;
+        background: #f0f4ff;
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+      }
+
+      .advice-box p {
+        margin: 0;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 768px) {
+        .calculator-card {
+          padding: 25px;
+        }
+
+        .video-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="dashboard.html" class="logo">BayQadam</a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kk">KZ</button>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul>
+            <li><a href="dashboard.html" data-i18n="dashboard">Дашборд</a></li>
+            <li>
+              <a href="transactions.html" data-i18n="transactions"
+                >Транзакции</a
+              >
+            </li>
+            <li><a href="goals.html" data-i18n="goals">Цели</a></li>
+            <li><a href="learning.html" data-i18n="learning">Обучение</a></li>
+            <li>
+              <a href="tools.html" data-i18n="tools" class="active"
+                >Инструменты</a
+              >
+            </li>
+            <li><a href="profile.html" data-i18n="profile">Профиль</a></li>
+            <li><a href="#" onclick="logout()" data-i18n="logout">Выйти</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="tools-container">
+        <div class="tools-header">
+          <h1>🛠️ Финансовые инструменты</h1>
+          <p style="color: #666">
+            Калькуляторы и видеоуроки для управления финансами
+          </p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tools-tabs">
+          <button class="tab-btn active" onclick="showTab('budget')">
+            💰 Бюджет
+          </button>
+          <button class="tab-btn" onclick="showTab('credit')">💳 Кредит</button>
+          <button class="tab-btn" onclick="showTab('savings')">
+            🏦 Сбережения
+          </button>
+          <button class="tab-btn" onclick="showTab('videos')">
+            🎬 Видеоуроки
+          </button>
+        </div>
+
+        <!-- Budget Calculator -->
+        <div id="budget" class="tab-content active">
+          <div class="calculator-card">
+            <h2>💰 Калькулятор бюджета</h2>
+
+            <div class="form-group">
+              <label>Ежемесячный доход (₸)</label>
+              <input type="number" id="budgetIncome" placeholder="300000" />
+            </div>
+
+            <div class="form-group">
+              <label>Ежемесячные расходы (₸)</label>
+              <input type="number" id="budgetExpenses" placeholder="200000" />
+            </div>
+
+            <div class="form-group">
+              <label>Текущие долги (₸)</label>
+              <input type="number" id="budgetDebt" placeholder="0" />
+            </div>
+
+            <button class="btn-calculate" onclick="calculateBudget()">
+              Рассчитать
+            </button>
+
+            <div id="budgetResult" style="display: none">
+              <div class="result-box">
+                <h3>📊 Результат</h3>
+                <div class="result-item">
+                  <span>Можете откладывать:</span>
+                  <span class="result-value" id="savingsAmount">0 ₸</span>
+                </div>
+                <div class="result-item">
+                  <span>Процент от дохода:</span>
+                  <span class="result-value" id="savingsPercent">0%</span>
+                </div>
+              </div>
+              <div class="advice-box" id="budgetAdvice"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Credit Calculator -->
+        <div id="credit" class="tab-content">
+          <div class="calculator-card">
+            <h2>💳 Кредитный калькулятор</h2>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Сумма кредита</span>
+                <span class="slider-value" id="creditAmountValue"
+                  >1,000,000 ₸</span
+                >
+              </div>
+              <input
+                type="range"
+                id="creditAmount"
+                min="50000"
+                max="10000000"
+                step="50000"
+                value="1000000"
+                oninput="updateCreditSliders()"
+              />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Срок (месяцев)</span>
+                <span class="slider-value" id="creditTermValue">12</span>
+              </div>
+              <input
+                type="range"
+                id="creditTerm"
+                min="3"
+                max="60"
+                value="12"
+                oninput="updateCreditSliders()"
+              />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Процентная ставка</span>
+                <span class="slider-value" id="creditRateValue">15%</span>
+              </div>
+              <input
+                type="range"
+                id="creditRate"
+                min="5"
+                max="40"
+                step="0.5"
+                value="15"
+                oninput="updateCreditSliders()"
+              />
+            </div>
+
+            <button class="btn-calculate" onclick="calculateCredit()">
+              Рассчитать
+            </button>
+
+            <div id="creditResult" class="result-box" style="margin-top: 30px">
+              <h3>📋 Расчёт кредита</h3>
+              <div class="result-item">
+                <span>Ежемесячный платёж:</span>
+                <span class="result-value" id="monthlyPayment">0 ₸</span>
+              </div>
+              <div class="result-item">
+                <span>Общая сумма выплат:</span>
+                <span class="result-value" id="totalPayment">0 ₸</span>
+              </div>
+              <div class="result-item">
+                <span>Переплата:</span>
+                <span class="result-value" id="overpayment">0 ₸</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Savings Calculator -->
+        <div id="savings" class="tab-content">
+          <div class="calculator-card">
+            <h2>🏦 Калькулятор сбережений</h2>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Начальная сумма</span>
+                <span class="slider-value" id="initialAmountValue"
+                  >100,000 ₸</span
+                >
+              </div>
+              <input
+                type="range"
+                id="initialAmount"
+                min="0"
+                max="5000000"
+                step="10000"
+                value="100000"
+                oninput="updateSavingsSliders()"
+              />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Ежемесячный взнос</span>
+                <span class="slider-value" id="monthlyDepositValue"
+                  >50,000 ₸</span
+                >
+              </div>
+              <input
+                type="range"
+                id="monthlyDeposit"
+                min="0"
+                max="500000"
+                step="5000"
+                value="50000"
+                oninput="updateSavingsSliders()"
+              />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Срок (лет)</span>
+                <span class="slider-value" id="savingsYearsValue">5</span>
+              </div>
+              <input
+                type="range"
+                id="savingsYears"
+                min="1"
+                max="30"
+                value="5"
+                oninput="updateSavingsSliders()"
+              />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Годовая ставка</span>
+                <span class="slider-value" id="savingsRateValue">10%</span>
+              </div>
+              <input
+                type="range"
+                id="savingsRate"
+                min="1"
+                max="20"
+                step="0.5"
+                value="10"
+                oninput="updateSavingsSliders()"
+              />
+            </div>
+
+            <button class="btn-calculate" onclick="calculateSavings()">
+              Рассчитать
+            </button>
+
+            <div id="savingsResult" class="result-box" style="margin-top: 30px">
+              <h3>💎 Результат накоплений</h3>
+              <div class="result-item">
+                <span>Итоговая сумма:</span>
+                <span class="result-value" id="finalAmount">0 ₸</span>
+              </div>
+              <div class="result-item">
+                <span>Ваши взносы:</span>
+                <span class="result-value" id="totalDeposits">0 ₸</span>
+              </div>
+              <div class="result-item">
+                <span>Доход от процентов:</span>
+                <span class="result-value" id="interestEarned">0 ₸</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Lessons -->
+        <div id="videos" class="tab-content">
+          <div class="video-grid">
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube.com/embed/sVKQn2I4HDM"
+                allowfullscreen
+              ></iframe>
+              <div class="video-card-content">
+                <h3>Как создать личный бюджет</h3>
+                <p class="video-duration">⏱️ 12 мин</p>
+              </div>
+            </div>
+
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube.com/embed/HQzoZfc3GwQ"
+                allowfullscreen
+              ></iframe>
+              <div class="video-card-content">
+                <h3>Кредитный рейтинг</h3>
+                <p class="video-duration">⏱️ 10 мин</p>
+              </div>
+            </div>
+
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube.com/embed/V9E7r5sGv1A"
+                allowfullscreen
+              ></iframe>
+              <div class="video-card-content">
+                <h3>Правило 50/30/20</h3>
+                <p class="video-duration">⏱️ 8 мин</p>
+              </div>
+            </div>
+
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube.com/embed/WEDIj9JBTC8"
+                allowfullscreen
+              ></iframe>
+              <div class="video-card-content">
+                <h3>Введение в инвестиции</h3>
+                <p class="video-duration">⏱️ 15 мин</p>
+              </div>
+            </div>
+
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube.com/embed/y6yCmdIkw_E"
+                allowfullscreen
+              ></iframe>
+              <div class="video-card-content">
+                <h3>Как выбраться из долгов</h3>
+                <p class="video-duration">⏱️ 14 мин</p>
+              </div>
+            </div>
+
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube.com/embed/WcEylCwkSxE"
+                allowfullscreen
+              ></iframe>
+              <div class="video-card-content">
+                <h3>Экстренный фонд</h3>
+                <p class="video-duration">⏱️ 9 мин</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 BayQadam.
+          <span data-i18n="allRights">Все права защищены.</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      // Check auth
+      async function init() {
+        const user = await requireAuth();
+        if (!user) return;
+
+        // Initialize calculators
+        updateCreditSliders();
+        updateSavingsSliders();
+        calculateCredit();
+        calculateSavings();
+      }
+
+      // Tab switching
+      function showTab(tabId) {
+        // Hide all tabs
+        document.querySelectorAll(".tab-content").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        // Show selected tab
+        document.getElementById(tabId).classList.add("active");
+        event.target.classList.add("active");
+      }
+
+      // Budget Calculator
+      function calculateBudget() {
+        const income =
+          parseFloat(document.getElementById("budgetIncome").value) || 0;
+        const expenses =
+          parseFloat(document.getElementById("budgetExpenses").value) || 0;
+        const debt =
+          parseFloat(document.getElementById("budgetDebt").value) || 0;
+
+        if (income <= 0) {
+          alert("Введите доход");
+          return;
+        }
+
+        const savings = income - expenses;
+        const savingsPercent = ((savings / income) * 100).toFixed(1);
+
+        document.getElementById("savingsAmount").textContent =
+          savings.toLocaleString() + " ₸";
+        document.getElementById("savingsPercent").textContent =
+          savingsPercent + "%";
+
+        let advice = "";
+        if (savings < 0) {
+          advice =
+            "⚠️ <strong>Внимание!</strong> Ваши расходы превышают доход. Срочно пересмотрите траты и найдите способы сократить расходы или увеличить доход.";
+        } else if (savings < income * 0.1) {
+          advice =
+            "💡 <strong>Совет:</strong> Старайтесь откладывать минимум 10-20% от дохода. Начните с малого — даже 5% лучше, чем ничего!";
+        } else if (debt > income * 3) {
+          advice =
+            "📊 <strong>Важно:</strong> Ваш долг превышает 3 месяца дохода. Приоритизируйте погашение долга перед накоплениями.";
+        } else if (savingsPercent >= 20) {
+          advice =
+            "✅ <strong>Отлично!</strong> Вы откладываете более 20% дохода. Продолжайте в том же духе и рассмотрите инвестирование!";
+        } else {
+          advice =
+            "👍 <strong>Хорошо!</strong> Вы на правильном пути. Постарайтесь увеличить сбережения до 20% от дохода.";
+        }
+
+        document.getElementById("budgetAdvice").innerHTML =
+          "<p>" + advice + "</p>";
+        document.getElementById("budgetResult").style.display = "block";
+      }
+
+      // Credit Calculator
+      function updateCreditSliders() {
+        const amount = document.getElementById("creditAmount").value;
+        const term = document.getElementById("creditTerm").value;
+        const rate = document.getElementById("creditRate").value;
+
+        document.getElementById("creditAmountValue").textContent =
+          parseInt(amount).toLocaleString() + " ₸";
+        document.getElementById("creditTermValue").textContent = term;
+        document.getElementById("creditRateValue").textContent = rate + "%";
+      }
+
+      function calculateCredit() {
+        const amount = parseFloat(
+          document.getElementById("creditAmount").value,
+        );
+        const months = parseInt(document.getElementById("creditTerm").value);
+        const yearlyRate = parseFloat(
+          document.getElementById("creditRate").value,
+        );
+        const monthlyRate = yearlyRate / 100 / 12;
+
+        const monthlyPayment =
+          (amount * (monthlyRate * Math.pow(1 + monthlyRate, months))) /
+          (Math.pow(1 + monthlyRate, months) - 1);
+        const totalPayment = monthlyPayment * months;
+        const overpayment = totalPayment - amount;
+
+        document.getElementById("monthlyPayment").textContent =
+          Math.round(monthlyPayment).toLocaleString() + " ₸";
+        document.getElementById("totalPayment").textContent =
+          Math.round(totalPayment).toLocaleString() + " ₸";
+        document.getElementById("overpayment").textContent =
+          Math.round(overpayment).toLocaleString() + " ₸";
+      }
+
+      // Savings Calculator
+      function updateSavingsSliders() {
+        const initial = document.getElementById("initialAmount").value;
+        const monthly = document.getElementById("monthlyDeposit").value;
+        const years = document.getElementById("savingsYears").value;
+        const rate = document.getElementById("savingsRate").value;
+
+        document.getElementById("initialAmountValue").textContent =
+          parseInt(initial).toLocaleString() + " ₸";
+        document.getElementById("monthlyDepositValue").textContent =
+          parseInt(monthly).toLocaleString() + " ₸";
+        document.getElementById("savingsYearsValue").textContent = years;
+        document.getElementById("savingsRateValue").textContent = rate + "%";
+      }
+
+      function calculateSavings() {
+        const initial = parseFloat(
+          document.getElementById("initialAmount").value,
+        );
+        const monthly = parseFloat(
+          document.getElementById("monthlyDeposit").value,
+        );
+        const years = parseInt(document.getElementById("savingsYears").value);
+        const yearlyRate =
+          parseFloat(document.getElementById("savingsRate").value) / 100;
+        const monthlyRate = yearlyRate / 12;
+        const months = years * 12;
+
+        // Future value of initial amount
+        const fvInitial = initial * Math.pow(1 + monthlyRate, months);
+
+        // Future value of monthly deposits
+        const fvDeposits =
+          monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+
+        const totalAmount = fvInitial + fvDeposits;
+        const totalDeposits = initial + monthly * months;
+        const interestEarned = totalAmount - totalDeposits;
+
+        document.getElementById("finalAmount").textContent =
+          Math.round(totalAmount).toLocaleString() + " ₸";
+        document.getElementById("totalDeposits").textContent =
+          Math.round(totalDeposits).toLocaleString() + " ₸";
+        document.getElementById("interestEarned").textContent =
+          Math.round(interestEarned).toLocaleString() + " ₸";
+      }
+
+      init();
+    </script>
+  </body>
+</html>
