@@ -1,0 +1,96 @@
+2️⃣ Файл: /app/login.html Создай этот файл в корне /app/ и скопируй код:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вход — BayQadam</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="auth-card">
+        <h1 data-i18n="loginTitle">Вход</h1>
+        <p data-i18n="loginSubtitle">Войдите в свой аккаунт</p>
+
+        <div
+          id="errorMessage"
+          class="error-message"
+          style="display: none"
+        ></div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label data-i18n="email">Email</label>
+            <input type="email" id="email" name="email" required autofocus />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="password">Пароль</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+
+          <button type="submit" class="btn-auth" id="submitBtn">
+            <span data-i18n="login">Войти</span>
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          <span data-i18n="noAccount">Нет аккаунта?</span>
+          <a href="register.html" data-i18n="register">Зарегистрироваться</a>
+        </div>
+
+        <div class="auth-footer" style="margin-top: 15px">
+          <a href="index.html" data-i18n="backToHome">← Вернуться на главную</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      const form = document.getElementById("loginForm");
+      const errorDiv = document.getElementById("errorMessage");
+      const submitBtn = document.getElementById("submitBtn");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Hide previous errors
+        errorDiv.style.display = "none";
+        submitBtn.disabled = true;
+        submitBtn.textContent = "⏳ Вход...";
+
+        const formData = {
+          email: document.getElementById("email").value.trim().toLowerCase(),
+          password: document.getElementById("password").value,
+        };
+
+        try {
+          const response = await apiFetch("/api/auth/login", {
+            method: "POST",
+            body: JSON.stringify(formData),
+          });
+
+          // Success - redirect to dashboard
+          window.location.href = "/dashboard.html";
+        } catch (error) {
+          errorDiv.textContent = error.message;
+          errorDiv.style.display = "block";
+          submitBtn.disabled = false;
+
+          const lang = localStorage.getItem("language") || "en";
+          const btnText = {
+            en: "Login",
+            ru: "Войти",
+            kk: "Кіру",
+          };
+          submitBtn.textContent = btnText[lang];
+        }
+      });
+    </script>
+  </body>
+</html>

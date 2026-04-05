@@ -1,0 +1,154 @@
+3️⃣ Файл: /app/dashboard.html Создай этот файл в корне /app/ и скопируй код:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Дашборд — BayQadam</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/advanced.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="dashboard.html" class="logo">BayQadam</a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kk">KZ</button>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul>
+            <li><a href="dashboard.html" data-i18n="dashboard">Дашборд</a></li>
+            <li>
+              <a href="transactions.html" data-i18n="transactions"
+                >Транзакции</a
+              >
+            </li>
+            <li><a href="goals.html" data-i18n="goals">Цели</a></li>
+            <li><a href="debts.html" data-i18n="debts">Долги</a></li>
+            <li><a href="profile.html" data-i18n="profile">Профиль</a></li>
+            <li><a href="#" onclick="logout()" data-i18n="logout">Выйти</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="dashboard-container">
+        <div class="dashboard-header">
+          <h1 data-i18n="welcomeBack">Добро пожаловать!</h1>
+          <div class="user-info">
+            <div class="user-avatar" id="userAvatar">A</div>
+            <div class="user-details">
+              <h3 id="userName">Loading...</h3>
+              <p id="userEmail">user@example.com</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card income">
+            <div class="stat-icon">💰</div>
+            <p class="stat-label" data-i18n="monthlyIncome">Доходы за месяц</p>
+            <h2 class="stat-value" id="incomeValue">0 ₸</h2>
+          </div>
+          <div class="stat-card expense">
+            <div class="stat-icon">💸</div>
+            <p class="stat-label" data-i18n="monthlyExpenses">
+              Расходы за месяц
+            </p>
+            <h2 class="stat-value" id="expenseValue">0 ₸</h2>
+          </div>
+          <div class="stat-card balance">
+            <div class="stat-icon">📊</div>
+            <p class="stat-label" data-i18n="balance">Баланс</p>
+            <h2 class="stat-value" id="balanceValue">0 ₸</h2>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3 data-i18n="yearlyTrend">Доходы и расходы за год</h3>
+            <div class="chart-container">
+              <canvas id="yearlyChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3 data-i18n="expensesByCategory">Расходы по категориям</h3>
+            <div class="chart-container">
+              <canvas id="categoryChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goals Section -->
+        <div class="goals-section">
+          <h2 data-i18n="yourGoals">Ваши финансовые цели</h2>
+          <div class="goals-grid" id="goalsGrid">
+            <p data-i18n="noGoals">У вас пока нет целей</p>
+          </div>
+          <div style="text-align: center; margin-top: 20px">
+            <a href="goals.html" class="btn-primary" data-i18n="manageGoals"
+              >Управление целями</a
+            >
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div
+          style="
+            text-align: center;
+            margin-top: 40px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+          "
+        >
+          <a
+            href="transactions.html"
+            class="btn-primary"
+            data-i18n="addTransaction"
+            >+ Добавить транзакцию</a
+          >
+          <a href="goals.html" class="btn-secondary" data-i18n="addGoal"
+            >+ Добавить цель</a
+          >
+          <a href="debts.html" class="btn-secondary" data-i18n="addDebt"
+            >+ Добавить долг</a
+          >
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 BayQadam.
+          <span data-i18n="allRights">Все права защищены.</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

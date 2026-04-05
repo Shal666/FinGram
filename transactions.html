@@ -1,0 +1,347 @@
+5️⃣ Файл: /app/transactions.html Создай этот файл в корне /app/ и скопируй код:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Транзакции — BayQadam</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/advanced.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="dashboard.html" class="logo">BayQadam</a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kk">KZ</button>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul>
+            <li><a href="dashboard.html" data-i18n="dashboard">Дашборд</a></li>
+            <li>
+              <a href="transactions.html" data-i18n="transactions"
+                >Транзакции</a
+              >
+            </li>
+            <li><a href="goals.html" data-i18n="goals">Цели</a></li>
+            <li><a href="debts.html" data-i18n="debts">Долги</a></li>
+            <li><a href="profile.html" data-i18n="profile">Профиль</a></li>
+            <li><a href="#" onclick="logout()" data-i18n="logout">Выйти</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="dashboard-container">
+        <div class="dashboard-header">
+          <h1 data-i18n="myTransactions">Мои транзакции</h1>
+          <button
+            class="btn-primary"
+            onclick="openAddModal()"
+            data-i18n="addTransaction"
+          >
+            + Добавить транзакцию
+          </button>
+        </div>
+
+        <!-- Filters -->
+        <div
+          style="
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          "
+        >
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 15px;
+            "
+          >
+            <div class="form-group" style="margin: 0">
+              <label data-i18n="filterByType">Тип</label>
+              <select id="filterType" onchange="loadTransactions()">
+                <option value="" data-i18n="all">Все</option>
+                <option value="income" data-i18n="income">Доход</option>
+                <option value="expense" data-i18n="expense">Расход</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin: 0">
+              <label data-i18n="filterByCategory">Категория</label>
+              <select id="filterCategory" onchange="loadTransactions()">
+                <option value="" data-i18n="all">Все</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transactions List -->
+        <div
+          id="transactionsList"
+          style="
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          "
+        >
+          <p style="text-align: center; color: #999" data-i18n="loading">
+            Загрузка...
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Add Transaction Modal -->
+    <div id="addModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 data-i18n="addTransaction">Добавить транзакцию</h3>
+          <button class="modal-close" onclick="closeAddModal()">×</button>
+        </div>
+
+        <div id="modalError" class="error-message" style="display: none"></div>
+
+        <form id="addForm">
+          <div class="form-group">
+            <label data-i18n="type">Тип</label>
+            <select id="type" required onchange="updateCategories()">
+              <option value="income" data-i18n="income">Доход</option>
+              <option value="expense" data-i18n="expense">Расход</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="amount">Сумма</label>
+            <input type="number" id="amount" step="0.01" min="0.01" required />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="category">Категория</label>
+            <select id="category" required></select>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="date">Дата</label>
+            <input type="date" id="date" required />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="description">Описание (необязательно)</label>
+            <input type="text" id="description" />
+          </div>
+
+          <button type="submit" class="btn-auth" id="addBtn" data-i18n="add">
+            Добавить
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 BayQadam.
+          <span data-i18n="allRights">Все права защищены.</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      let user = null;
+
+      async function init() {
+        user = await requireAuth();
+        if (!user) return;
+
+        // Set default date to today
+        document.getElementById("date").valueAsDate = new Date();
+
+        updateCategories();
+        loadTransactions();
+      }
+
+      function updateCategories() {
+        const type = document.getElementById("type").value;
+        const categorySelect = document.getElementById("category");
+        const lang = localStorage.getItem("language") || "en";
+
+        const categories = getCategories(type, lang);
+
+        categorySelect.innerHTML = categories
+          .map((cat) => `<option value="${cat}">${cat}</option>`)
+          .join("");
+
+        // Update filter category dropdown
+        const filterCategorySelect = document.getElementById("filterCategory");
+        const allCategories = [
+          ...getCategories("expense", lang),
+          ...getCategories("income", lang),
+        ];
+        const uniqueCategories = [...new Set(allCategories)];
+
+        filterCategorySelect.innerHTML = `
+        <option value="">${translations[lang].all || "All"}</option>
+        ${uniqueCategories.map((cat) => `<option value="${cat}">${cat}</option>`).join("")}
+      `;
+      }
+
+      async function loadTransactions() {
+        const listDiv = document.getElementById("transactionsList");
+        const lang = localStorage.getItem("language") || "en";
+
+        try {
+          const type = document.getElementById("filterType").value;
+          const category = document.getElementById("filterCategory").value;
+
+          let url = "/api/transactions?limit=100";
+          if (type) url += `&type=${type}`;
+          if (category) url += `&category=${encodeURIComponent(category)}`;
+
+          const transactions = await apiFetch(url);
+
+          if (transactions.length === 0) {
+            listDiv.innerHTML = `<p style="text-align: center; color: #999;" data-i18n="noTransactions">Транзакций пока нет</p>`;
+            return;
+          }
+
+          listDiv.innerHTML = `
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="border-bottom: 2px solid #f0f0f0;">
+                  <th style="padding: 15px; text-align: left;" data-i18n="date">Дата</th>
+                  <th style="padding: 15px; text-align: left;" data-i18n="type">Тип</th>
+                  <th style="padding: 15px; text-align: left;" data-i18n="category">Категория</th>
+                  <th style="padding: 15px; text-align: left;" data-i18n="description">Описание</th>
+                  <th style="padding: 15px; text-align: right;" data-i18n="amount">Сумма</th>
+                  <th style="padding: 15px; text-align: center;" data-i18n="actions">Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${transactions
+                  .map(
+                    (t) => `
+                  <tr style="border-bottom: 1px solid #f5f5f5;">
+                    <td style="padding: 15px;">${formatDate(t.date)}</td>
+                    <td style="padding: 15px;">
+                      <span style="padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; 
+                        ${t.type === "income" ? "background: #e8f5e9; color: #2e7d32;" : "background: #ffebee; color: #c62828;"}">
+                        ${t.type === "income" ? "💰" : "💸"} ${t.type === "income" ? translations[lang].income || "Income" : translations[lang].expense || "Expense"}
+                      </span>
+                    </td>
+                    <td style="padding: 15px;">${t.category}</td>
+                    <td style="padding: 15px; color: #666;">${t.description || "-"}</td>
+                    <td style="padding: 15px; text-align: right; font-weight: 700; font-size: 16px;
+                      ${t.type === "income" ? "color: #2e7d32;" : "color: #c62828;"}">
+                      ${t.type === "income" ? "+" : "-"}${formatCurrency(t.amount, user.currency)}
+                    </td>
+                    <td style="padding: 15px; text-align: center;">
+                      <button onclick="deleteTransaction('${t.id}')" class="btn-danger" style="padding: 8px 15px; font-size: 14px;">
+                        🗑️
+                      </button>
+                    </td>
+                  </tr>
+                `,
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+        } catch (error) {
+          listDiv.innerHTML = `<p style="text-align: center; color: #c33;">Ошибка загрузки: ${error.message}</p>`;
+        }
+      }
+
+      function openAddModal() {
+        document.getElementById("addModal").classList.add("active");
+      }
+
+      function closeAddModal() {
+        document.getElementById("addModal").classList.remove("active");
+        document.getElementById("addForm").reset();
+        document.getElementById("modalError").style.display = "none";
+        document.getElementById("date").valueAsDate = new Date();
+      }
+
+      const addForm = document.getElementById("addForm");
+      const modalError = document.getElementById("modalError");
+      const addBtn = document.getElementById("addBtn");
+
+      addForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        modalError.style.display = "none";
+        addBtn.disabled = true;
+        addBtn.textContent = "⏳ Добавление...";
+
+        const formData = {
+          type: document.getElementById("type").value,
+          amount: parseFloat(document.getElementById("amount").value),
+          category: document.getElementById("category").value,
+          description: document.getElementById("description").value || null,
+          date: new Date(document.getElementById("date").value).toISOString(),
+        };
+
+        try {
+          await apiFetch("/api/transactions", {
+            method: "POST",
+            body: JSON.stringify(formData),
+          });
+
+          closeAddModal();
+          loadTransactions();
+        } catch (error) {
+          modalError.textContent = error.message;
+          modalError.style.display = "block";
+          addBtn.disabled = false;
+          addBtn.textContent =
+            translations[localStorage.getItem("language") || "en"].add || "Add";
+        }
+      });
+
+      async function deleteTransaction(id) {
+        const lang = localStorage.getItem("language") || "en";
+        const confirmText = {
+          en: "Delete this transaction?",
+          ru: "Удалить эту транзакцию?",
+          kk: "Бұл транзакцияны жою керек пе?",
+        };
+
+        if (!confirm(confirmText[lang])) return;
+
+        try {
+          await apiFetch(`/api/transactions/${id}`, { method: "DELETE" });
+          loadTransactions();
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+
+      init();
+    </script>
+  </body>
+</html>

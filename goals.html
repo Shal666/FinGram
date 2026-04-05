@@ -1,0 +1,456 @@
+6️⃣ Файл: /app/goals.html Создай этот файл в корне /app/ и скопируй код:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Финансовые цели — BayQadam</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/advanced.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="dashboard.html" class="logo">BayQadam</a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kk">KZ</button>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul>
+            <li><a href="dashboard.html" data-i18n="dashboard">Дашборд</a></li>
+            <li>
+              <a href="transactions.html" data-i18n="transactions"
+                >Транзакции</a
+              >
+            </li>
+            <li><a href="goals.html" data-i18n="goals">Цели</a></li>
+            <li><a href="debts.html" data-i18n="debts">Долги</a></li>
+            <li><a href="profile.html" data-i18n="profile">Профиль</a></li>
+            <li><a href="#" onclick="logout()" data-i18n="logout">Выйти</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="dashboard-container">
+        <div class="dashboard-header">
+          <h1 data-i18n="myGoals">Мои финансовые цели</h1>
+          <button
+            class="btn-primary"
+            onclick="openAddModal()"
+            data-i18n="addGoal"
+          >
+            + Добавить цель
+          </button>
+        </div>
+
+        <!-- Goals Grid -->
+        <div class="goals-grid" id="goalsGrid">
+          <p style="text-align: center; color: #999" data-i18n="loading">
+            Загрузка...
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Add Goal Modal -->
+    <div id="addModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 data-i18n="addGoal">Добавить цель</h3>
+          <button class="modal-close" onclick="closeAddModal()">×</button>
+        </div>
+
+        <div id="modalError" class="error-message" style="display: none"></div>
+
+        <form id="addForm">
+          <div class="form-group">
+            <label data-i18n="goalTitle">Название цели</label>
+            <input
+              type="text"
+              id="title"
+              required
+              placeholder="Например: Накопить на машину"
+            />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="targetAmount">Целевая сумма</label>
+            <input
+              type="number"
+              id="target_amount"
+              step="0.01"
+              min="1"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="currentAmount">Уже накоплено</label>
+            <input
+              type="number"
+              id="current_amount"
+              step="0.01"
+              min="0"
+              value="0"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="deadline">Срок (необязательно)</label>
+            <input type="date" id="deadline" />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="description">Описание (необязательно)</label>
+            <textarea
+              id="description"
+              rows="3"
+              style="
+                width: 100%;
+                padding: 14px 18px;
+                border: 2px solid #e0e0e0;
+                border-radius: 12px;
+                font-size: 16px;
+                font-family: inherit;
+                resize: vertical;
+              "
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-auth" id="addBtn" data-i18n="add">
+            Добавить
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Goal Modal -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 data-i18n="editGoal">Редактировать цель</h3>
+          <button class="modal-close" onclick="closeEditModal()">×</button>
+        </div>
+
+        <div
+          id="editModalError"
+          class="error-message"
+          style="display: none"
+        ></div>
+
+        <form id="editForm">
+          <input type="hidden" id="edit_id" />
+
+          <div class="form-group">
+            <label data-i18n="goalTitle">Название цели</label>
+            <input type="text" id="edit_title" required />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="targetAmount">Целевая сумма</label>
+            <input
+              type="number"
+              id="edit_target_amount"
+              step="0.01"
+              min="1"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="currentAmount">Уже накоплено</label>
+            <input
+              type="number"
+              id="edit_current_amount"
+              step="0.01"
+              min="0"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="deadline">Срок (необязательно)</label>
+            <input type="date" id="edit_deadline" />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="description">Описание (необязательно)</label>
+            <textarea
+              id="edit_description"
+              rows="3"
+              style="
+                width: 100%;
+                padding: 14px 18px;
+                border: 2px solid #e0e0e0;
+                border-radius: 12px;
+                font-size: 16px;
+                font-family: inherit;
+                resize: vertical;
+              "
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="btn-auth"
+            id="editBtn"
+            data-i18n="saveChanges"
+          >
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 BayQadam.
+          <span data-i18n="allRights">Все права защищены.</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      let user = null;
+
+      async function init() {
+        user = await requireAuth();
+        if (!user) return;
+        loadGoals();
+      }
+
+      async function loadGoals() {
+        const grid = document.getElementById("goalsGrid");
+        const lang = localStorage.getItem("language") || "en";
+
+        try {
+          const goals = await apiFetch("/api/goals");
+
+          if (goals.length === 0) {
+            grid.innerHTML = `
+            <div style="text-align: center; padding: 60px 20px; grid-column: 1/-1;">
+              <div style="font-size: 80px; margin-bottom: 20px;">🎯</div>
+              <h3 data-i18n="noGoals">У вас пока нет целей</h3>
+              <p style="color: #999; margin: 15px 0;" data-i18n="addFirstGoal">Добавьте свою первую финансовую цель!</p>
+              <button class="btn-primary" onclick="openAddModal()" data-i18n="addGoal">+ Добавить цель</button>
+            </div>
+          `;
+            return;
+          }
+
+          grid.innerHTML = goals
+            .map(
+              (goal) => `
+          <div class="goal-card">
+            <div class="goal-header">
+              <h4>${goal.title}</h4>
+              <div style="display: flex; gap: 10px;">
+                <button onclick="openEditModal('${goal.id}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">✏️</button>
+                <button onclick="deleteGoal('${goal.id}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">🗑️</button>
+              </div>
+            </div>
+            
+            ${goal.description ? `<p style="color: #666; font-size: 14px; margin-bottom: 15px;">${goal.description}</p>` : ""}
+            
+            <div class="goal-amount" style="margin-bottom: 10px;">
+              <strong>${formatCurrency(goal.current_amount, user.currency)}</strong> из ${formatCurrency(goal.target_amount, user.currency)}
+            </div>
+            
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${goal.progress}%"></div>
+            </div>
+            
+            <div class="progress-text" style="margin-top: 8px;">
+              ${Math.round(goal.progress)}% ${translations[lang].completed || "завершено"}
+            </div>
+            
+            ${
+              goal.deadline
+                ? `
+              <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border-radius: 8px; font-size: 14px; color: #666;">
+                📅 <strong data-i18n="deadline">Срок:</strong> ${formatDate(goal.deadline)}
+              </div>
+            `
+                : ""
+            }
+          </div>
+        `,
+            )
+            .join("");
+        } catch (error) {
+          grid.innerHTML = `<p style="text-align: center; color: #c33; grid-column: 1/-1;">Ошибка загрузки: ${error.message}</p>`;
+        }
+      }
+
+      function openAddModal() {
+        document.getElementById("addModal").classList.add("active");
+      }
+
+      function closeAddModal() {
+        document.getElementById("addModal").classList.remove("active");
+        document.getElementById("addForm").reset();
+        document.getElementById("modalError").style.display = "none";
+      }
+
+      const addForm = document.getElementById("addForm");
+      const modalError = document.getElementById("modalError");
+      const addBtn = document.getElementById("addBtn");
+
+      addForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        modalError.style.display = "none";
+        addBtn.disabled = true;
+        addBtn.textContent = "⏳ Добавление...";
+
+        const formData = {
+          title: document.getElementById("title").value.trim(),
+          target_amount: parseFloat(
+            document.getElementById("target_amount").value,
+          ),
+          current_amount: parseFloat(
+            document.getElementById("current_amount").value,
+          ),
+          deadline: document.getElementById("deadline").value
+            ? new Date(document.getElementById("deadline").value).toISOString()
+            : null,
+          description:
+            document.getElementById("description").value.trim() || null,
+        };
+
+        try {
+          await apiFetch("/api/goals", {
+            method: "POST",
+            body: JSON.stringify(formData),
+          });
+
+          closeAddModal();
+          loadGoals();
+        } catch (error) {
+          modalError.textContent = error.message;
+          modalError.style.display = "block";
+          addBtn.disabled = false;
+          addBtn.textContent =
+            translations[localStorage.getItem("language") || "en"].add || "Add";
+        }
+      });
+
+      async function openEditModal(goalId) {
+        try {
+          const goal = await apiFetch(`/api/goals/${goalId}`);
+
+          document.getElementById("edit_id").value = goal.id;
+          document.getElementById("edit_title").value = goal.title;
+          document.getElementById("edit_target_amount").value =
+            goal.target_amount;
+          document.getElementById("edit_current_amount").value =
+            goal.current_amount;
+          document.getElementById("edit_deadline").value = goal.deadline
+            ? goal.deadline.split("T")[0]
+            : "";
+          document.getElementById("edit_description").value =
+            goal.description || "";
+
+          document.getElementById("editModal").classList.add("active");
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+
+      function closeEditModal() {
+        document.getElementById("editModal").classList.remove("active");
+        document.getElementById("editForm").reset();
+        document.getElementById("editModalError").style.display = "none";
+      }
+
+      const editForm = document.getElementById("editForm");
+      const editModalError = document.getElementById("editModalError");
+      const editBtn = document.getElementById("editBtn");
+
+      editForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        editModalError.style.display = "none";
+        editBtn.disabled = true;
+        editBtn.textContent = "⏳ Сохранение...";
+
+        const goalId = document.getElementById("edit_id").value;
+        const formData = {
+          title: document.getElementById("edit_title").value.trim(),
+          target_amount: parseFloat(
+            document.getElementById("edit_target_amount").value,
+          ),
+          current_amount: parseFloat(
+            document.getElementById("edit_current_amount").value,
+          ),
+          deadline: document.getElementById("edit_deadline").value
+            ? new Date(
+                document.getElementById("edit_deadline").value,
+              ).toISOString()
+            : null,
+          description:
+            document.getElementById("edit_description").value.trim() || null,
+        };
+
+        try {
+          await apiFetch(`/api/goals/${goalId}`, {
+            method: "PUT",
+            body: JSON.stringify(formData),
+          });
+
+          closeEditModal();
+          loadGoals();
+        } catch (error) {
+          editModalError.textContent = error.message;
+          editModalError.style.display = "block";
+          editBtn.disabled = false;
+          editBtn.textContent =
+            translations[localStorage.getItem("language") || "en"]
+              .saveChanges || "Save";
+        }
+      });
+
+      async function deleteGoal(id) {
+        const lang = localStorage.getItem("language") || "en";
+        const confirmText = {
+          en: "Delete this goal?",
+          ru: "Удалить эту цель?",
+          kk: "Бұл мақсатты жою керек пе?",
+        };
+
+        if (!confirm(confirmText[lang])) return;
+
+        try {
+          await apiFetch(`/api/goals/${id}`, { method: "DELETE" });
+          loadGoals();
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+
+      init();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,618 @@
+7️⃣ Файл: /app/debts.html Создай этот файл в корне /app/ и скопируй код:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Долги и кредиты — BayQadam</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/advanced.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="dashboard.html" class="logo">BayQadam</a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kk">KZ</button>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul>
+            <li><a href="dashboard.html" data-i18n="dashboard">Дашборд</a></li>
+            <li>
+              <a href="transactions.html" data-i18n="transactions"
+                >Транзакции</a
+              >
+            </li>
+            <li><a href="goals.html" data-i18n="goals">Цели</a></li>
+            <li><a href="debts.html" data-i18n="debts">Долги</a></li>
+            <li><a href="profile.html" data-i18n="profile">Профиль</a></li>
+            <li><a href="#" onclick="logout()" data-i18n="logout">Выйти</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="dashboard-container">
+        <div class="dashboard-header">
+          <h1 data-i18n="myDebts">Мои долги и кредиты</h1>
+          <button
+            class="btn-primary"
+            onclick="openAddModal()"
+            data-i18n="addDebt"
+          >
+            + Добавить долг
+          </button>
+        </div>
+
+        <!-- Summary Stats -->
+        <div
+          class="stats-grid"
+          style="
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            margin-bottom: 40px;
+          "
+        >
+          <div
+            class="stat-card"
+            style="
+              background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+              color: white;
+            "
+          >
+            <div class="stat-icon">💳</div>
+            <p class="stat-label" data-i18n="totalDebt">Общий долг</p>
+            <h2 class="stat-value" id="totalDebt">0 ₸</h2>
+          </div>
+          <div
+            class="stat-card"
+            style="
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+            "
+          >
+            <div class="stat-icon">📅</div>
+            <p class="stat-label" data-i18n="monthlyPayments">
+              Ежемесячные платежи
+            </p>
+            <h2 class="stat-value" id="monthlyPayments">0 ₸</h2>
+          </div>
+        </div>
+
+        <!-- Credits Section -->
+        <div class="goals-section">
+          <h2 data-i18n="credits">🏦 Кредиты</h2>
+          <div class="goals-grid" id="creditsGrid">
+            <p style="text-align: center; color: #999" data-i18n="loading">
+              Загрузка...
+            </p>
+          </div>
+        </div>
+
+        <!-- Personal Debts Section -->
+        <div class="goals-section" style="margin-top: 40px">
+          <h2 data-i18n="personalDebts">👤 Личные долги</h2>
+          <div class="goals-grid" id="personalDebtsGrid">
+            <p style="text-align: center; color: #999" data-i18n="loading">
+              Загрузка...
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Add Debt Modal -->
+    <div id="addModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 data-i18n="addDebt">Добавить долг</h3>
+          <button class="modal-close" onclick="closeAddModal()">×</button>
+        </div>
+
+        <div id="modalError" class="error-message" style="display: none"></div>
+
+        <form id="addForm">
+          <div class="form-group">
+            <label data-i18n="debtType">Тип долга</label>
+            <select id="type" required onchange="toggleDebtFields()">
+              <option value="credit" data-i18n="creditLoan">
+                Кредит (банк)
+              </option>
+              <option value="personal" data-i18n="personalDebt">
+                Личный долг
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="debtTitle">Название</label>
+            <input
+              type="text"
+              id="title"
+              required
+              placeholder="Например: Ипотека"
+            />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="creditorName">Кредитор (банк или имя)</label>
+            <input
+              type="text"
+              id="creditor"
+              placeholder="Например: Kaspi Bank"
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="totalAmount">Общая сумма долга</label>
+              <input
+                type="number"
+                id="total_amount"
+                step="0.01"
+                min="1"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label data-i18n="remainingAmount">Осталось выплатить</label>
+              <input
+                type="number"
+                id="remaining_amount"
+                step="0.01"
+                min="0"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row" id="creditFields">
+            <div class="form-group">
+              <label data-i18n="monthlyPayment">Ежемесячный платеж</label>
+              <input type="number" id="monthly_payment" step="0.01" min="0" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="interestRate">Процентная ставка (%)</label>
+              <input type="number" id="interest_rate" step="0.1" min="0" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="deadline">Срок погашения (необязательно)</label>
+            <input type="date" id="deadline" />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="description">Описание (необязательно)</label>
+            <textarea
+              id="description"
+              rows="3"
+              style="
+                width: 100%;
+                padding: 14px 18px;
+                border: 2px solid #e0e0e0;
+                border-radius: 12px;
+                font-size: 16px;
+                font-family: inherit;
+                resize: vertical;
+              "
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-auth" id="addBtn" data-i18n="add">
+            Добавить
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Debt Modal -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 data-i18n="editDebt">Редактировать долг</h3>
+          <button class="modal-close" onclick="closeEditModal()">×</button>
+        </div>
+
+        <div
+          id="editModalError"
+          class="error-message"
+          style="display: none"
+        ></div>
+
+        <form id="editForm">
+          <input type="hidden" id="edit_id" />
+
+          <div class="form-group">
+            <label data-i18n="debtTitle">Название</label>
+            <input type="text" id="edit_title" required />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="creditorName">Кредитор</label>
+            <input type="text" id="edit_creditor" />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="remainingAmount">Осталось выплатить</label>
+            <input
+              type="number"
+              id="edit_remaining_amount"
+              step="0.01"
+              min="0"
+              required
+            />
+          </div>
+
+          <div class="form-group" id="edit_credit_fields">
+            <label data-i18n="monthlyPayment">Ежемесячный платеж</label>
+            <input
+              type="number"
+              id="edit_monthly_payment"
+              step="0.01"
+              min="0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="interestRate">Процентная ставка (%)</label>
+            <input type="number" id="edit_interest_rate" step="0.1" min="0" />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="deadline">Срок погашения</label>
+            <input type="date" id="edit_deadline" />
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="description">Описание</label>
+            <textarea
+              id="edit_description"
+              rows="3"
+              style="
+                width: 100%;
+                padding: 14px 18px;
+                border: 2px solid #e0e0e0;
+                border-radius: 12px;
+                font-size: 16px;
+                font-family: inherit;
+                resize: vertical;
+              "
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="btn-auth"
+            id="editBtn"
+            data-i18n="saveChanges"
+          >
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 BayQadam.
+          <span data-i18n="allRights">Все права защищены.</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      let user = null;
+
+      async function init() {
+        user = await requireAuth();
+        if (!user) return;
+        loadDebts();
+      }
+
+      function toggleDebtFields() {
+        const type = document.getElementById("type").value;
+        const creditFields = document.getElementById("creditFields");
+
+        if (type === "credit") {
+          creditFields.style.display = "grid";
+        } else {
+          creditFields.style.display = "none";
+          document.getElementById("monthly_payment").value = "";
+          document.getElementById("interest_rate").value = "";
+        }
+      }
+
+      async function loadDebts() {
+        const lang = localStorage.getItem("language") || "en";
+
+        try {
+          const summary = await apiFetch("/api/debts/stats/summary");
+
+          document.getElementById("totalDebt").textContent = formatCurrency(
+            summary.total_debt,
+            user.currency,
+          );
+          document.getElementById("monthlyPayments").textContent =
+            formatCurrency(summary.total_monthly_payments, user.currency);
+
+          renderDebts(summary.credits, "creditsGrid", "credit");
+          renderDebts(summary.personal_debts, "personalDebtsGrid", "personal");
+        } catch (error) {
+          console.error("Error loading debts:", error);
+        }
+      }
+
+      function renderDebts(debts, gridId, type) {
+        const grid = document.getElementById(gridId);
+        const lang = localStorage.getItem("language") || "en";
+
+        if (debts.length === 0) {
+          grid.innerHTML = `
+          <p style="text-align: center; color: #999; grid-column: 1/-1;" data-i18n="noDebts">
+            ${type === "credit" ? "Нет кредитов" : "Нет личных долгов"}
+          </p>
+        `;
+          return;
+        }
+
+        grid.innerHTML = debts
+          .map(
+            (debt) => `
+        <div class="goal-card" style="border-left: 4px solid ${type === "credit" ? "#f5576c" : "#ff9800"};">
+          <div class="goal-header">
+            <h4>${debt.title}</h4>
+            <div style="display: flex; gap: 10px;">
+              <button onclick="openEditModal('${debt.id}', '${debt.type}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">✏️</button>
+              <button onclick="deleteDebt('${debt.id}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">🗑️</button>
+            </div>
+          </div>
+          
+          ${debt.creditor ? `<p style="color: #666; font-size: 14px; margin-bottom: 10px;">🏦 ${debt.creditor}</p>` : ""}
+          ${debt.description ? `<p style="color: #666; font-size: 14px; margin-bottom: 15px;">${debt.description}</p>` : ""}
+          
+          <div class="goal-amount" style="margin-bottom: 10px; color: #f5576c;">
+            <strong>${formatCurrency(debt.remaining_amount, user.currency)}</strong> из ${formatCurrency(debt.total_amount, user.currency)}
+          </div>
+          
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${debt.progress}%; background: linear-gradient(90deg, #f5576c, #f093fb);"></div>
+          </div>
+          
+          <div class="progress-text" style="margin-top: 8px;">
+            ${Math.round(debt.progress)}% ${translations[lang].paid || "выплачено"}
+          </div>
+          
+          ${
+            debt.monthly_payment
+              ? `
+            <div style="margin-top: 15px; padding: 10px; background: #fff3e0; border-radius: 8px; font-size: 14px; color: #e65100;">
+              💰 <strong data-i18n="monthlyPayment">Ежемесячный платеж:</strong> ${formatCurrency(debt.monthly_payment, user.currency)}
+            </div>
+          `
+              : ""
+          }
+          
+          ${
+            debt.interest_rate
+              ? `
+            <div style="margin-top: 10px; font-size: 14px; color: #666;">
+              📊 <strong data-i18n="interestRate">Ставка:</strong> ${debt.interest_rate}%
+            </div>
+          `
+              : ""
+          }
+          
+          ${
+            debt.deadline
+              ? `
+            <div style="margin-top: 10px; font-size: 14px; color: #666;">
+              📅 <strong data-i18n="deadline">Срок:</strong> ${formatDate(debt.deadline)}
+            </div>
+          `
+              : ""
+          }
+        </div>
+      `,
+          )
+          .join("");
+      }
+
+      function openAddModal() {
+        document.getElementById("addModal").classList.add("active");
+        toggleDebtFields();
+      }
+
+      function closeAddModal() {
+        document.getElementById("addModal").classList.remove("active");
+        document.getElementById("addForm").reset();
+        document.getElementById("modalError").style.display = "none";
+      }
+
+      const addForm = document.getElementById("addForm");
+      const modalError = document.getElementById("modalError");
+      const addBtn = document.getElementById("addBtn");
+
+      addForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        modalError.style.display = "none";
+        addBtn.disabled = true;
+        addBtn.textContent = "⏳ Добавление...";
+
+        const type = document.getElementById("type").value;
+
+        const formData = {
+          type: type,
+          title: document.getElementById("title").value.trim(),
+          creditor: document.getElementById("creditor").value.trim() || null,
+          total_amount: parseFloat(
+            document.getElementById("total_amount").value,
+          ),
+          remaining_amount: parseFloat(
+            document.getElementById("remaining_amount").value,
+          ),
+          monthly_payment:
+            type === "credit" &&
+            document.getElementById("monthly_payment").value
+              ? parseFloat(document.getElementById("monthly_payment").value)
+              : null,
+          interest_rate: document.getElementById("interest_rate").value
+            ? parseFloat(document.getElementById("interest_rate").value)
+            : null,
+          deadline: document.getElementById("deadline").value
+            ? new Date(document.getElementById("deadline").value).toISOString()
+            : null,
+          description:
+            document.getElementById("description").value.trim() || null,
+        };
+
+        try {
+          await apiFetch("/api/debts", {
+            method: "POST",
+            body: JSON.stringify(formData),
+          });
+
+          closeAddModal();
+          loadDebts();
+        } catch (error) {
+          modalError.textContent = error.message;
+          modalError.style.display = "block";
+          addBtn.disabled = false;
+          addBtn.textContent =
+            translations[localStorage.getItem("language") || "en"].add || "Add";
+        }
+      });
+
+      async function openEditModal(debtId, debtType) {
+        try {
+          const debt = await apiFetch(`/api/debts/${debtId}`);
+
+          document.getElementById("edit_id").value = debt.id;
+          document.getElementById("edit_title").value = debt.title;
+          document.getElementById("edit_creditor").value = debt.creditor || "";
+          document.getElementById("edit_remaining_amount").value =
+            debt.remaining_amount;
+          document.getElementById("edit_monthly_payment").value =
+            debt.monthly_payment || "";
+          document.getElementById("edit_interest_rate").value =
+            debt.interest_rate || "";
+          document.getElementById("edit_deadline").value = debt.deadline
+            ? debt.deadline.split("T")[0]
+            : "";
+          document.getElementById("edit_description").value =
+            debt.description || "";
+
+          // Show/hide monthly payment field based on type
+          const creditFields = document.getElementById("edit_credit_fields");
+          if (debtType === "credit") {
+            creditFields.style.display = "block";
+          } else {
+            creditFields.style.display = "none";
+          }
+
+          document.getElementById("editModal").classList.add("active");
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+
+      function closeEditModal() {
+        document.getElementById("editModal").classList.remove("active");
+        document.getElementById("editForm").reset();
+        document.getElementById("editModalError").style.display = "none";
+      }
+
+      const editForm = document.getElementById("editForm");
+      const editModalError = document.getElementById("editModalError");
+      const editBtn = document.getElementById("editBtn");
+
+      editForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        editModalError.style.display = "none";
+        editBtn.disabled = true;
+        editBtn.textContent = "⏳ Сохранение...";
+
+        const debtId = document.getElementById("edit_id").value;
+        const formData = {
+          title: document.getElementById("edit_title").value.trim(),
+          creditor:
+            document.getElementById("edit_creditor").value.trim() || null,
+          remaining_amount: parseFloat(
+            document.getElementById("edit_remaining_amount").value,
+          ),
+          monthly_payment: document.getElementById("edit_monthly_payment").value
+            ? parseFloat(document.getElementById("edit_monthly_payment").value)
+            : null,
+          interest_rate: document.getElementById("edit_interest_rate").value
+            ? parseFloat(document.getElementById("edit_interest_rate").value)
+            : null,
+          deadline: document.getElementById("edit_deadline").value
+            ? new Date(
+                document.getElementById("edit_deadline").value,
+              ).toISOString()
+            : null,
+          description:
+            document.getElementById("edit_description").value.trim() || null,
+        };
+
+        try {
+          await apiFetch(`/api/debts/${debtId}`, {
+            method: "PUT",
+            body: JSON.stringify(formData),
+          });
+
+          closeEditModal();
+          loadDebts();
+        } catch (error) {
+          editModalError.textContent = error.message;
+          editModalError.style.display = "block";
+          editBtn.disabled = false;
+          editBtn.textContent =
+            translations[localStorage.getItem("language") || "en"]
+              .saveChanges || "Save";
+        }
+      });
+
+      async function deleteDebt(id) {
+        const lang = localStorage.getItem("language") || "en";
+        const confirmText = {
+          en: "Delete this debt?",
+          ru: "Удалить этот долг?",
+          kk: "Бұл қарызды жою керек пе?",
+        };
+
+        if (!confirm(confirmText[lang])) return;
+
+        try {
+          await apiFetch(`/api/debts/${id}`, { method: "DELETE" });
+          loadDebts();
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+
+      init();
+    </script>
+  </body>
+</html>
