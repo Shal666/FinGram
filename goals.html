@@ -231,9 +231,12 @@
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script>
+      // Используем currentUser из auth.js
+      let pageUser = null;
+
       async function init() {
-        const user = await requireAuth();
-        if (!user) return;
+        pageUser = await requireAuth();
+        if (!pageUser) return;
         loadGoals();
       }
 
@@ -246,53 +249,53 @@
 
           if (goals.length === 0) {
             grid.innerHTML = `
-            <div style="text-align: center; padding: 60px 20px; grid-column: 1/-1;">
-              <div style="font-size: 80px; margin-bottom: 20px;">🎯</div>
-              <h3 data-i18n="noGoals">У вас пока нет целей</h3>
-              <p style="color: #999; margin: 15px 0;" data-i18n="addFirstGoal">Добавьте свою первую финансовую цель!</p>
-              <button class="btn-primary" onclick="openAddModal()" data-i18n="addGoal">+ Добавить цель</button>
-            </div>
-          `;
+          <div style="text-align: center; padding: 60px 20px; grid-column: 1/-1;">
+            <div style="font-size: 80px; margin-bottom: 20px;">🎯</div>
+            <h3 data-i18n="noGoals">У вас пока нет целей</h3>
+            <p style="color: #999; margin: 15px 0;" data-i18n="addFirstGoal">Добавьте свою первую финансовую цель!</p>
+            <button class="btn-primary" onclick="openAddModal()" data-i18n="addGoal">+ Добавить цель</button>
+          </div>
+        `;
             return;
           }
 
           grid.innerHTML = goals
             .map(
               (goal) => `
-          <div class="goal-card">
-            <div class="goal-header">
-              <h4>${goal.title}</h4>
-              <div style="display: flex; gap: 10px;">
-                <button onclick="openEditModal('${goal.id}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">✏️</button>
-                <button onclick="deleteGoal('${goal.id}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">🗑️</button>
-              </div>
+        <div class="goal-card">
+          <div class="goal-header">
+            <h4>${goal.title}</h4>
+            <div style="display: flex; gap: 10px;">
+              <button onclick="openEditModal('${goal.id}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">✏️</button>
+              <button onclick="deleteGoal('${goal.id}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">🗑️</button>
             </div>
-            
-            ${goal.description ? `<p style="color: #666; font-size: 14px; margin-bottom: 15px;">${goal.description}</p>` : ""}
-            
-            <div class="goal-amount" style="margin-bottom: 10px;">
-              <strong>${formatCurrency(goal.current_amount, user.currency)}</strong> из ${formatCurrency(goal.target_amount, user.currency)}
-            </div>
-            
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: ${goal.progress}%"></div>
-            </div>
-            
-            <div class="progress-text" style="margin-top: 8px;">
-              ${Math.round(goal.progress)}% ${translations[lang].completed || "завершено"}
-            </div>
-            
-            ${
-              goal.deadline
-                ? `
-              <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border-radius: 8px; font-size: 14px; color: #666;">
-                📅 <strong data-i18n="deadline">Срок:</strong> ${formatDate(goal.deadline)}
-              </div>
-            `
-                : ""
-            }
           </div>
-        `,
+          
+          ${goal.description ? `<p style="color: #666; font-size: 14px; margin-bottom: 15px;">${goal.description}</p>` : ""}
+          
+          <div class="goal-amount" style="margin-bottom: 10px;">
+            <strong>${formatCurrency(goal.current_amount, pageUser.currency)}</strong> из ${formatCurrency(goal.target_amount, pageUser.currency)}
+          </div>
+          
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${goal.progress}%"></div>
+          </div>
+          
+          <div class="progress-text" style="margin-top: 8px;">
+            ${Math.round(goal.progress)}% ${translations[lang].completed || "завершено"}
+          </div>
+          
+          ${
+            goal.deadline
+              ? `
+            <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border-radius: 8px; font-size: 14px; color: #666;">
+              📅 <strong data-i18n="deadline">Срок:</strong> ${formatDate(goal.deadline)}
+            </div>
+          `
+              : ""
+          }
+        </div>
+      `,
             )
             .join("");
         } catch (error) {

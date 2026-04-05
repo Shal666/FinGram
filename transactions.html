@@ -168,9 +168,12 @@
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script>
+      // Используем currentUser из auth.js
+      let pageUser = null;
+
       async function init() {
-        const user = await requireAuth();
-        if (!user) return;
+        pageUser = await requireAuth();
+        if (!pageUser) return;
 
         // Set default date to today
         document.getElementById("date").valueAsDate = new Date();
@@ -199,9 +202,9 @@
         const uniqueCategories = [...new Set(allCategories)];
 
         filterCategorySelect.innerHTML = `
-        <option value="">${translations[lang].all || "All"}</option>
-        ${uniqueCategories.map((cat) => `<option value="${cat}">${cat}</option>`).join("")}
-      `;
+      <option value="">${translations[lang].all || "All"}</option>
+      ${uniqueCategories.map((cat) => `<option value="${cat}">${cat}</option>`).join("")}
+    `;
       }
 
       async function loadTransactions() {
@@ -224,49 +227,49 @@
           }
 
           listDiv.innerHTML = `
-          <div style="overflow-x: auto;">
-            <table style="width: 100%; border-collapse: collapse;">
-              <thead>
-                <tr style="border-bottom: 2px solid #f0f0f0;">
-                  <th style="padding: 15px; text-align: left;" data-i18n="date">Дата</th>
-                  <th style="padding: 15px; text-align: left;" data-i18n="type">Тип</th>
-                  <th style="padding: 15px; text-align: left;" data-i18n="category">Категория</th>
-                  <th style="padding: 15px; text-align: left;" data-i18n="description">Описание</th>
-                  <th style="padding: 15px; text-align: right;" data-i18n="amount">Сумма</th>
-                  <th style="padding: 15px; text-align: center;" data-i18n="actions">Действия</th>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 2px solid #f0f0f0;">
+                <th style="padding: 15px; text-align: left;" data-i18n="date">Дата</th>
+                <th style="padding: 15px; text-align: left;" data-i18n="type">Тип</th>
+                <th style="padding: 15px; text-align: left;" data-i18n="category">Категория</th>
+                <th style="padding: 15px; text-align: left;" data-i18n="description">Описание</th>
+                <th style="padding: 15px; text-align: right;" data-i18n="amount">Сумма</th>
+                <th style="padding: 15px; text-align: center;" data-i18n="actions">Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${transactions
+                .map(
+                  (t) => `
+                <tr style="border-bottom: 1px solid #f5f5f5;">
+                  <td style="padding: 15px;">${formatDate(t.date)}</td>
+                  <td style="padding: 15px;">
+                    <span style="padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; 
+                      ${t.type === "income" ? "background: #e8f5e9; color: #2e7d32;" : "background: #ffebee; color: #c62828;"}">
+                      ${t.type === "income" ? "💰" : "💸"} ${t.type === "income" ? translations[lang].income || "Income" : translations[lang].expense || "Expense"}
+                    </span>
+                  </td>
+                  <td style="padding: 15px;">${t.category}</td>
+                  <td style="padding: 15px; color: #666;">${t.description || "-"}</td>
+                  <td style="padding: 15px; text-align: right; font-weight: 700; font-size: 16px;
+                    ${t.type === "income" ? "color: #2e7d32;" : "color: #c62828;"}">
+                    ${t.type === "income" ? "+" : "-"}${formatCurrency(t.amount, pageUser.currency)}
+                  </td>
+                  <td style="padding: 15px; text-align: center;">
+                    <button onclick="deleteTransaction('${t.id}')" class="btn-danger" style="padding: 8px 15px; font-size: 14px;">
+                      🗑️
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                ${transactions
-                  .map(
-                    (t) => `
-                  <tr style="border-bottom: 1px solid #f5f5f5;">
-                    <td style="padding: 15px;">${formatDate(t.date)}</td>
-                    <td style="padding: 15px;">
-                      <span style="padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; 
-                        ${t.type === "income" ? "background: #e8f5e9; color: #2e7d32;" : "background: #ffebee; color: #c62828;"}">
-                        ${t.type === "income" ? "💰" : "💸"} ${t.type === "income" ? translations[lang].income || "Income" : translations[lang].expense || "Expense"}
-                      </span>
-                    </td>
-                    <td style="padding: 15px;">${t.category}</td>
-                    <td style="padding: 15px; color: #666;">${t.description || "-"}</td>
-                    <td style="padding: 15px; text-align: right; font-weight: 700; font-size: 16px;
-                      ${t.type === "income" ? "color: #2e7d32;" : "color: #c62828;"}">
-                      ${t.type === "income" ? "+" : "-"}${formatCurrency(t.amount, user.currency)}
-                    </td>
-                    <td style="padding: 15px; text-align: center;">
-                      <button onclick="deleteTransaction('${t.id}')" class="btn-danger" style="padding: 8px 15px; font-size: 14px;">
-                        🗑️
-                      </button>
-                    </td>
-                  </tr>
-                `,
-                  )
-                  .join("")}
-              </tbody>
-            </table>
-          </div>
-        `;
+              `,
+                )
+                .join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
         } catch (error) {
           listDiv.innerHTML = `<p style="text-align: center; color: #c33;">Ошибка загрузки: ${error.message}</p>`;
         }

@@ -319,9 +319,12 @@
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script>
+      // Используем currentUser из auth.js
+      let pageUser = null;
+
       async function init() {
-        const user = await requireAuth();
-        if (!user) return;
+        pageUser = await requireAuth();
+        if (!pageUser) return;
         loadDebts();
       }
 
@@ -346,10 +349,10 @@
 
           document.getElementById("totalDebt").textContent = formatCurrency(
             summary.total_debt,
-            user.currency,
+            pageUser.currency,
           );
           document.getElementById("monthlyPayments").textContent =
-            formatCurrency(summary.total_monthly_payments, user.currency);
+            formatCurrency(summary.total_monthly_payments, pageUser.currency);
 
           renderDebts(summary.credits, "creditsGrid", "credit");
           renderDebts(summary.personal_debts, "personalDebtsGrid", "personal");
@@ -364,71 +367,71 @@
 
         if (debts.length === 0) {
           grid.innerHTML = `
-          <p style="text-align: center; color: #999; grid-column: 1/-1;" data-i18n="noDebts">
-            ${type === "credit" ? "Нет кредитов" : "Нет личных долгов"}
-          </p>
-        `;
+        <p style="text-align: center; color: #999; grid-column: 1/-1;" data-i18n="noDebts">
+          ${type === "credit" ? "Нет кредитов" : "Нет личных долгов"}
+        </p>
+      `;
           return;
         }
 
         grid.innerHTML = debts
           .map(
             (debt) => `
-        <div class="goal-card" style="border-left: 4px solid ${type === "credit" ? "#f5576c" : "#ff9800"};">
-          <div class="goal-header">
-            <h4>${debt.title}</h4>
-            <div style="display: flex; gap: 10px;">
-              <button onclick="openEditModal('${debt.id}', '${debt.type}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">✏️</button>
-              <button onclick="deleteDebt('${debt.id}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">🗑️</button>
-            </div>
+      <div class="goal-card" style="border-left: 4px solid ${type === "credit" ? "#f5576c" : "#ff9800"};">
+        <div class="goal-header">
+          <h4>${debt.title}</h4>
+          <div style="display: flex; gap: 10px;">
+            <button onclick="openEditModal('${debt.id}', '${debt.type}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">✏️</button>
+            <button onclick="deleteDebt('${debt.id}')" style="background: none; border: none; cursor: pointer; font-size: 20px;">🗑️</button>
           </div>
-          
-          ${debt.creditor ? `<p style="color: #666; font-size: 14px; margin-bottom: 10px;">🏦 ${debt.creditor}</p>` : ""}
-          ${debt.description ? `<p style="color: #666; font-size: 14px; margin-bottom: 15px;">${debt.description}</p>` : ""}
-          
-          <div class="goal-amount" style="margin-bottom: 10px; color: #f5576c;">
-            <strong>${formatCurrency(debt.remaining_amount, user.currency)}</strong> из ${formatCurrency(debt.total_amount, user.currency)}
-          </div>
-          
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: ${debt.progress}%; background: linear-gradient(90deg, #f5576c, #f093fb);"></div>
-          </div>
-          
-          <div class="progress-text" style="margin-top: 8px;">
-            ${Math.round(debt.progress)}% ${translations[lang].paid || "выплачено"}
-          </div>
-          
-          ${
-            debt.monthly_payment
-              ? `
-            <div style="margin-top: 15px; padding: 10px; background: #fff3e0; border-radius: 8px; font-size: 14px; color: #e65100;">
-              💰 <strong data-i18n="monthlyPayment">Ежемесячный платеж:</strong> ${formatCurrency(debt.monthly_payment, user.currency)}
-            </div>
-          `
-              : ""
-          }
-          
-          ${
-            debt.interest_rate
-              ? `
-            <div style="margin-top: 10px; font-size: 14px; color: #666;">
-              📊 <strong data-i18n="interestRate">Ставка:</strong> ${debt.interest_rate}%
-            </div>
-          `
-              : ""
-          }
-          
-          ${
-            debt.deadline
-              ? `
-            <div style="margin-top: 10px; font-size: 14px; color: #666;">
-              📅 <strong data-i18n="deadline">Срок:</strong> ${formatDate(debt.deadline)}
-            </div>
-          `
-              : ""
-          }
         </div>
-      `,
+        
+        ${debt.creditor ? `<p style="color: #666; font-size: 14px; margin-bottom: 10px;">🏦 ${debt.creditor}</p>` : ""}
+        ${debt.description ? `<p style="color: #666; font-size: 14px; margin-bottom: 15px;">${debt.description}</p>` : ""}
+        
+        <div class="goal-amount" style="margin-bottom: 10px; color: #f5576c;">
+          <strong>${formatCurrency(debt.remaining_amount, pageUser.currency)}</strong> из ${formatCurrency(debt.total_amount, pageUser.currency)}
+        </div>
+        
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: ${debt.progress}%; background: linear-gradient(90deg, #f5576c, #f093fb);"></div>
+        </div>
+        
+        <div class="progress-text" style="margin-top: 8px;">
+          ${Math.round(debt.progress)}% ${translations[lang].paid || "выплачено"}
+        </div>
+        
+        ${
+          debt.monthly_payment
+            ? `
+          <div style="margin-top: 15px; padding: 10px; background: #fff3e0; border-radius: 8px; font-size: 14px; color: #e65100;">
+            💰 <strong data-i18n="monthlyPayment">Ежемесячный платеж:</strong> ${formatCurrency(debt.monthly_payment, pageUser.currency)}
+          </div>
+        `
+            : ""
+        }
+        
+        ${
+          debt.interest_rate
+            ? `
+          <div style="margin-top: 10px; font-size: 14px; color: #666;">
+            📊 <strong data-i18n="interestRate">Ставка:</strong> ${debt.interest_rate}%
+          </div>
+        `
+            : ""
+        }
+        
+        ${
+          debt.deadline
+            ? `
+          <div style="margin-top: 10px; font-size: 14px; color: #666;">
+            📅 <strong data-i18n="deadline">Срок:</strong> ${formatDate(debt.deadline)}
+          </div>
+        `
+            : ""
+        }
+      </div>
+    `,
           )
           .join("");
       }
