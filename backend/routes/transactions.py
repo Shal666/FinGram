@@ -122,6 +122,7 @@ async def get_transaction_stats(
         "month": month,
         "income": 0,
         "expense": 0,
+        "expenses": 0,  # Add alias for frontend compatibility
         "balance": 0,
         "transactions_count": 0
     }
@@ -132,6 +133,7 @@ async def get_transaction_stats(
             stats["transactions_count"] += r["count"]
         elif r["_id"] == "expense":
             stats["expense"] = r["total"]
+            stats["expenses"] = r["total"]  # Add alias
             stats["transactions_count"] += r["count"]
     
     stats["balance"] = stats["income"] - stats["expense"]
@@ -165,6 +167,150 @@ async def get_transaction_stats(
     ]
     
     return stats
+
+@router.get("/stats/summary")
+async def get_transaction_summary(request: Request):
+    """Get current month transaction summary (for dashboard)"""
+    db = get_database()
+    user = await get_current_user(request, db)
+    
+    # Get current month data
+    now = datetime.now(timezone.utc)
+    start_date = datetime(now.year, now.month, 1, tzinfo=timezone.utc)
+    if now.month == 12:
+        end_date = datetime(now.year + 1, 1, 1, tzinfo=timezone.utc)
+    else:
+        end_date = datetime(now.year, now.month + 1, 1, tzinfo=timezone.utc)
+    
+    # Aggregate statistics
+    pipeline = [
+        {
+            "$match": {
+                "user_id": user["id"],
+                "date": {"$gte": start_date, "$lt": end_date}
+            }
+        },
+        {
+            "$group": {
+                "_id": "$type",
+                "total": {"$sum": "$amount"}
+            }
+        }
+    ]
+    
+    results = await db.transactions.aggregate(pipeline).to_list(10)
+    
+    # Format results
+    income = 0
+    expenses = 0
+    
+    for r in results:
+        if r["_id"] == "income":
+            income = r["total"]
+        elif r["_id"] == "expense":
+            expenses = r["total"]
+    
+    return {
+        "income": income,
+        "expenses": expenses,
+        "balance": income - expenses
+    }
+
+@router.get("/stats/yearly")
+async def get_yearly_transaction_stats(request: Request, year: Optional[int] = None):
+    """Get yearly statistics for charts (month by month)"""
+    db = get_database()
+    user = await get_current_user(request, db)
+    
+    year = year or datetime.now(timezone.utc).year
+    
+    start_date = datetime(year, 1, 1, tzinfo=timezone.utc)
+    end_date = datetime(year + 1, 1, 1, tzinfo=timezone.utc)
+    
+    pipeline = [
+        {
+            "$match": {
+                "user_id": user["id"],
+                "date": {"$gte": start_date, "$lt": end_date}
+            }
+        },
+        {
+            "$group": {
+                "_id": {
+                    "month": {"$month": "$date"},
+                    "type": "$type"
+                },
+                "total": {"$sum": "$amount"}
+            }
+        },
+        {
+            "$sort": {"_id.month": 1}
+        }
+    ]
+    
+    results = await db.transactions.aggregate(pipeline).to_list(100)
+    
+    # Format by month for charts
+    income_by_month = [0] * 12
+    expenses_by_month = [0] * 12
+    
+    for r in results:
+        month_index = r["_id"]["month"] - 1
+        type_ = r["_id"]["type"]
+        
+        if type_ == "income":
+            income_by_month[month_index] = r["total"]
+        elif type_ == "expense":
+            expenses_by_month[month_index] = r["total"]
+    
+    return {
+        "year": year,
+        "income": income_by_month,
+        "expenses": expenses_by_month
+    }
+
+@router.get("/stats/category")
+async def get_category_stats(request: Request):
+    """Get expense breakdown by category for current month"""
+    db = get_database()
+    user = await get_current_user(request, db)
+    
+    # Get current month data
+    now = datetime.now(timezone.utc)
+    start_date = datetime(now.year, now.month, 1, tzinfo=timezone.utc)
+    if now.month == 12:
+        end_date = datetime(now.year + 1, 1, 1, tzinfo=timezone.utc)
+    else:
+        end_date = datetime(now.year, now.month + 1, 1, tzinfo=timezone.utc)
+    
+    pipeline = [
+        {
+            "$match": {
+                "user_id": user["id"],
+                "type": "expense",
+                "date": {"$gte": start_date, "$lt": end_date}
+            }
+        },
+        {
+            "$group": {
+                "_id": "$category",
+                "total": {"$sum": "$amount"}
+            }
+        },
+        {
+            "$sort": {"total": -1}
+        }
+    ]
+    
+    results = await db.transactions.aggregate(pipeline).to_list(20)
+    
+    categories = [r["_id"] for r in results]
+    amounts = [r["total"] for r in results]
+    
+    return {
+        "categories": categories,
+        "amounts": amounts
+    }
 
 @router.get("/yearly-stats")
 async def get_yearly_stats(request: Request, year: Optional[int] = None):

@@ -84,6 +84,36 @@ async def get_debts(request: Request, type: str = None):
     
     return [DebtResponse(**d) for d in debts]
 
+@router.get("/stats/summary")
+async def get_debt_summary(request: Request):
+    """Get debt summary statistics"""
+    db = get_database()
+    user = await get_current_user(request, db)
+    
+    debts = await db.debts.find({"user_id": user["id"]}, {"_id": 0}).to_list(100)
+    
+    total_debt = sum(d["remaining_amount"] for d in debts)
+    total_monthly_payments = sum(d.get("monthly_payment", 0) or 0 for d in debts if d["type"] == "credit")
+    
+    credits = [d for d in debts if d["type"] == "credit"]
+    personal_debts = [d for d in debts if d["type"] == "personal"]
+    
+    # Add progress to each debt
+    for debt in credits:
+        debt["progress"] = calculate_debt_progress(debt["remaining_amount"], debt["total_amount"])
+    
+    for debt in personal_debts:
+        debt["progress"] = calculate_debt_progress(debt["remaining_amount"], debt["total_amount"])
+    
+    return {
+        "total_debt": total_debt,
+        "total_monthly_payments": total_monthly_payments,
+        "credits_count": len(credits),
+        "personal_debts_count": len(personal_debts),
+        "credits": credits,
+        "personal_debts": personal_debts
+    }
+
 @router.get("/{debt_id}", response_model=DebtResponse)
 async def get_debt(debt_id: str, request: Request):
     """Get a specific debt"""
@@ -160,30 +190,3 @@ async def delete_debt(debt_id: str, request: Request):
         raise HTTPException(status_code=404, detail="Debt not found")
     
     return {"message": "Debt deleted successfully"}
-
-@router.get("/stats/summary")
-async def get_debt_summary(request: Request):
-    """Get debt summary statistics"""
-    db = get_database()
-    user = await get_current_user(request, db)
-    
-    debts = await db.debts.find({"user_id": user["id"]}, {"_id": 0}).to_list(100)
-    
-    total_debt = sum(d["remaining_amount"] for d in debts)
-    total_monthly_payments = sum(d.get("monthly_payment", 0) or 0 for d in debts if d["type"] == "credit")
-    
-    credits = [d for d in debts if d["type"] == "credit"]
-    personal_debts = [d for d in debts if d["type"] == "personal"]
-    
-    # Calculate progress for each debt
-    for debt in credits + personal_debts:
-        debt["progress"] = calculate_debt_progress(debt["remaining_amount"], debt["total_amount"])
-    
-    return {
-        "total_debt": total_debt,
-        "total_monthly_payments": total_monthly_payments,
-        "credits_count": len(credits),
-        "personal_debts_count": len(personal_debts),
-        "credits": credits,
-        "personal_debts": personal_debts
-    }
