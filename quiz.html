@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Квиз — BayQadam</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/advanced.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+    <style>
+      .quiz-container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .quiz-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .quiz-progress {
+        background: #e0e0e0;
+        border-radius: 10px;
+        height: 10px;
+        margin-bottom: 20px;
+        overflow: hidden;
+      }
+
+      .quiz-progress-fill {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        height: 100%;
+        transition: width 0.3s ease;
+      }
+
+      .quiz-question-number {
+        color: #667eea;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .quiz-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+      }
+
+      .quiz-question {
+        font-size: 22px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 30px;
+        line-height: 1.4;
+      }
+
+      .quiz-options {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .quiz-option {
+        background: #f9f9f9;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 18px 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 16px;
+      }
+
+      .quiz-option:hover {
+        border-color: #667eea;
+        background: #f0f4ff;
+      }
+
+      .quiz-option.selected {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+      }
+
+      .quiz-option.correct {
+        border-color: #4caf50;
+        background: #e8f5e9;
+        color: #2e7d32;
+      }
+
+      .quiz-option.incorrect {
+        border-color: #f44336;
+        background: #ffebee;
+        color: #c62828;
+      }
+
+      .quiz-actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .btn-next {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 15px 50px;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-next:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-next:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      /* Results */
+      .quiz-results {
+        text-align: center;
+      }
+
+      .results-icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+      }
+
+      .results-score {
+        font-size: 48px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+      }
+
+      .results-message {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .results-xp {
+        font-size: 32px;
+        color: #4caf50;
+        font-weight: 700;
+        margin-bottom: 30px;
+      }
+
+      .results-achievements {
+        margin: 20px 0;
+        padding: 20px;
+        background: #fff8e1;
+        border-radius: 15px;
+      }
+
+      .achievement-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: white;
+        padding: 10px 20px;
+        border-radius: 30px;
+        margin: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      @media (max-width: 768px) {
+        .quiz-card {
+          padding: 25px;
+        }
+
+        .quiz-question {
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="dashboard.html" class="logo">BayQadam</a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kk">KZ</button>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul>
+            <li><a href="dashboard.html" data-i18n="dashboard">Дашборд</a></li>
+            <li>
+              <a href="transactions.html" data-i18n="transactions"
+                >Транзакции</a
+              >
+            </li>
+            <li><a href="goals.html" data-i18n="goals">Цели</a></li>
+            <li>
+              <a href="learning.html" data-i18n="learning" class="active"
+                >Обучение</a
+              >
+            </li>
+            <li><a href="profile.html" data-i18n="profile">Профиль</a></li>
+            <li><a href="#" onclick="logout()" data-i18n="logout">Выйти</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="quiz-container">
+        <div class="quiz-header">
+          <h1>📝 <span data-i18n="quiz">Квиз</span></h1>
+          <div class="quiz-progress">
+            <div
+              class="quiz-progress-fill"
+              id="progressBar"
+              style="width: 0%"
+            ></div>
+          </div>
+          <div class="quiz-question-number" id="questionNumber">
+            Вопрос 1 из 3
+          </div>
+        </div>
+
+        <div class="quiz-card" id="quizCard">
+          <p style="text-align: center; color: #999">Загрузка...</p>
+        </div>
+
+        <div class="quiz-actions" id="quizActions"></div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 BayQadam.
+          <span data-i18n="allRights">Все права защищены.</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      let quizData = null;
+      let currentQuestion = 0;
+      let userAnswers = [];
+      let lessonId = null;
+
+      async function init() {
+        const user = await requireAuth();
+        if (!user) return;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        lessonId = urlParams.get("lesson");
+
+        if (!lessonId) {
+          window.location.href = "learning.html";
+          return;
+        }
+
+        await loadQuiz();
+      }
+
+      async function loadQuiz() {
+        try {
+          quizData = await apiFetch(`/api/learning/lessons/${lessonId}/quiz`);
+          userAnswers = new Array(quizData.questions.length).fill(-1);
+          showQuestion(0);
+        } catch (error) {
+          document.getElementById("quizCard").innerHTML =
+            `<p style="color: #c33; text-align: center;">Ошибка: ${error.message}</p>`;
+        }
+      }
+
+      function showQuestion(index) {
+        const lang = localStorage.getItem("language") || "ru";
+        const q = quizData.questions[index];
+
+        const question =
+          lang === "en"
+            ? q.question_en
+            : lang === "kk"
+              ? q.question_kk
+              : q.question;
+        const options =
+          lang === "en"
+            ? q.options_en
+            : lang === "kk"
+              ? q.options_kk
+              : q.options;
+
+        // Update progress
+        const progress = ((index + 1) / quizData.total_questions) * 100;
+        document.getElementById("progressBar").style.width = progress + "%";
+        document.getElementById("questionNumber").textContent =
+          `Вопрос ${index + 1} из ${quizData.total_questions}`;
+
+        // Show question
+        let html = `
+                <div class="quiz-question">${question}</div>
+                <div class="quiz-options">
+            `;
+
+        options.forEach((opt, i) => {
+          const selected = userAnswers[index] === i ? "selected" : "";
+          html += `
+                    <div class="quiz-option ${selected}" onclick="selectOption(${i})" data-index="${i}">
+                        ${opt}
+                    </div>
+                `;
+        });
+
+        html += "</div>";
+        document.getElementById("quizCard").innerHTML = html;
+
+        // Actions
+        const isLast = index === quizData.total_questions - 1;
+        const hasAnswer = userAnswers[index] !== -1;
+
+        let actionsHtml = "";
+
+        if (index > 0) {
+          actionsHtml += `<button class="btn-next" onclick="prevQuestion()" style="background: #999;">← Назад</button>`;
+        }
+
+        if (isLast) {
+          actionsHtml += `<button class="btn-next" onclick="submitQuiz()" id="submitBtn" ${hasAnswer ? "" : "disabled"}>Завершить ✓</button>`;
+        } else {
+          actionsHtml += `<button class="btn-next" onclick="nextQuestion()" id="nextBtn" ${hasAnswer ? "" : "disabled"}>Далее →</button>`;
+        }
+
+        document.getElementById("quizActions").innerHTML = actionsHtml;
+      }
+
+      function selectOption(index) {
+        userAnswers[currentQuestion] = index;
+
+        // Update UI
+        document.querySelectorAll(".quiz-option").forEach((opt, i) => {
+          opt.classList.toggle("selected", i === index);
+        });
+
+        // Enable next/submit button
+        const btn =
+          document.getElementById("nextBtn") ||
+          document.getElementById("submitBtn");
+        if (btn) btn.disabled = false;
+      }
+
+      function nextQuestion() {
+        if (currentQuestion < quizData.total_questions - 1) {
+          currentQuestion++;
+          showQuestion(currentQuestion);
+        }
+      }
+
+      function prevQuestion() {
+        if (currentQuestion > 0) {
+          currentQuestion--;
+          showQuestion(currentQuestion);
+        }
+      }
+
+      async function submitQuiz() {
+        const btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        btn.textContent = "⏳ Проверка...";
+
+        try {
+          const result = await apiFetch(
+            `/api/learning/lessons/${lessonId}/quiz/submit`,
+            {
+              method: "POST",
+              body: JSON.stringify({ answers: userAnswers }),
+            },
+          );
+
+          showResults(result);
+        } catch (error) {
+          alert("Ошибка: " + error.message);
+          btn.disabled = false;
+          btn.textContent = "Завершить ✓";
+        }
+      }
+
+      function showResults(result) {
+        const passed = result.passed;
+        const icon = passed ? "🎉" : "😔";
+        const message = passed ? "Квиз пройден!" : "Попробуй ещё раз!";
+
+        let achievementsHtml = "";
+        if (result.new_achievements && result.new_achievements.length > 0) {
+          achievementsHtml = `
+                    <div class="results-achievements">
+                        <h3>🏆 Новые достижения!</h3>
+                        ${result.new_achievements
+                          .map(
+                            (a) => `
+                            <span class="achievement-badge">${a}</span>
+                        `,
+                          )
+                          .join("")}
+                    </div>
+                `;
+        }
+
+        let streakHtml = "";
+        if (result.streak > 1) {
+          streakHtml = `<p style="color: #ff9800; font-weight: bold;">🔥 ${result.streak} дней подряд!</p>`;
+        }
+
+        document.getElementById("quizCard").innerHTML = `
+                <div class="quiz-results">
+                    <div class="results-icon">${icon}</div>
+                    <div class="results-score">${result.correct}/${result.total}</div>
+                    <div class="results-message">${message}</div>
+                    ${passed ? `<div class="results-xp">+${result.xp_earned} XP</div>` : ""}
+                    ${achievementsHtml}
+                    ${streakHtml}
+                </div>
+            `;
+
+        let actionsHtml = "";
+        if (!passed) {
+          actionsHtml += `<button class="btn-next" onclick="retryQuiz()">🔄 Попробовать снова</button>`;
+        }
+        actionsHtml += `<a href="learning.html" class="btn-next" style="text-decoration: none; display: inline-block;">К урокам</a>`;
+
+        document.getElementById("quizActions").innerHTML = actionsHtml;
+        document.getElementById("questionNumber").textContent = "Результаты";
+        document.getElementById("progressBar").style.width = "100%";
+      }
+
+      function retryQuiz() {
+        currentQuestion = 0;
+        userAnswers = new Array(quizData.questions.length).fill(-1);
+        showQuestion(0);
+      }
+
+      init();
+    </script>
+  </body>
+</html>

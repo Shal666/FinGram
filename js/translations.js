@@ -1,5 +1,3 @@
-
-
 const translations = {
   en: {
     // Navigation
@@ -13,13 +11,23 @@ const translations = {
     debts: "Debts",
     profile: "Profile",
     logout: "Logout",
-    
+
     // Hero Section
     heroTitle: "Learn to Manage Money and Do It Right",
-    heroSubtitle: "Local service for Kazakhstan: budget, goals, loans, interactive lessons and gamification.",
+    heroSubtitle:
+      "Local service for Kazakhstan: budget, goals, loans, interactive lessons and gamification.",
     getStarted: "Get Started Free",
     tryNow: "Try Now",
-    
+
+    // В объект translations добавь:
+    learning: "Обучение",
+    quiz: "Квиз",
+    yourProgress: "Ваш прогресс",
+    lessonsCompleted: "Уроков",
+    dayStreak: "дней подряд",
+    financialLessons: "Уроки финансовой грамотности",
+    backToLessons: "Назад к урокам",
+
     // Auth
     login: "Login",
     register: "Register",
@@ -36,7 +44,7 @@ const translations = {
     alreadyHaveAccount: "Already have an account?",
     noAccount: "Don't have an account?",
     backToHome: "← Back to Home",
-    
+
     // Profile
     myProfile: "My Profile",
     saveChanges: "Save Changes",
@@ -45,7 +53,7 @@ const translations = {
     accountInfo: "Account Information",
     registeredSince: "Registered Since",
     role: "Role",
-    
+
     // Dashboard
     welcomeBack: "Welcome Back!",
     monthlyIncome: "Monthly Income",
@@ -59,7 +67,7 @@ const translations = {
     addTransaction: "Add Transaction",
     addGoal: "Add Goal",
     addDebt: "Add Debt",
-    
+
     // Transactions
     myTransactions: "My Transactions",
     filterByType: "Type",
@@ -76,7 +84,7 @@ const translations = {
     loading: "Loading...",
     noTransactions: "No transactions yet",
     add: "Add",
-    
+
     // Goals
     myGoals: "My Financial Goals",
     addFirstGoal: "Add your first financial goal!",
@@ -87,7 +95,7 @@ const translations = {
     editGoal: "Edit Goal",
     completed: "completed",
     paid: "paid",
-    
+
     // Debts
     myDebts: "My Debts & Credits",
     totalDebt: "Total Debt",
@@ -105,7 +113,7 @@ const translations = {
     monthlyPayment: "Monthly Payment",
     interestRate: "Interest Rate (%)",
     editDebt: "Edit Debt",
-    
+
     // Calculator
     calcTitle: "Financial Calculator",
     calcSubtitle: "Find out how much you can save and improve your finances 💰",
@@ -115,7 +123,7 @@ const translations = {
     calculate: "Calculate",
     result: "Result",
     newCalculation: "New Calculation",
-    
+
     // Credit Calculator
     creditTitle: "Credit Calculator",
     loanAmount: "Loan Amount",
@@ -123,14 +131,14 @@ const translations = {
     months: "months",
     totalPayment: "Total Payment",
     overpayment: "Overpayment",
-    
+
     // Footer
     allRights: "All rights reserved.",
-    
+
     // Video
     videoTitle: "Financial Literacy Video Lessons",
     videoSubtitle: "Learn financial management from experts",
-    
+
     // Advantages
     advantagesTitle: "Why Choose BayQadam?",
     adv1Title: "Smart Budgeting",
@@ -141,11 +149,11 @@ const translations = {
     adv3Text: "Manage your debts and credits",
     adv4Title: "Video Lessons",
     adv4Text: "Learn from financial experts",
-    
+
     // Contact
     contactTitle: "Contact Us",
     contactSubtitle: "We're here to help you",
-    
+
     // Pricing
     pricingTitle: "Choose Your Plan",
     basic: "Basic",
@@ -153,9 +161,9 @@ const translations = {
     vip: "VIP",
     free: "Free",
     perMonth: "per month",
-    choosePlan: "Choose Plan"
+    choosePlan: "Choose Plan",
   },
-  
+
   ru: {
     // Navigation
     home: "Главная",
@@ -168,13 +176,14 @@ const translations = {
     debts: "Долги",
     profile: "Профиль",
     logout: "Выйти",
-    
+
     // Hero Section
     heroTitle: "Научись управлять деньгами правильно",
-    heroSubtitle: "Локальный сервис для Казахстана: бюджет, цели, займы, интерактивные уроки и геймификация.",
+    heroSubtitle:
+      "Локальный сервис для Казахстана: бюджет, цели, займы, интерактивные уроки и геймификация.",
     getStarted: "Начать бесплатно",
     tryNow: "Попробовать",
-    
+
     // Auth
     login: "Войти",
     register: "Регистрация",
@@ -191,7 +200,7 @@ const translations = {
     alreadyHaveAccount: "Уже есть аккаунт?",
     noAccount: "Нет аккаунта?",
     backToHome: "← Вернуться на главную",
-    
+
     // Profile
     myProfile: "Мой профиль",
     saveChanges: "Сохранить изменения",
@@ -200,7 +209,7 @@ const translations = {
     accountInfo: "Информация об аккаунте",
     registeredSince: "Зарегистрирован",
     role: "Роль",
-    
+
     // Dashboard
     welcomeBack: "Добро пожаловать!",
     monthlyIncome: "Доходы за месяц",
@@ -214,7 +223,7 @@ const translations = {
     addTransaction: "Добавить транзакцию",
     addGoal: "Добавить цель",
     addDebt: "Добавить долг",
-    
+
     // Transactions
     myTransactions: "Мои транзакции",
     filterByType: "Тип",
@@ -231,7 +240,7 @@ const translations = {
     loading: "Загрузка...",
     noTransactions: "Транзакций пока нет",
     add: "Добавить",
-    
+
     // Goals
     myGoals: "Мои финансовые цели",
     addFirstGoal: "Добавьте свою первую финансовую цель!",
@@ -242,7 +251,7 @@ const translations = {
     editGoal: "Редактировать цель",
     completed: "завершено",
     paid: "выплачено",
-    
+
     // Debts
     myDebts: "Мои долги и кредиты",
     totalDebt: "Общий долг",
@@ -260,7 +269,7 @@ const translations = {
     monthlyPayment: "Ежемесячный платеж",
     interestRate: "Процентная ставка (%)",
     editDebt: "Редактировать долг",
-    
+
     // Calculator
     calcTitle: "Финансовый калькулятор",
     calcSubtitle: "Узнайте сколько можете накопить и улучшите финансы 💰",
@@ -270,7 +279,7 @@ const translations = {
     calculate: "Рассчитать",
     result: "Результат",
     newCalculation: "Новый расчет",
-    
+
     // Credit Calculator
     creditTitle: "Кредитный калькулятор",
     loanAmount: "Сумма кредита",
@@ -278,14 +287,14 @@ const translations = {
     months: "месяцев",
     totalPayment: "Общая выплата",
     overpayment: "Переплата",
-    
+
     // Footer
     allRights: "Все права защищены.",
-    
+
     // Video
     videoTitle: "Видео уроки финансовой грамотности",
     videoSubtitle: "Учитесь управлению финансами у экспертов",
-    
+
     // Advantages
     advantagesTitle: "Почему BayQadam?",
     adv1Title: "Умный бюджет",
@@ -296,11 +305,11 @@ const translations = {
     adv3Text: "Управляйте долгами и кредитами",
     adv4Title: "Видео уроки",
     adv4Text: "Учитесь у финансовых экспертов",
-    
+
     // Contact
     contactTitle: "Свяжитесь с нами",
     contactSubtitle: "Мы здесь, чтобы помочь вам",
-    
+
     // Pricing
     pricingTitle: "Выберите тариф",
     basic: "Базовый",
@@ -308,9 +317,9 @@ const translations = {
     vip: "VIP",
     free: "Бесплатно",
     perMonth: "в месяц",
-    choosePlan: "Выбрать план"
+    choosePlan: "Выбрать план",
   },
-  
+
   kk: {
     // Navigation
     home: "Басты бет",
@@ -323,13 +332,14 @@ const translations = {
     debts: "Қарыздар",
     profile: "Профиль",
     logout: "Шығу",
-    
+
     // Hero Section
     heroTitle: "Ақшаны дұрыс басқаруды үйреніңіз",
-    heroSubtitle: "Қазақстан үшін жергілікті қызмет: бюджет, мақсаттар, несиелер, интерактивті сабақтар және геймификация.",
+    heroSubtitle:
+      "Қазақстан үшін жергілікті қызмет: бюджет, мақсаттар, несиелер, интерактивті сабақтар және геймификация.",
     getStarted: "Тегін бастау",
     tryNow: "Қазір сынап көріңіз",
-    
+
     // Auth
     login: "Кіру",
     register: "Тіркелу",
@@ -346,7 +356,7 @@ const translations = {
     alreadyHaveAccount: "Есептік жазба бар ма?",
     noAccount: "Есептік жазба жоқ па?",
     backToHome: "← Басты бетке оралу",
-    
+
     // Profile
     myProfile: "Менің профилім",
     saveChanges: "Өзгерістерді сақтау",
@@ -355,7 +365,7 @@ const translations = {
     accountInfo: "Есептік жазба ақпараты",
     registeredSince: "Тіркелген күні",
     role: "Рөлі",
-    
+
     // Dashboard
     welcomeBack: "Қош келдіңіз!",
     monthlyIncome: "Айлық табыс",
@@ -369,7 +379,7 @@ const translations = {
     addTransaction: "Транзакция қосу",
     addGoal: "Мақсат қосу",
     addDebt: "Қарыз қосу",
-    
+
     // Transactions
     myTransactions: "Менің транзакцияларым",
     filterByType: "Түрі",
@@ -386,7 +396,7 @@ const translations = {
     loading: "Жүктелуде...",
     noTransactions: "Транзакциялар әлі жоқ",
     add: "Қосу",
-    
+
     // Goals
     myGoals: "Менің қаржылық мақсаттарым",
     addFirstGoal: "Алғашқы қаржылық мақсатты қосыңыз!",
@@ -397,7 +407,7 @@ const translations = {
     editGoal: "Мақсатты өңдеу",
     completed: "аяқталды",
     paid: "төленді",
-    
+
     // Debts
     myDebts: "Менің қарыздарым мен несиелерім",
     totalDebt: "Жалпы қарыз",
@@ -415,7 +425,7 @@ const translations = {
     monthlyPayment: "Айлық төлем",
     interestRate: "Пайыз мөлшері (%)",
     editDebt: "Қарызды өңдеу",
-    
+
     // Calculator
     calcTitle: "Қаржылық калькулятор",
     calcSubtitle: "Қанша жинай алатыныңызды біліп, қаржыңызды жақсартыңыз 💰",
@@ -425,7 +435,7 @@ const translations = {
     calculate: "Есептеу",
     result: "Нәтиже",
     newCalculation: "Жаңа есептеу",
-    
+
     // Credit Calculator
     creditTitle: "Несие калькуляторы",
     loanAmount: "Несие сомасы",
@@ -433,14 +443,14 @@ const translations = {
     months: "ай",
     totalPayment: "Жалпы төлем",
     overpayment: "Артық төлем",
-    
+
     // Footer
     allRights: "Барлық құқықтар қорғалған.",
-    
+
     // Video
     videoTitle: "Қаржылық сауаттылық бейне сабақтары",
     videoSubtitle: "Сарапшылардан қаржыны басқаруды үйреніңіз",
-    
+
     // Advantages
     advantagesTitle: "Неліктен BayQadam?",
     adv1Title: "Ақылды бюджет",
@@ -451,11 +461,11 @@ const translations = {
     adv3Text: "Қарыздар мен несиелерді басқарыңыз",
     adv4Title: "Бейне сабақтар",
     adv4Text: "Қаржылық сарапшылардан үйреніңіз",
-    
+
     // Contact
     contactTitle: "Бізбен байланысыңыз",
     contactSubtitle: "Біз сізге көмектесуге дайынбыз",
-    
+
     // Pricing
     pricingTitle: "Тарифті таңдаңыз",
     basic: "Базалық",
@@ -463,6 +473,6 @@ const translations = {
     vip: "VIP",
     free: "Тегін",
     perMonth: "айына",
-    choosePlan: "Жоспарды таңдау"
-  }
+    choosePlan: "Жоспарды таңдау",
+  },
 };

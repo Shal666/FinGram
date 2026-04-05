@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Урок — BayQadam</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/advanced.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+    <style>
+      .lesson-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .lesson-header {
+        margin-bottom: 30px;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      .lesson-meta-top {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+      }
+
+      .lesson-badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .badge-category {
+        background: #e3f2fd;
+        color: #1976d2;
+      }
+      .badge-xp {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+      }
+      .badge-completed {
+        background: #e8f5e9;
+        color: #388e3c;
+      }
+
+      .lesson-title {
+        font-size: 32px;
+        font-weight: 900;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .lesson-content {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+      }
+
+      .lesson-content h1 {
+        font-size: 28px;
+        color: #333;
+        margin: 30px 0 20px 0;
+      }
+      .lesson-content h2 {
+        font-size: 22px;
+        color: #667eea;
+        margin: 25px 0 15px 0;
+      }
+      .lesson-content h3 {
+        font-size: 18px;
+        color: #333;
+        margin: 20px 0 10px 0;
+      }
+      .lesson-content p {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 15px;
+      }
+      .lesson-content ul,
+      .lesson-content ol {
+        margin: 15px 0;
+        padding-left: 25px;
+      }
+      .lesson-content li {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 8px;
+      }
+      .lesson-content strong {
+        color: #333;
+      }
+      .lesson-content code {
+        background: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+
+      .lesson-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-complete {
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-complete:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+      }
+
+      .btn-complete:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .btn-quiz {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+      }
+
+      .btn-quiz:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+      }
+
+      .reward-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        transition: transform 0.3s ease;
+      }
+
+      .reward-popup.active {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .reward-popup h2 {
+        color: #4caf50;
+        margin-bottom: 20px;
+      }
+
+      .reward-xp {
+        font-size: 48px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+      }
+
+      .overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      @media (max-width: 768px) {
+        .lesson-content {
+          padding: 25px;
+        }
+
+        .lesson-title {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="dashboard.html" class="logo">BayQadam</a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kk">KZ</button>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul>
+            <li><a href="dashboard.html" data-i18n="dashboard">Дашборд</a></li>
+            <li>
+              <a href="transactions.html" data-i18n="transactions"
+                >Транзакции</a
+              >
+            </li>
+            <li><a href="goals.html" data-i18n="goals">Цели</a></li>
+            <li>
+              <a href="learning.html" data-i18n="learning" class="active"
+                >Обучение</a
+              >
+            </li>
+            <li><a href="profile.html" data-i18n="profile">Профиль</a></li>
+            <li><a href="#" onclick="logout()" data-i18n="logout">Выйти</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="lesson-container">
+        <div class="lesson-header">
+          <a href="learning.html" class="back-link"
+            >← <span data-i18n="backToLessons">Назад к урокам</span></a
+          >
+
+          <div class="lesson-meta-top" id="lessonMeta"></div>
+          <h1 class="lesson-title" id="lessonTitle">Загрузка...</h1>
+        </div>
+
+        <div class="lesson-content" id="lessonContent">
+          <p>Загрузка содержимого...</p>
+        </div>
+
+        <div class="lesson-actions" id="lessonActions"></div>
+      </div>
+    </main>
+
+    <!-- Reward Popup -->
+    <div class="overlay" id="overlay"></div>
+    <div class="reward-popup" id="rewardPopup">
+      <h2>🎉 Отлично!</h2>
+      <div class="reward-xp" id="rewardXP">+50 XP</div>
+      <p id="rewardMessage">Урок пройден!</p>
+      <button class="btn-quiz" onclick="closeReward()" style="margin-top: 20px">
+        Продолжить
+      </button>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 BayQadam.
+          <span data-i18n="allRights">Все права защищены.</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      let currentLesson = null;
+
+      async function init() {
+        const user = await requireAuth();
+        if (!user) return;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const lessonId = urlParams.get("id");
+
+        if (!lessonId) {
+          window.location.href = "learning.html";
+          return;
+        }
+
+        await loadLesson(lessonId);
+      }
+
+      async function loadLesson(lessonId) {
+        const lang = localStorage.getItem("language") || "ru";
+
+        try {
+          currentLesson = await apiFetch(`/api/learning/lessons/${lessonId}`);
+
+          // Title
+          const title =
+            lang === "en"
+              ? currentLesson.title_en
+              : lang === "kk"
+                ? currentLesson.title_kk
+                : currentLesson.title;
+          document.getElementById("lessonTitle").textContent = title;
+          document.title = `${title} — BayQadam`;
+
+          // Meta badges
+          const metaHtml = `
+                    <span class="lesson-badge badge-category">${currentLesson.category}</span>
+                    <span class="lesson-badge badge-xp">+${currentLesson.xp_reward} XP</span>
+                    ${currentLesson.is_completed ? '<span class="lesson-badge badge-completed">✓ Пройден</span>' : ""}
+                `;
+          document.getElementById("lessonMeta").innerHTML = metaHtml;
+
+          // Content (convert markdown-like to HTML)
+          const content =
+            lang === "en"
+              ? currentLesson.content_en
+              : lang === "kk"
+                ? currentLesson.content_kk
+                : currentLesson.content;
+          document.getElementById("lessonContent").innerHTML =
+            formatContent(content);
+
+          // Actions
+          let actionsHtml = "";
+
+          if (!currentLesson.is_completed) {
+            actionsHtml += `
+                        <button class="btn-complete" onclick="completeLesson()" id="completeBtn">
+                            ✓ Завершить урок
+                        </button>
+                    `;
+          }
+
+          if (currentLesson.has_quiz) {
+            actionsHtml += `
+                        <a href="quiz.html?lesson=${currentLesson.id}" class="btn-quiz">
+                            📝 Пройти квиз
+                        </a>
+                    `;
+          }
+
+          if (currentLesson.is_completed && !currentLesson.has_quiz) {
+            actionsHtml += `
+                        <a href="learning.html" class="btn-quiz">
+                            ← К урокам
+                        </a>
+                    `;
+          }
+
+          document.getElementById("lessonActions").innerHTML = actionsHtml;
+        } catch (error) {
+          document.getElementById("lessonContent").innerHTML =
+            `<p style="color: #c33;">Ошибка загрузки: ${error.message}</p>`;
+        }
+      }
+
+      function formatContent(text) {
+        if (!text) return "";
+
+        // Simple markdown-like formatting
+        let html = text
+          .replace(/^### (.+)$/gm, "<h3>$1</h3>")
+          .replace(/^## (.+)$/gm, "<h2>$1</h2>")
+          .replace(/^# (.+)$/gm, "<h1>$1</h1>")
+          .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+          .replace(/^- (.+)$/gm, "<li>$1</li>")
+          .replace(/^(\d+)\. (.+)$/gm, "<li>$2</li>")
+          .replace(/✅/g, '<span style="color: #4caf50;">✅</span>')
+          .replace(/❌/g, '<span style="color: #f44336;">❌</span>');
+
+        // Wrap consecutive <li> in <ul>
+        html = html.replace(/(<li>.*?<\/li>\n?)+/g, "<ul>$&</ul>");
+
+        // Paragraphs
+        html = html
+          .split("\n\n")
+          .map((p) => {
+            if (
+              p.startsWith("<h") ||
+              p.startsWith("<ul") ||
+              p.startsWith("<ol")
+            ) {
+              return p;
+            }
+            return `<p>${p}</p>`;
+          })
+          .join("");
+
+        return html;
+      }
+
+      async function completeLesson() {
+        const btn = document.getElementById("completeBtn");
+        btn.disabled = true;
+        btn.textContent = "⏳ Сохранение...";
+
+        try {
+          const result = await apiFetch(
+            `/api/learning/lessons/${currentLesson.id}/complete`,
+            {
+              method: "POST",
+            },
+          );
+
+          // Show reward popup
+          document.getElementById("rewardXP").textContent =
+            `+${result.xp_earned} XP`;
+
+          let message = "Урок пройден!";
+          if (result.new_achievements && result.new_achievements.length > 0) {
+            message += " 🏆 Новое достижение!";
+          }
+          if (result.streak > 1) {
+            message += ` 🔥 ${result.streak} дней подряд!`;
+          }
+          document.getElementById("rewardMessage").textContent = message;
+
+          document.getElementById("overlay").classList.add("active");
+          document.getElementById("rewardPopup").classList.add("active");
+
+          // Update button
+          btn.textContent = "✓ Пройден";
+          btn.style.background = "#4caf50";
+        } catch (error) {
+          alert("Ошибка: " + error.message);
+          btn.disabled = false;
+          btn.textContent = "✓ Завершить урок";
+        }
+      }
+
+      function closeReward() {
+        document.getElementById("overlay").classList.remove("active");
+        document.getElementById("rewardPopup").classList.remove("active");
+
+        if (currentLesson.has_quiz) {
+          window.location.href = `quiz.html?lesson=${currentLesson.id}`;
+        } else {
+          window.location.href = "learning.html";
+        }
+      }
+
+      init();
+    </script>
+  </body>
+</html>

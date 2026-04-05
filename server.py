@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import os
 
+from backend.routes.learning import router as learning_router
 from backend.utils.db import init_indexes
 from backend.routes.auth import router as auth_router, seed_admin
 from backend.routes.transactions import router as transactions_router
@@ -70,6 +71,7 @@ app.include_router(auth_router)
 app.include_router(transactions_router)
 app.include_router(goals_router)
 app.include_router(debts_router)
+app.include_router(learning_router)
 
 if __name__ == "__main__":
     import uvicorn

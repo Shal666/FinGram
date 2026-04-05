@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Обучение — BayQadam</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/advanced.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+    <style>
+      .lessons-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .progress-banner {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 30px;
+        color: white;
+        margin-bottom: 40px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .progress-info h2 {
+        margin: 0 0 10px 0;
+        font-size: 28px;
+      }
+
+      .progress-stats {
+        display: flex;
+        gap: 30px;
+        margin-top: 15px;
+      }
+
+      .progress-stat {
+        text-align: center;
+      }
+
+      .progress-stat-value {
+        font-size: 32px;
+        font-weight: 900;
+      }
+
+      .progress-stat-label {
+        font-size: 14px;
+        opacity: 0.9;
+      }
+
+      .xp-bar-container {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        height: 20px;
+        margin-top: 15px;
+        overflow: hidden;
+      }
+
+      .xp-bar-fill {
+        background: #ffd700;
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.5s ease;
+      }
+
+      .xp-text {
+        font-size: 14px;
+        margin-top: 8px;
+      }
+
+      .streak-badge {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        padding: 20px 30px;
+        text-align: center;
+      }
+
+      .streak-icon {
+        font-size: 40px;
+      }
+
+      .streak-count {
+        font-size: 36px;
+        font-weight: 900;
+      }
+
+      .streak-label {
+        font-size: 14px;
+      }
+
+      .lessons-section {
+        margin-bottom: 40px;
+      }
+
+      .lessons-section h2 {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .lessons-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 20px;
+      }
+
+      .lesson-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .lesson-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        border-color: #667eea;
+      }
+
+      .lesson-card.completed {
+        border-color: #4caf50;
+      }
+
+      .lesson-card.completed::before {
+        content: "✓";
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #4caf50;
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .lesson-category {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+      }
+
+      .category-basics {
+        background: #e3f2fd;
+        color: #1976d2;
+      }
+      .category-saving {
+        background: #e8f5e9;
+        color: #388e3c;
+      }
+      .category-credit {
+        background: #fff3e0;
+        color: #f57c00;
+      }
+      .category-goals {
+        background: #f3e5f5;
+        color: #7b1fa2;
+      }
+      .category-investing {
+        background: #fce4ec;
+        color: #c2185b;
+      }
+
+      .lesson-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .lesson-description {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+      }
+
+      .lesson-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+      }
+
+      .lesson-difficulty {
+        font-size: 13px;
+        color: #999;
+      }
+
+      .lesson-xp {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .difficulty-beginner {
+        color: #4caf50;
+      }
+      .difficulty-intermediate {
+        color: #ff9800;
+      }
+      .difficulty-advanced {
+        color: #f44336;
+      }
+
+      @media (max-width: 768px) {
+        .progress-banner {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .progress-stats {
+          justify-content: center;
+        }
+
+        .lessons-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="dashboard.html" class="logo">BayQadam</a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kk">KZ</button>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul>
+            <li><a href="dashboard.html" data-i18n="dashboard">Дашборд</a></li>
+            <li>
+              <a href="transactions.html" data-i18n="transactions"
+                >Транзакции</a
+              >
+            </li>
+            <li><a href="goals.html" data-i18n="goals">Цели</a></li>
+            <li>
+              <a href="learning.html" data-i18n="learning" class="active"
+                >Обучение</a
+              >
+            </li>
+            <li><a href="profile.html" data-i18n="profile">Профиль</a></li>
+            <li><a href="#" onclick="logout()" data-i18n="logout">Выйти</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="lessons-container">
+        <!-- Progress Banner -->
+        <div class="progress-banner" id="progressBanner">
+          <div class="progress-info">
+            <h2>🎓 <span data-i18n="yourProgress">Ваш прогресс</span></h2>
+            <div class="progress-stats">
+              <div class="progress-stat">
+                <div class="progress-stat-value" id="userLevel">1</div>
+                <div class="progress-stat-label" id="levelName">Новичок</div>
+              </div>
+              <div class="progress-stat">
+                <div class="progress-stat-value" id="userXP">0</div>
+                <div class="progress-stat-label">XP</div>
+              </div>
+              <div class="progress-stat">
+                <div class="progress-stat-value" id="lessonsCompleted">0/5</div>
+                <div class="progress-stat-label" data-i18n="lessonsCompleted">
+                  Уроков
+                </div>
+              </div>
+            </div>
+            <div class="xp-bar-container">
+              <div class="xp-bar-fill" id="xpBar" style="width: 0%"></div>
+            </div>
+            <div class="xp-text" id="xpText">
+              0 / 500 XP до следующего уровня
+            </div>
+          </div>
+          <div class="streak-badge">
+            <div class="streak-icon">🔥</div>
+            <div class="streak-count" id="streakCount">0</div>
+            <div class="streak-label" data-i18n="dayStreak">дней подряд</div>
+          </div>
+        </div>
+
+        <!-- Lessons -->
+        <div class="lessons-section">
+          <h2>
+            📚
+            <span data-i18n="financialLessons"
+              >Уроки финансовой грамотности</span
+            >
+          </h2>
+          <div class="lessons-grid" id="lessonsGrid">
+            <p style="text-align: center; color: #999">Загрузка...</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 BayQadam.
+          <span data-i18n="allRights">Все права защищены.</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      let userProgress = null;
+
+      const categoryNames = {
+        basics: { ru: "Основы", en: "Basics", kk: "Негіздер" },
+        saving: { ru: "Сбережения", en: "Saving", kk: "Жинақ" },
+        credit: { ru: "Кредиты", en: "Credit", kk: "Несие" },
+        goals: { ru: "Цели", en: "Goals", kk: "Мақсаттар" },
+        investing: { ru: "Инвестиции", en: "Investing", kk: "Инвестициялар" },
+      };
+
+      const difficultyNames = {
+        beginner: { ru: "Начинающий", en: "Beginner", kk: "Бастаушы" },
+        intermediate: { ru: "Средний", en: "Intermediate", kk: "Орташа" },
+        advanced: { ru: "Продвинутый", en: "Advanced", kk: "Жоғары" },
+      };
+
+      async function init() {
+        const user = await requireAuth();
+        if (!user) return;
+
+        // Do daily check-in
+        try {
+          await apiFetch("/api/learning/daily-checkin", { method: "POST" });
+        } catch (e) {
+          console.log("Check-in:", e.message);
+        }
+
+        await loadProgress();
+        await loadLessons();
+      }
+
+      async function loadProgress() {
+        try {
+          userProgress = await apiFetch("/api/learning/progress");
+          const lang = localStorage.getItem("language") || "ru";
+
+          document.getElementById("userLevel").textContent = userProgress.level;
+          document.getElementById("levelName").textContent =
+            lang === "en"
+              ? userProgress.level_name_en
+              : lang === "kk"
+                ? userProgress.level_name_kk
+                : userProgress.level_name;
+          document.getElementById("userXP").textContent = userProgress.xp;
+          document.getElementById("lessonsCompleted").textContent =
+            `${userProgress.total_lessons_completed}/${userProgress.total_lessons}`;
+          document.getElementById("streakCount").textContent =
+            userProgress.current_streak;
+
+          // XP bar
+          if (userProgress.next_level_xp) {
+            const currentLevelXP =
+              [0, 500, 1500, 3000, 5000][userProgress.level - 1] || 0;
+            const xpInLevel = userProgress.xp - currentLevelXP;
+            const xpNeeded = userProgress.next_level_xp - currentLevelXP;
+            const percent = Math.min((xpInLevel / xpNeeded) * 100, 100);
+
+            document.getElementById("xpBar").style.width = percent + "%";
+            document.getElementById("xpText").textContent =
+              `${userProgress.xp} / ${userProgress.next_level_xp} XP`;
+          } else {
+            document.getElementById("xpBar").style.width = "100%";
+            document.getElementById("xpText").textContent =
+              "Максимальный уровень! 🏆";
+          }
+        } catch (error) {
+          console.error("Error loading progress:", error);
+        }
+      }
+
+      async function loadLessons() {
+        const grid = document.getElementById("lessonsGrid");
+        const lang = localStorage.getItem("language") || "ru";
+
+        try {
+          const lessons = await apiFetch("/api/learning/lessons");
+
+          if (lessons.length === 0) {
+            grid.innerHTML =
+              '<p style="text-align: center; color: #999;">Уроки скоро появятся!</p>';
+            return;
+          }
+
+          grid.innerHTML = lessons
+            .map((lesson) => {
+              const title =
+                lang === "en"
+                  ? lesson.title_en
+                  : lang === "kk"
+                    ? lesson.title_kk
+                    : lesson.title;
+              const desc =
+                lang === "en"
+                  ? lesson.description_en
+                  : lang === "kk"
+                    ? lesson.description_kk
+                    : lesson.description;
+              const catName =
+                categoryNames[lesson.category]?.[lang] || lesson.category;
+              const diffName =
+                difficultyNames[lesson.difficulty]?.[lang] || lesson.difficulty;
+
+              return `
+                        <div class="lesson-card ${lesson.is_completed ? "completed" : ""}" 
+                             onclick="openLesson('${lesson.id}')">
+                            <span class="lesson-category category-${lesson.category}">${catName}</span>
+                            <h3 class="lesson-title">${title}</h3>
+                            <p class="lesson-description">${desc}</p>
+                            <div class="lesson-meta">
+                                <span class="lesson-difficulty difficulty-${lesson.difficulty}">${diffName}</span>
+                                <span class="lesson-xp">+${lesson.xp_reward} XP</span>
+                            </div>
+                        </div>
+                    `;
+            })
+            .join("");
+        } catch (error) {
+          grid.innerHTML = `<p style="text-align: center; color: #c33;">Ошибка: ${error.message}</p>`;
+        }
+      }
+
+      function openLesson(lessonId) {
+        window.location.href = `lesson.html?id=${lessonId}`;
+      }
+
+      init();
+    </script>
+  </body>
+</html>

@@ -8,6 +8,282 @@
     <link rel="stylesheet" href="css/advanced.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="stylesheet" href="css/forms.css" />
+    <style>
+      .profile-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .profile-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 25px;
+        padding: 40px;
+        color: white;
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .profile-header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+        animation: pulse 4s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 0.3;
+        }
+      }
+
+      .profile-avatar {
+        width: 100px;
+        height: 100px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        font-weight: 900;
+        color: #667eea;
+        margin: 0 auto 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .profile-name {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .profile-email {
+        opacity: 0.9;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .profile-level-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 18px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .level-icon {
+        font-size: 24px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      .stat-card-icon {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+
+      .stat-card-value {
+        font-size: 32px;
+        font-weight: 900;
+        color: #333;
+      }
+
+      .stat-card-label {
+        color: #999;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .section-title {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .xp-section {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+      }
+
+      .xp-bar-container {
+        background: #e0e0e0;
+        border-radius: 10px;
+        height: 25px;
+        overflow: hidden;
+        margin: 15px 0;
+      }
+
+      .xp-bar-fill {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.5s ease;
+      }
+
+      .xp-text {
+        display: flex;
+        justify-content: space-between;
+        color: #666;
+        font-size: 14px;
+      }
+
+      .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 15px;
+      }
+
+      .achievement-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s;
+      }
+
+      .achievement-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .achievement-card.locked {
+        opacity: 0.5;
+        filter: grayscale(1);
+      }
+
+      .achievement-icon {
+        font-size: 40px;
+        width: 60px;
+        height: 60px;
+        background: #f5f5f5;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .achievement-card:not(.locked) .achievement-icon {
+        background: linear-gradient(135deg, #fff8e1, #ffecb3);
+      }
+
+      .achievement-info h4 {
+        margin: 0 0 5px 0;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .achievement-info p {
+        margin: 0;
+        font-size: 13px;
+        color: #999;
+      }
+
+      .profile-actions {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      .action-btn {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-bottom: 10px;
+        text-align: left;
+      }
+
+      .action-btn:last-child {
+        margin-bottom: 0;
+      }
+
+      .action-btn-primary {
+        background: #f5f5f5;
+        color: #333;
+      }
+
+      .action-btn-primary:hover {
+        background: #e0e0e0;
+      }
+
+      .action-btn-danger {
+        background: #ffebee;
+        color: #c62828;
+      }
+
+      .action-btn-danger:hover {
+        background: #ffcdd2;
+      }
+
+      @media (max-width: 768px) {
+        .profile-header {
+          padding: 30px 20px;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .achievements-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
   </head>
   <body>
     <header class="site-header">
@@ -21,9 +297,7 @@
         </div>
 
         <button class="burger" id="burger" aria-label="Toggle menu">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </button>
 
         <nav class="nav" id="nav">
@@ -35,8 +309,12 @@
               >
             </li>
             <li><a href="goals.html" data-i18n="goals">Цели</a></li>
-            <li><a href="debts.html" data-i18n="debts">Долги</a></li>
-            <li><a href="profile.html" data-i18n="profile">Профиль</a></li>
+            <li><a href="learning.html" data-i18n="learning">Обучение</a></li>
+            <li>
+              <a href="profile.html" data-i18n="profile" class="active"
+                >Профиль</a
+              >
+            </li>
             <li><a href="#" onclick="logout()" data-i18n="logout">Выйти</a></li>
           </ul>
         </nav>
@@ -44,107 +322,83 @@
     </header>
 
     <main>
-      <div class="dashboard-container" style="max-width: 800px">
-        <div class="dashboard-header">
-          <h1 data-i18n="myProfile">Мой профиль</h1>
+      <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="profile-avatar" id="profileAvatar">A</div>
+          <div class="profile-name" id="profileName">Загрузка...</div>
+          <div class="profile-email" id="profileEmail">user@example.com</div>
+          <div class="profile-level-badge">
+            <span class="level-icon">⭐</span>
+            <span
+              >Level <span id="profileLevel">1</span> —
+              <span id="profileLevelName">Новичок</span></span
+            >
+          </div>
         </div>
 
-        <div
-          style="
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-          "
-        >
-          <div
-            id="successMessage"
-            class="success-message"
-            style="display: none"
-          ></div>
-          <div
-            id="errorMessage"
-            class="error-message"
-            style="display: none"
-          ></div>
-
-          <form id="profileForm">
-            <div class="form-row">
-              <div class="form-group">
-                <label data-i18n="firstName">Имя</label>
-                <input type="text" id="name" name="name" required />
-              </div>
-              <div class="form-group">
-                <label data-i18n="lastName">Фамилия</label>
-                <input type="text" id="surname" name="surname" required />
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label data-i18n="age">Возраст</label>
-                <input
-                  type="number"
-                  id="age"
-                  name="age"
-                  min="13"
-                  max="120"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label data-i18n="currency">Валюта</label>
-                <select id="currency" name="currency" required>
-                  <option value="KZT">₸ Тенге (KZT)</option>
-                  <option value="RUB">₽ Рубль (RUB)</option>
-                  <option value="USD">$ Доллар (USD)</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label data-i18n="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                disabled
-                style="background: #f0f0f0; cursor: not-allowed"
-              />
-              <small
-                style="color: #999; font-size: 12px"
-                data-i18n="emailCantChange"
-                >Email нельзя изменить</small
-              >
-            </div>
-
-            <div style="display: flex; gap: 15px; margin-top: 30px">
-              <button type="submit" class="btn-primary" id="saveBtn">
-                <span data-i18n="saveChanges">Сохранить изменения</span>
-              </button>
-              <a href="dashboard.html" class="btn-secondary" data-i18n="cancel"
-                >Отмена</a
-              >
-            </div>
-          </form>
-
-          <hr
-            style="margin: 40px 0; border: none; border-top: 2px solid #f0f0f0"
-          />
-
-          <div style="text-align: center">
-            <p style="color: #999; margin-bottom: 15px" data-i18n="accountInfo">
-              Информация об аккаунте
-            </p>
-            <p style="color: #666">
-              <strong data-i18n="registeredSince">Зарегистрирован:</strong>
-              <span id="createdAt">-</span>
-            </p>
-            <p style="color: #666">
-              <strong data-i18n="role">Роль:</strong>
-              <span id="userRole">user</span>
-            </p>
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-icon">⚡</div>
+            <div class="stat-card-value" id="totalXP">0</div>
+            <div class="stat-card-label">Всего XP</div>
           </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">🔥</div>
+            <div class="stat-card-value" id="currentStreak">0</div>
+            <div class="stat-card-label">Дней подряд</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">📚</div>
+            <div class="stat-card-value" id="lessonsCount">0</div>
+            <div class="stat-card-label">Уроков пройдено</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">✅</div>
+            <div class="stat-card-value" id="quizzesCount">0</div>
+            <div class="stat-card-label">Квизов сдано</div>
+          </div>
+        </div>
+
+        <!-- XP Progress -->
+        <div class="xp-section">
+          <h3 class="section-title">📊 Прогресс до следующего уровня</h3>
+          <div class="xp-bar-container">
+            <div class="xp-bar-fill" id="xpBarFill" style="width: 0%"></div>
+          </div>
+          <div class="xp-text">
+            <span id="xpCurrent">0 XP</span>
+            <span id="xpNext">500 XP</span>
+          </div>
+        </div>
+
+        <!-- Achievements -->
+        <div style="margin-bottom: 30px">
+          <h3 class="section-title">🏆 Достижения</h3>
+          <div class="achievements-grid" id="achievementsGrid">
+            <p style="text-align: center; color: #999">Загрузка...</p>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="profile-actions">
+          <h3 class="section-title">⚙️ Настройки</h3>
+          <button
+            class="action-btn action-btn-primary"
+            onclick="window.location.href = 'learning.html'"
+          >
+            📚 Продолжить обучение
+          </button>
+          <button
+            class="action-btn action-btn-primary"
+            onclick="window.location.href = 'goals.html'"
+          >
+            🎯 Мои цели
+          </button>
+          <button class="action-btn action-btn-danger" onclick="logout()">
+            🚪 Выйти из аккаунта
+          </button>
         </div>
       </div>
     </main>
@@ -164,85 +418,96 @@
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script>
-      let user = null;
+      async function init() {
+        const user = await requireAuth();
+        if (!user) return;
 
-      async function loadProfile() {
+        // User info
+        document.getElementById("profileAvatar").textContent = (user.name ||
+          "U")[0].toUpperCase();
+        document.getElementById("profileName").textContent =
+          user.name || "Пользователь";
+        document.getElementById("profileEmail").textContent = user.email;
+
+        await loadProgress();
+      }
+
+      async function loadProgress() {
+        const lang = localStorage.getItem("language") || "ru";
+
         try {
-          user = await requireAuth();
-          if (!user) return;
+          const progress = await apiFetch("/api/learning/progress");
 
-          document.getElementById("name").value = user.name;
-          document.getElementById("surname").value = user.surname;
-          document.getElementById("age").value = user.age;
-          document.getElementById("currency").value = user.currency;
-          document.getElementById("email").value = user.email;
-          document.getElementById("userRole").textContent = user.role || "user";
+          // Level info
+          document.getElementById("profileLevel").textContent = progress.level;
+          document.getElementById("profileLevelName").textContent =
+            lang === "en"
+              ? progress.level_name_en
+              : lang === "kk"
+                ? progress.level_name_kk
+                : progress.level_name;
 
-          if (user.created_at) {
-            document.getElementById("createdAt").textContent = formatDate(
-              user.created_at,
-            );
-          }
+          // Stats
+          document.getElementById("totalXP").textContent = progress.xp;
+          document.getElementById("currentStreak").textContent =
+            progress.current_streak;
+          document.getElementById("lessonsCount").textContent =
+            progress.total_lessons_completed;
+          document.getElementById("quizzesCount").textContent =
+            progress.total_quizzes_passed;
+
+          // XP bar
+          const currentLevelXP =
+            [0, 500, 1500, 3000, 5000][progress.level - 1] || 0;
+          const nextLevelXP = progress.next_level_xp || progress.xp;
+          const xpInLevel = progress.xp - currentLevelXP;
+          const xpNeeded = nextLevelXP - currentLevelXP;
+          const percent = Math.min((xpInLevel / xpNeeded) * 100, 100);
+
+          document.getElementById("xpBarFill").style.width = percent + "%";
+          document.getElementById("xpCurrent").textContent =
+            progress.xp + " XP";
+          document.getElementById("xpNext").textContent = progress.next_level_xp
+            ? progress.next_level_xp + " XP"
+            : "MAX";
+
+          // Achievements
+          const achievementsHtml = progress.achievements
+            .map((ach) => {
+              const name =
+                lang === "en"
+                  ? ach.name_en
+                  : lang === "kk"
+                    ? ach.name_kk
+                    : ach.name;
+              const desc =
+                lang === "en"
+                  ? ach.description_en
+                  : lang === "kk"
+                    ? ach.description_kk
+                    : ach.description;
+
+              return `
+                        <div class="achievement-card ${ach.earned ? "" : "locked"}">
+                            <div class="achievement-icon">${ach.icon}</div>
+                            <div class="achievement-info">
+                                <h4>${name}</h4>
+                                <p>${desc}</p>
+                            </div>
+                        </div>
+                    `;
+            })
+            .join("");
+
+          document.getElementById("achievementsGrid").innerHTML =
+            achievementsHtml ||
+            '<p style="text-align: center; color: #999;">Пока нет достижений</p>';
         } catch (error) {
-          console.error("Error loading profile:", error);
+          console.error("Error loading progress:", error);
         }
       }
 
-      const form = document.getElementById("profileForm");
-      const successDiv = document.getElementById("successMessage");
-      const errorDiv = document.getElementById("errorMessage");
-      const saveBtn = document.getElementById("saveBtn");
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        successDiv.style.display = "none";
-        errorDiv.style.display = "none";
-        saveBtn.disabled = true;
-        saveBtn.textContent = "⏳ Сохранение...";
-
-        const formData = {
-          name: document.getElementById("name").value.trim(),
-          surname: document.getElementById("surname").value.trim(),
-          age: parseInt(document.getElementById("age").value),
-          currency: document.getElementById("currency").value,
-        };
-
-        try {
-          await apiFetch("/api/auth/profile", {
-            method: "PUT",
-            body: JSON.stringify(formData),
-          });
-
-          const lang = localStorage.getItem("language") || "en";
-          const successText = {
-            en: "✅ Profile updated successfully!",
-            ru: "✅ Профиль успешно обновлен!",
-            kk: "✅ Профиль сәтті жаңартылды!",
-          };
-
-          successDiv.textContent = successText[lang];
-          successDiv.style.display = "block";
-
-          setTimeout(() => {
-            window.location.href = "/dashboard.html";
-          }, 1500);
-        } catch (error) {
-          errorDiv.textContent = error.message;
-          errorDiv.style.display = "block";
-          saveBtn.disabled = false;
-
-          const lang = localStorage.getItem("language") || "en";
-          const btnText = {
-            en: "Save Changes",
-            ru: "Сохранить изменения",
-            kk: "Өзгерістерді сақтау",
-          };
-          saveBtn.textContent = btnText[lang];
-        }
-      });
-
-      loadProfile();
+      init();
     </script>
   </body>
 </html>
