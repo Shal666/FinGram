@@ -68,6 +68,31 @@
         margin-bottom: 10px;
       }
 
+      /* Video Section */
+      .lesson-video {
+        margin-bottom: 30px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        background: #000;
+      }
+
+      .lesson-video iframe {
+        width: 100%;
+        height: 450px;
+        border: none;
+      }
+
+      .video-label {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 10px 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
       .lesson-content {
         background: white;
         border-radius: 20px;
@@ -80,6 +105,8 @@
         font-size: 28px;
         color: #333;
         margin: 30px 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #667eea;
       }
       .lesson-content h2 {
         font-size: 22px;
@@ -113,6 +140,47 @@
         background: #f5f5f5;
         padding: 2px 6px;
         border-radius: 4px;
+        font-family: monospace;
+      }
+
+      .lesson-content blockquote {
+        background: linear-gradient(135deg, #f0f4ff, #e8f5e9);
+        border-left: 4px solid #667eea;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 0 12px 12px 0;
+        font-style: italic;
+        color: #333;
+      }
+
+      .lesson-content table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .lesson-content th {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 12px 15px;
+        text-align: left;
+        font-weight: 600;
+      }
+
+      .lesson-content td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .lesson-content tr:nth-child(even) {
+        background: #f9f9f9;
+      }
+
+      .lesson-content tr:hover {
+        background: #f0f4ff;
       }
 
       .lesson-actions {
@@ -156,13 +224,36 @@
         cursor: pointer;
         transition: all 0.3s;
         text-decoration: none;
+        display: inline-block;
       }
 
       .btn-quiz:hover {
         transform: translateY(-3px);
         box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        color: white;
       }
 
+      .btn-secondary {
+        background: #f5f5f5;
+        color: #333;
+        border: 2px solid #ddd;
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .btn-secondary:hover {
+        background: #eee;
+        border-color: #667eea;
+        color: #667eea;
+      }
+
+      /* Reward Popup */
       .reward-popup {
         position: fixed;
         top: 50%;
@@ -175,6 +266,8 @@
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         z-index: 1000;
         transition: transform 0.3s ease;
+        max-width: 400px;
+        width: 90%;
       }
 
       .reward-popup.active {
@@ -184,6 +277,7 @@
       .reward-popup h2 {
         color: #4caf50;
         margin-bottom: 20px;
+        font-size: 28px;
       }
 
       .reward-xp {
@@ -193,6 +287,23 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 20px;
+      }
+
+      .reward-message {
+        color: #666;
+        margin-bottom: 10px;
+      }
+
+      .reward-achievements {
+        margin: 20px 0;
+        padding: 15px;
+        background: #fff8e1;
+        border-radius: 10px;
+      }
+
+      .reward-achievements span {
+        font-size: 24px;
+        margin: 0 5px;
       }
 
       .overlay {
@@ -213,6 +324,23 @@
         visibility: visible;
       }
 
+      /* Progress indicator */
+      .lesson-progress {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding: 15px 20px;
+        background: #f0f4ff;
+        border-radius: 12px;
+      }
+
+      .progress-text {
+        font-size: 14px;
+        color: #667eea;
+        font-weight: 600;
+      }
+
       @media (max-width: 768px) {
         .lesson-content {
           padding: 25px;
@@ -220,6 +348,21 @@
 
         .lesson-title {
           font-size: 24px;
+        }
+
+        .lesson-video iframe {
+          height: 250px;
+        }
+
+        .lesson-actions {
+          flex-direction: column;
+        }
+
+        .btn-complete,
+        .btn-quiz,
+        .btn-secondary {
+          width: 100%;
+          text-align: center;
         }
       }
     </style>
@@ -248,7 +391,11 @@
               >
             </li>
             <li><a href="goals.html" data-i18n="goals">Цели</a></li>
-            <li><a href="learning.html" data-i18n="learning">Обучение</a></li>
+            <li>
+              <a href="learning.html" data-i18n="learning" class="active"
+                >Обучение</a
+              >
+            </li>
             <li><a href="tools.html" data-i18n="tools">Инструменты</a></li>
             <li><a href="profile.html" data-i18n="profile">Профиль</a></li>
             <li><a href="#" onclick="logout()" data-i18n="logout">Выйти</a></li>
@@ -268,10 +415,21 @@
           <h1 class="lesson-title" id="lessonTitle">Загрузка...</h1>
         </div>
 
-        <div class="lesson-content" id="lessonContent">
-          <p>Загрузка содержимого...</p>
+        <!-- Video Section -->
+        <div class="lesson-video" id="lessonVideo" style="display: none">
+          <div class="video-label">
+            <span>🎬</span>
+            <span data-i18n="watchVideo">Посмотри видео</span>
+          </div>
+          <iframe id="videoFrame" src="" allowfullscreen></iframe>
         </div>
 
+        <!-- Lesson Content -->
+        <div class="lesson-content" id="lessonContent">
+          <p style="text-align: center; color: #999">Загрузка содержимого...</p>
+        </div>
+
+        <!-- Actions -->
         <div class="lesson-actions" id="lessonActions"></div>
       </div>
     </main>
@@ -281,7 +439,15 @@
     <div class="reward-popup" id="rewardPopup">
       <h2>🎉 Отлично!</h2>
       <div class="reward-xp" id="rewardXP">+50 XP</div>
-      <p id="rewardMessage">Урок пройден!</p>
+      <p class="reward-message" id="rewardMessage">Урок пройден!</p>
+      <div
+        class="reward-achievements"
+        id="rewardAchievements"
+        style="display: none"
+      >
+        <p>🏆 Новое достижение!</p>
+        <span id="achievementIcons"></span>
+      </div>
       <button class="btn-quiz" onclick="closeReward()" style="margin-top: 20px">
         Продолжить
       </button>
@@ -336,14 +502,38 @@
           document.title = `${title} — BayQadam`;
 
           // Meta badges
+          const categoryNames = {
+            basics: { ru: "Основы", en: "Basics", kk: "Негіздер" },
+            saving: { ru: "Сбережения", en: "Saving", kk: "Жинақ" },
+            credit: { ru: "Кредиты", en: "Credit", kk: "Несие" },
+            goals: { ru: "Цели", en: "Goals", kk: "Мақсаттар" },
+            investing: {
+              ru: "Инвестиции",
+              en: "Investing",
+              kk: "Инвестициялар",
+            },
+          };
+
+          const catName =
+            categoryNames[currentLesson.category]?.[lang] ||
+            currentLesson.category;
+
           const metaHtml = `
-                    <span class="lesson-badge badge-category">${currentLesson.category}</span>
+                    <span class="lesson-badge badge-category">${catName}</span>
                     <span class="lesson-badge badge-xp">+${currentLesson.xp_reward} XP</span>
                     ${currentLesson.is_completed ? '<span class="lesson-badge badge-completed">✓ Пройден</span>' : ""}
                 `;
           document.getElementById("lessonMeta").innerHTML = metaHtml;
 
-          // Content (convert markdown-like to HTML)
+          // Video
+          if (currentLesson.video_url) {
+            document.getElementById("videoFrame").src = currentLesson.video_url;
+            document.getElementById("lessonVideo").style.display = "block";
+          } else {
+            document.getElementById("lessonVideo").style.display = "none";
+          }
+
+          // Content
           const content =
             lang === "en"
               ? currentLesson.content_en
@@ -372,52 +562,90 @@
                     `;
           }
 
-          if (currentLesson.is_completed && !currentLesson.has_quiz) {
-            actionsHtml += `
-                        <a href="learning.html" class="btn-quiz">
-                            ← К урокам
-                        </a>
-                    `;
-          }
+          actionsHtml += `
+                    <a href="learning.html" class="btn-secondary">
+                        ← К урокам
+                    </a>
+                `;
 
           document.getElementById("lessonActions").innerHTML = actionsHtml;
         } catch (error) {
           document.getElementById("lessonContent").innerHTML =
-            `<p style="color: #c33;">Ошибка загрузки: ${error.message}</p>`;
+            `<p style="color: #c33; text-align: center;">Ошибка загрузки: ${error.message}</p>`;
         }
       }
 
       function formatContent(text) {
-        if (!text) return "";
+        if (!text) return "<p>Содержимое урока загружается...</p>";
 
-        // Simple markdown-like formatting
         let html = text
+          // Headers
           .replace(/^### (.+)$/gm, "<h3>$1</h3>")
           .replace(/^## (.+)$/gm, "<h2>$1</h2>")
           .replace(/^# (.+)$/gm, "<h1>$1</h1>")
+          // Bold
           .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+          // Blockquotes
+          .replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>")
+          // Lists
           .replace(/^- (.+)$/gm, "<li>$1</li>")
           .replace(/^(\d+)\. (.+)$/gm, "<li>$2</li>")
+          // Emojis styling
           .replace(/✅/g, '<span style="color: #4caf50;">✅</span>')
-          .replace(/❌/g, '<span style="color: #f44336;">❌</span>');
+          .replace(/❌/g, '<span style="color: #f44336;">❌</span>')
+          .replace(/💡/g, '<span style="font-size: 1.2em;">💡</span>')
+          .replace(/⚠️/g, '<span style="color: #ff9800;">⚠️</span>');
+
+        // Tables
+        html = html.replace(/\|(.+)\|/g, (match) => {
+          const cells = match.split("|").filter((c) => c.trim());
+          if (cells.some((c) => c.includes("---"))) {
+            return ""; // Skip separator row
+          }
+          const isHeader =
+            match.includes("**") || cells[0].trim().startsWith("**");
+          const tag = isHeader ? "th" : "td";
+          const row = cells
+            .map((c) => `<${tag}>${c.trim().replace(/\*\*/g, "")}</${tag}>`)
+            .join("");
+          return `<tr>${row}</tr>`;
+        });
+
+        // Wrap table rows
+        if (html.includes("<tr>")) {
+          html = html.replace(/(<tr>.*<\/tr>)+/gs, "<table>$&</table>");
+        }
 
         // Wrap consecutive <li> in <ul>
         html = html.replace(/(<li>.*?<\/li>\n?)+/g, "<ul>$&</ul>");
 
+        // Clean up multiple blockquotes
+        html = html.replace(/<\/blockquote>\s*<blockquote>/g, "<br>");
+
         // Paragraphs
-        html = html
-          .split("\n\n")
+        const lines = html.split("\n\n");
+        html = lines
           .map((p) => {
+            p = p.trim();
+            if (!p) return "";
             if (
               p.startsWith("<h") ||
               p.startsWith("<ul") ||
-              p.startsWith("<ol")
+              p.startsWith("<ol") ||
+              p.startsWith("<table") ||
+              p.startsWith("<blockquote") ||
+              p.startsWith("<li")
             ) {
               return p;
             }
             return `<p>${p}</p>`;
           })
-          .join("");
+          .join("\n");
+
+        // Clean up empty paragraphs
+        html = html.replace(/<p>\s*<\/p>/g, "");
+        html = html.replace(/<p>(<h[123]>)/g, "$1");
+        html = html.replace(/(<\/h[123]>)<\/p>/g, "$1");
 
         return html;
       }
@@ -439,14 +667,22 @@
           document.getElementById("rewardXP").textContent =
             `+${result.xp_earned} XP`;
 
-          let message = "Урок пройден!";
-          if (result.new_achievements && result.new_achievements.length > 0) {
-            message += " 🏆 Новое достижение!";
-          }
+          let message = "Урок успешно пройден!";
           if (result.streak > 1) {
             message += ` 🔥 ${result.streak} дней подряд!`;
           }
           document.getElementById("rewardMessage").textContent = message;
+
+          // Show achievements if any
+          if (result.new_achievements && result.new_achievements.length > 0) {
+            document.getElementById("rewardAchievements").style.display =
+              "block";
+            document.getElementById("achievementIcons").textContent =
+              result.new_achievements.join(" ");
+          } else {
+            document.getElementById("rewardAchievements").style.display =
+              "none";
+          }
 
           document.getElementById("overlay").classList.add("active");
           document.getElementById("rewardPopup").classList.add("active");
@@ -472,6 +708,10 @@
         }
       }
 
+      // Close popup on overlay click
+      document.getElementById("overlay").addEventListener("click", closeReward);
+
+      // Initialize
       init();
     </script>
   </body>
