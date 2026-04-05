@@ -1,5 +1,5 @@
 // API Configuration
-const API_URL = 'http://localhost:8001';
+const API_URL = 'https://web-production-2526b.up.railway.app';
 
 // Currency symbols
 const CURRENCY_SYMBOLS = {
