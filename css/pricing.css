@@ -1,0 +1,262 @@
+.lang-switcher {
+  display: flex;
+  gap: 8px;
+  margin-right: 20px;
+}
+
+.lang-btn {
+  padding: 6px 12px;
+  border: 2px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.lang-btn:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.lang-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+@media (max-width: 700px) {
+  .lang-switcher {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-right: 0;
+  }
+  
+  .header-inner {
+    position: relative;
+    padding-top: 50px;
+  }
+}
+
+.pricing-section {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 60px 0 !important;
+}
+
+.pricing-subtitle {
+  text-align: center;
+  font-size: 18px;
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+
+.pricing-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .pricing-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.pricing-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  border: 3px solid transparent;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.pricing-card.popular {
+  border-color: var(--accent);
+  transform: scale(1.05);
+}
+
+.pricing-card.popular:hover {
+  transform: scale(1.08) translateY(-10px);
+}
+
+.pricing-card.vip {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.pricing-card.vip h3,
+.pricing-card.vip .price,
+.pricing-card.vip .features-list {
+  color: white;
+}
+
+.badge {
+  position: absolute;
+  top: -15px;
+  right: 20px;
+  background: var(--accent);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pricing-card h3 {
+  font-size: 28px;
+  margin: 0 0 20px;
+  color: var(--accent);
+}
+
+.pricing-card.vip h3 {
+  color: white;
+}
+
+.price {
+  margin-bottom: 30px;
+}
+
+.price .amount {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+}
+
+.pricing-card.vip .price .amount {
+  color: white;
+}
+
+.price .period {
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.pricing-card.vip .price .period {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px;
+  text-align: left;
+}
+
+.features-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  font-size: 16px;
+  color: #333;
+}
+
+.pricing-card.vip .features-list li {
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.features-list li:last-child {
+  border-bottom: none;
+}
+
+.pricing-card .btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+}
+
+.pricing-card.vip .btn.primary {
+  background: white;
+  color: #764ba2;
+}
+
+.pricing-card.vip .btn.primary:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.register-modal {
+  max-width: 500px;
+}
+
+.register-modal h3 {
+  margin: 0 0 10px;
+  font-size: 28px;
+  color: var(--accent);
+}
+
+.modal-subtitle {
+  color: var(--muted);
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group input,
+.form-group select {
+  padding: 14px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.modal-footer {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--muted);
+}
+
+.modal-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.modal-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .pricing-card.popular {
+    transform: scale(1);
+  }
+  
+  .pricing-card.popular:hover {
+    transform: translateY(-10px);
+  }
+}

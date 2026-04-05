@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Credit Calculator — BayQadam</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/pricing.css" />
+    <link rel="stylesheet" href="css/advanced.css" />
+    <style>
+      .credit-container {
+        max-width: 700px;
+        margin: 60px auto;
+        padding: 50px 40px;
+        background: white;
+        border-radius: 30px;
+        box-shadow: 0 20px 60px rgba(102, 126, 234, 0.15);
+        border: 2px solid rgba(102, 126, 234, 0.1);
+      }
+
+      .credit-container h2 {
+        margin-top: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 42px;
+        font-weight: 900;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .form-group {
+        margin-bottom: 35px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 12px;
+        font-weight: 700;
+        color: #333;
+        font-size: 18px;
+      }
+
+      .form-group input[type="range"] {
+        width: 100%;
+        height: 10px;
+        border-radius: 5px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        outline: none;
+        -webkit-appearance: none;
+      }
+
+      .form-group input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: white;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        cursor: pointer;
+        border: 3px solid #667eea;
+      }
+
+      .form-group input[type="range"]::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: white;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        cursor: pointer;
+        border: 3px solid #667eea;
+      }
+
+      .credit-container button {
+        width: 100%;
+        padding: 18px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+      }
+
+      .credit-container button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+      }
+
+      .result {
+        margin-top: 40px;
+        padding: 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 20px;
+        font-size: 18px;
+        line-height: 2;
+        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+      }
+
+      .result b {
+        font-size: 24px;
+        font-weight: 900;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">BayQadam</a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kk">KZ</button>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul>
+            <li><a href="index.html" data-i18n="home">Home</a></li>
+            <li>
+              <a href="calculator.html" data-i18n="calculator">Calculator</a>
+            </li>
+            <li>
+              <a href="credit.html" data-i18n="creditCalc">Credit Calculator</a>
+            </li>
+            <li>
+              <a href="video.html" data-i18n="videoLessons">Video Lessons</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="credit-container">
+        <h2 data-i18n="creditTitle">Credit Calculator</h2>
+
+        <div class="form-group">
+          <label>
+            <span data-i18n="loanAmount">Loan Amount</span>:
+            <span id="amountValue">1000000 ₸</span>
+          </label>
+          <input
+            type="range"
+            id="amount"
+            min="50000"
+            max="10000000"
+            step="50000"
+            value="1000000"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>
+            <span data-i18n="loanTerm">Loan Term</span>:
+            <span id="monthsValue"
+              >12 <span data-i18n="months">months</span></span
+            >
+          </label>
+          <input
+            type="range"
+            id="months"
+            min="3"
+            max="60"
+            step="1"
+            value="12"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>
+            <span data-i18n="interestRate">Interest Rate</span>:
+            <span id="rateValue">15 %</span>
+          </label>
+          <input
+            type="range"
+            id="rate"
+            min="5"
+            max="40"
+            step="0.1"
+            value="15"
+          />
+        </div>
+
+        <button onclick="calculate()" data-i18n="calculate">Calculate</button>
+
+        <div class="result" id="result">
+          💰 <span data-i18n="monthlyPayment">Monthly Payment</span>:
+          <b>90258 ₸</b><br />
+          📅 <span data-i18n="totalPayment">Total Payment</span>:
+          <b>1083100 ₸</b><br />
+          💸 <span data-i18n="overpayment">Overpayment</span>: <b>83100 ₸</b>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 BayQadam.
+          <span data-i18n="allRights">All rights reserved.</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+      const amountSlider = document.getElementById("amount");
+      const monthsSlider = document.getElementById("months");
+      const rateSlider = document.getElementById("rate");
+      const amountValue = document.getElementById("amountValue");
+      const monthsValue = document.getElementById("monthsValue");
+      const rateValue = document.getElementById("rateValue");
+      const resultDiv = document.getElementById("result");
+
+      function updateLabels() {
+        const lang = localStorage.getItem("language") || "en";
+        const monthsText = translations[lang].months;
+        monthsValue.innerHTML = `${monthsSlider.value} <span data-i18n="months">${monthsText}</span>`;
+      }
+
+      amountSlider.addEventListener("input", () => {
+        amountValue.textContent =
+          parseInt(amountSlider.value).toLocaleString() + " ₸";
+        calculate();
+      });
+
+      monthsSlider.addEventListener("input", () => {
+        updateLabels();
+        calculate();
+      });
+
+      rateSlider.addEventListener("input", () => {
+        rateValue.textContent = rateSlider.value + " %";
+        calculate();
+      });
+
+      function calculate() {
+        const amount = parseFloat(amountSlider.value);
+        const months = parseInt(monthsSlider.value);
+        const rate = parseFloat(rateSlider.value) / 100 / 12;
+
+        const monthlyPayment =
+          (amount * (rate * Math.pow(1 + rate, months))) /
+          (Math.pow(1 + rate, months) - 1);
+        const totalPayment = monthlyPayment * months;
+        const overpayment = totalPayment - amount;
+
+        const lang = localStorage.getItem("language") || "en";
+        const t = translations[lang];
+
+        resultDiv.innerHTML = `
+        💰 ${t.monthlyPayment}: <b>${Math.round(monthlyPayment).toLocaleString()} ₸</b><br>
+        📅 ${t.totalPayment}: <b>${Math.round(totalPayment).toLocaleString()} ₸</b><br>
+        💸 ${t.overpayment}: <b>${Math.round(overpayment).toLocaleString()} ₸</b>
+      `;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        updateLabels();
+        calculate();
+      });
+
+      const langButtons = document.querySelectorAll("[data-lang]");
+      langButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          setTimeout(() => {
+            updateLabels();
+            calculate();
+          }, 100);
+        });
+      });
+    </script>
+  </body>
+</html>

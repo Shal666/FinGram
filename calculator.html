@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Financial Calculator — BayQadam</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/pricing.css" />
+    <link rel="stylesheet" href="css/advanced.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">BayQadam</a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kk">KZ</button>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul>
+            <li><a href="index.html" data-i18n="home">Home</a></li>
+            <li>
+              <a href="calculator.html" data-i18n="calculator">Calculator</a>
+            </li>
+            <li>
+              <a href="credit.html" data-i18n="creditCalc">Credit Calculator</a>
+            </li>
+            <li>
+              <a href="video.html" data-i18n="videoLessons">Video Lessons</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section
+        class="section calculator"
+        style="min-height: 70vh; display: flex; align-items: center"
+      >
+        <div class="container">
+          <h1
+            data-i18n="calcTitle"
+            style="
+              text-align: center;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              font-size: 48px;
+              margin-bottom: 20px;
+            "
+          >
+            Financial Calculator
+          </h1>
+          <p
+            data-i18n="calcSubtitle"
+            style="
+              text-align: center;
+              font-size: 18px;
+              color: #666;
+              margin-bottom: 40px;
+            "
+          >
+            Find out how much you can save and how to improve your finances 💰
+          </p>
+
+          <form
+            id="calcForm"
+            class="form"
+            style="
+              max-width: 600px;
+              margin: 0 auto;
+              background: white;
+              padding: 40px;
+              border-radius: 20px;
+              box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            "
+          >
+            <label
+              ><span data-i18n="monthlyIncome">Monthly Income (₸)</span>
+              <input
+                type="number"
+                id="income"
+                placeholder="300000"
+                required
+                style="margin-top: 8px"
+              />
+            </label>
+            <label
+              ><span data-i18n="monthlyExpenses">Monthly Expenses (₸)</span>
+              <input
+                type="number"
+                id="expenses"
+                placeholder="200000"
+                required
+                style="margin-top: 8px"
+              />
+            </label>
+            <label
+              ><span data-i18n="currentDebt">Current Debt (₸)</span>
+              <input
+                type="number"
+                id="debt"
+                placeholder="150000"
+                required
+                style="margin-top: 8px"
+              />
+            </label>
+            <button type="submit" class="btn primary" data-i18n="calculate">
+              Calculate
+            </button>
+          </form>
+
+          <div
+            id="result"
+            class="result-box"
+            style="display: none; max-width: 600px; margin: 30px auto 0"
+          >
+            <h3 data-i18n="result">Result</h3>
+            <p id="summary"></p>
+            <p id="advice"></p>
+            <button
+              id="resetCalc"
+              class="btn outline"
+              data-i18n="newCalculation"
+            >
+              New Calculation
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 BayQadam.
+          <span data-i18n="allRights">All rights reserved.</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+      document.getElementById("calcForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const income = parseFloat(document.getElementById("income").value);
+        const expenses = parseFloat(document.getElementById("expenses").value);
+        const debt = parseFloat(document.getElementById("debt").value);
+
+        const savings = income - expenses;
+        const savingsPercent = ((savings / income) * 100).toFixed(1);
+
+        document.getElementById("result").style.display = "block";
+
+        const lang = localStorage.getItem("language") || "en";
+        const summaryTexts = {
+          en: `You can save ${savings.toLocaleString()} ₸ per month (${savingsPercent}% of income).`,
+          ru: `Вы можете откладывать ${savings.toLocaleString()} ₸ в месяц (${savingsPercent}% от дохода).`,
+          kk: `Сіз айына ${savings.toLocaleString()} ₸ жинай аласыз (табыстың ${savingsPercent}%).`,
+        };
+
+        document.getElementById("summary").textContent = summaryTexts[lang];
+
+        let advice = "";
+        if (savings < 0) {
+          const adviceTexts = {
+            en: "⚠️ Your expenses exceed your income! Review your spending and find ways to reduce costs.",
+            ru: "⚠️ Ваши расходы превышают доход! Пересмотрите траты и найдите способы сократить расходы.",
+            kk: "⚠️ Шығындарыңыз табысыңыздан асып түсті! Шығындарыңызды қарап шығыңыз және азайту жолдарын табыңыз.",
+          };
+          advice = adviceTexts[lang];
+        } else if (savings < income * 0.1) {
+          const adviceTexts = {
+            en: "💡 Try to save at least 10-20% of your income. Start with small steps!",
+            ru: "💡 Старайтесь откладывать минимум 10-20% дохода. Начните с малого!",
+            kk: "💡 Табысыңыздың кемінде 10-20%-ын жинауға тырысыңыз. Кішкентай қадамнан бастаңыз!",
+          };
+          advice = adviceTexts[lang];
+        } else if (debt > income * 3) {
+          const adviceTexts = {
+            en: "📊 Your debt is high. Consider debt consolidation and prioritize paying it off.",
+            ru: "📊 Ваш долг велик. Рассмотрите консолидацию долга и приоритизируйте его погашение.",
+            kk: "📊 Қарызыңыз жоғары. Қарызды біріктіруді қарастырыңыз және оны төлеуге басымдық беріңіз.",
+          };
+          advice = adviceTexts[lang];
+        } else {
+          const adviceTexts = {
+            en: "✅ Great job! Keep tracking your expenses and increasing your savings.",
+            ru: "✅ Отличная работа! Продолжайте отслеживать расходы и увеличивать сбережения.",
+            kk: "✅ Жақсы жұмыс! Шығындарды қадағалауды және жинақтарды арттыруды жалғастырыңыз.",
+          };
+          advice = adviceTexts[lang];
+        }
+
+        document.getElementById("advice").textContent = advice;
+      });
+
+      document.getElementById("resetCalc").addEventListener("click", () => {
+        document.getElementById("calcForm").reset();
+        document.getElementById("result").style.display = "none";
+      });
+    </script>
+  </body>
+</html>

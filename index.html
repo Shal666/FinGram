@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BayQadam — Financial Literacy</title>
+    <link rel="stylesheet" href="css/mycss.css" />
+    <link rel="stylesheet" href="css/pricing.css" />
+    <link rel="stylesheet" href="css/advanced.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">BayQadam</a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kk">KZ</button>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul>
+            <li><a href="index.html" data-i18n="home">Home</a></li>
+            <li>
+              <a href="calculator.html" data-i18n="calculator">Calculator</a>
+            </li>
+            <li>
+              <a href="credit.html" data-i18n="creditCalc">Credit Calculator</a>
+            </li>
+            <li>
+              <a href="video.html" data-i18n="videoLessons">Video Lessons</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-inner">
+          <h1 data-i18n="heroTitle">Learn to Manage Money and Do It Right</h1>
+          <p data-i18n="heroSubtitle">
+            Local service for Kazakhstan: budget, goals, loans, interactive
+            lessons and gamification.
+          </p>
+          <div class="hero-cta">
+            <button class="btn primary" id="openRegister" data-i18n="tryNow">
+              Try Now
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section about">
+        <div class="container">
+          <h2 data-i18n="aboutTitle">About Us</h2>
+          <p
+            data-i18n="aboutText"
+            style="
+              text-align: center;
+              font-size: 18px;
+              max-width: 800px;
+              margin: 0 auto;
+              color: #666;
+            "
+          >
+            We combine financial education and money management tools in one
+            application. Support for local banks and currencies, interactive
+            modules, goal planning, and personal advice.
+          </p>
+        </div>
+      </section>
+
+      <section id="features" class="section features">
+        <div class="container">
+          <h2 data-i18n="featuresTitle">Key Features</h2>
+          <div class="cards">
+            <article class="card">
+              <h3 data-i18n="feature1Title">Expense Tracking</h3>
+              <p data-i18n="feature1Text">
+                Quick expense recording, categories, daily tips.
+              </p>
+            </article>
+            <article class="card">
+              <h3 data-i18n="feature2Title">Goal Planning</h3>
+              <p data-i18n="feature2Text">
+                Create goals with timelines and progress tracking.
+              </p>
+            </article>
+            <article class="card">
+              <h3 data-i18n="feature3Title">Loans & Calculators</h3>
+              <p data-i18n="feature3Text">
+                Loan calculators and payment reminders.
+              </p>
+            </article>
+            <article class="card">
+              <h3 data-i18n="feature4Title">Learning + Gamification</h3>
+              <p data-i18n="feature4Text">
+                Quizzes, tasks, and progress with rewards.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="section pricing-section">
+        <div class="container">
+          <h2 data-i18n="pricingTitle">Choose Your Plan</h2>
+          <p class="pricing-subtitle" data-i18n="pricingSubtitle">
+            Start with free basic features or upgrade for advanced tools
+          </p>
+
+          <div class="pricing-cards">
+            <div class="pricing-card">
+              <h3 data-i18n="basicPlan">Basic</h3>
+              <div class="price">
+                <span class="amount" data-i18n="free">Free</span>
+              </div>
+              <ul class="features-list">
+                <li>
+                  ✓
+                  <span data-i18n="basicFeature1">Basic expense tracking</span>
+                </li>
+                <li>
+                  ✓ <span data-i18n="basicFeature2">1 financial goal</span>
+                </li>
+                <li>✓ <span data-i18n="basicFeature3">Email support</span></li>
+                <li>
+                  ✓ <span data-i18n="basicFeature4">Monthly reports</span>
+                </li>
+              </ul>
+              <button
+                class="btn outline"
+                onclick="openRegisterWithPlan('basic')"
+                data-i18n="choosePlan"
+              >
+                Choose Plan
+              </button>
+            </div>
+
+            <div class="pricing-card popular">
+              <div class="badge" data-i18n="mostPopular">Most Popular</div>
+              <h3 data-i18n="premiumPlan">Premium</h3>
+              <div class="price">
+                <span class="amount">$9.99</span>
+                <span class="period" data-i18n="perMonth">/month</span>
+              </div>
+              <ul class="features-list">
+                <li>
+                  ✓
+                  <span data-i18n="premiumFeature1"
+                    >Unlimited expense tracking</span
+                  >
+                </li>
+                <li>
+                  ✓ <span data-i18n="premiumFeature2">5 financial goals</span>
+                </li>
+                <li>
+                  ✓ <span data-i18n="premiumFeature3">All calculators</span>
+                </li>
+                <li>
+                  ✓ <span data-i18n="premiumFeature4">Priority support</span>
+                </li>
+                <li>
+                  ✓ <span data-i18n="premiumFeature5">Advanced analytics</span>
+                </li>
+              </ul>
+              <button
+                class="btn primary"
+                onclick="openRegisterWithPlan('premium')"
+                data-i18n="choosePlan"
+              >
+                Choose Plan
+              </button>
+            </div>
+
+            <div class="pricing-card vip">
+              <h3 data-i18n="vipPlan">VIP</h3>
+              <div class="price">
+                <span class="amount">$19.99</span>
+                <span class="period" data-i18n="perMonth">/month</span>
+              </div>
+              <ul class="features-list">
+                <li>
+                  ✓ <span data-i18n="vipFeature1">Everything in Premium</span>
+                </li>
+                <li>✓ <span data-i18n="vipFeature2">Unlimited goals</span></li>
+                <li>
+                  ✓
+                  <span data-i18n="vipFeature3"
+                    >Personal financial advisor</span
+                  >
+                </li>
+                <li>
+                  ✓
+                  <span data-i18n="vipFeature4"
+                    >Investment recommendations</span
+                  >
+                </li>
+                <li>✓ <span data-i18n="vipFeature5">Custom reports</span></li>
+                <li>✓ <span data-i18n="vipFeature6">24/7 VIP support</span></li>
+              </ul>
+              <button
+                class="btn primary"
+                onclick="openRegisterWithPlan('vip')"
+                data-i18n="choosePlan"
+              >
+                Choose Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="advantages" class="section advantages-modern">
+        <div class="container">
+          <h2 data-i18n="advantagesTitle">Our Advantages</h2>
+          <p class="section-subtitle">
+            Why thousands of people trust BayQadam with their financial future
+          </p>
+
+          <div class="advantages-grid">
+            <div class="advantage-card">
+              <div class="advantage-icon">🎯</div>
+              <h3>Smart Goal Tracking</h3>
+              <p>
+                AI-powered goal setting with personalized milestones and
+                progress tracking. Achieve your financial dreams faster with
+                intelligent recommendations.
+              </p>
+            </div>
+
+            <div class="advantage-card">
+              <div class="advantage-icon">🌍</div>
+              <h3>Kazakhstan First</h3>
+              <p>
+                Built specifically for Kazakhstan market with support for local
+                banks, currencies (₸), and cultural financial practices. Native
+                language support included.
+              </p>
+            </div>
+
+            <div class="advantage-card">
+              <div class="advantage-icon">🔒</div>
+              <h3>Bank-Level Security</h3>
+              <p>
+                Your data is protected with 256-bit encryption and multi-factor
+                authentication. We never share your information with third
+                parties.
+              </p>
+            </div>
+
+            <div class="advantage-card">
+              <div class="advantage-icon">📊</div>
+              <h3>Real-Time Analytics</h3>
+              <p>
+                Get instant insights into your spending patterns with beautiful
+                charts and reports. Make data-driven financial decisions
+                effortlessly.
+              </p>
+            </div>
+
+            <div class="advantage-card">
+              <div class="advantage-icon">🎓</div>
+              <h3>Learn & Earn Rewards</h3>
+              <p>
+                Complete financial literacy courses and challenges to unlock
+                badges, rewards, and premium features. Education meets
+                gamification.
+              </p>
+            </div>
+
+            <div class="advantage-card">
+              <div class="advantage-icon">⚡</div>
+              <h3>Lightning Fast</h3>
+              <p>
+                Record expenses in under 3 seconds. Built with modern technology
+                for instant syncing across all your devices.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact-modern">
+        <div class="container">
+          <h2 data-i18n="contactTitle">Get In Touch</h2>
+          <p class="section-subtitle">
+            We're here to help you succeed financially. Reach out anytime!
+          </p>
+
+          <div class="contact-grid">
+            <div class="contact-info-box">
+              <h3>Contact Information</h3>
+
+              <div class="contact-item-modern">
+                <div class="contact-icon">📧</div>
+                <div class="contact-details">
+                  <span class="contact-label">Email</span>
+                  <a href="mailto:hello@bayqadam.kz">hello@bayqadam.kz</a>
+                </div>
+              </div>
+
+              <div class="contact-item-modern">
+                <div class="contact-icon">📱</div>
+                <div class="contact-details">
+                  <span class="contact-label">Phone</span>
+                  <a href="tel:+77001234567">+7 (700) 123-45-67</a>
+                </div>
+              </div>
+
+              <div class="contact-item-modern">
+                <div class="contact-icon">📍</div>
+                <div class="contact-details">
+                  <span class="contact-label">Address</span>
+                  <p>Almaty, Kazakhstan<br />Dostyk Avenue, 123</p>
+                </div>
+              </div>
+
+              <div class="contact-item-modern">
+                <div class="contact-icon">⏰</div>
+                <div class="contact-details">
+                  <span class="contact-label">Working Hours</span>
+                  <p>Mon - Fri: 9:00 - 18:00<br />Sat: 10:00 - 15:00</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="social-media-box">
+              <h3>Follow Us</h3>
+              <p>Stay updated with tips, news, and exclusive offers</p>
+
+              <div class="social-links-grid">
+                <a
+                  href="https://instagram.com/bayqadam"
+                  class="social-link instagram"
+                  target="_blank"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                    />
+                  </svg>
+                  <span>Instagram</span>
+                </a>
+
+                <a
+                  href="https://tiktok.com/@bayqadam"
+                  class="social-link tiktok"
+                  target="_blank"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"
+                    />
+                  </svg>
+                  <span>TikTok</span>
+                </a>
+
+                <a
+                  href="https://t.me/bayqadam"
+                  class="social-link telegram"
+                  target="_blank"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"
+                    />
+                  </svg>
+                  <span>Telegram</span>
+                </a>
+
+                <a
+                  href="https://wa.me/77001234567"
+                  class="social-link whatsapp"
+                  target="_blank"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                    />
+                  </svg>
+                  <span>WhatsApp</span>
+                </a>
+
+                <a
+                  href="https://youtube.com/@bayqadam"
+                  class="social-link youtube"
+                  target="_blank"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                    />
+                  </svg>
+                  <span>YouTube</span>
+                </a>
+
+                <a
+                  href="https://facebook.com/bayqadam"
+                  class="social-link facebook"
+                  target="_blank"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                    />
+                  </svg>
+                  <span>Facebook</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          &copy; 2025 BayQadam.
+          <span data-i18n="allRights">All rights reserved.</span>
+        </p>
+      </div>
+    </footer>
+
+    <div class="modal" id="registerModal" aria-hidden="true">
+      <div class="modal-content register-modal">
+        <button class="modal-close" id="closeRegister" aria-label="Close">
+          ✕
+        </button>
+        <h3 data-i18n="registerTitle">Start Your Financial Journey</h3>
+        <p class="modal-subtitle" data-i18n="registerSubtitle">
+          Fill in your details to get started
+        </p>
+
+        <form id="registerForm" class="register-form">
+          <div class="form-group">
+            <input
+              type="text"
+              name="fullName"
+              required
+              data-i18n="fullName"
+              placeholder="Full Name"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="email"
+              name="email"
+              required
+              data-i18n="emailAddress"
+              placeholder="Email Address"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="tel"
+              name="phone"
+              required
+              data-i18n="phoneNumber"
+              placeholder="Phone Number"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              name="city"
+              data-i18n="city"
+              placeholder="City (Optional)"
+            />
+          </div>
+          <div class="form-group">
+            <select name="plan" id="planSelect" required>
+              <option value="" data-i18n="selectPlan">Select Plan</option>
+              <option value="basic" data-i18n="basicPlan">Basic - Free</option>
+              <option value="premium" data-i18n="premiumPlan">
+                Premium - $9.99/month
+              </option>
+              <option value="vip" data-i18n="vipPlan">
+                VIP - $19.99/month
+              </option>
+            </select>
+          </div>
+          <button
+            class="btn primary full-width"
+            type="submit"
+            data-i18n="createAccount"
+          >
+            Create Account
+          </button>
+        </form>
+
+        <p class="modal-footer">
+          <span data-i18n="alreadyHave">Already have an account?</span>
+          <a href="#" data-i18n="login">Login</a>
+        </p>
+      </div>
+    </div>
+
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+      const registerModal = document.getElementById("registerModal");
+      const openRegisterBtn = document.getElementById("openRegister");
+      const closeRegisterBtn = document.getElementById("closeRegister");
+      const registerForm = document.getElementById("registerForm");
+      const planSelect = document.getElementById("planSelect");
+
+      function openRegisterWithPlan(plan) {
+        registerModal.setAttribute("aria-hidden", "false");
+        if (plan) {
+          planSelect.value = plan;
+        }
+      }
+
+      openRegisterBtn.addEventListener("click", () => openRegisterWithPlan());
+      closeRegisterBtn.addEventListener("click", () => {
+        registerModal.setAttribute("aria-hidden", "true");
+      });
+
+      registerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(registerForm);
+        const data = Object.fromEntries(formData);
+        console.log("Registration data:", data);
+        alert(`Welcome! You've registered for the ${data.plan} plan!`);
+        registerModal.setAttribute("aria-hidden", "true");
+        registerForm.reset();
+      });
+
+      registerModal.addEventListener("click", (e) => {
+        if (e.target === registerModal) {
+          registerModal.setAttribute("aria-hidden", "true");
+        }
+      });
+    </script>
+  </body>
+</html>
