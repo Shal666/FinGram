@@ -1,5 +1,5 @@
 // Dashboard Logic
-let currentUser = null;
+
 let monthlyStats = null;
 let yearlyStats = null;
 
