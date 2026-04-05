@@ -1,5 +1,3 @@
-
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -37,11 +35,22 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS Configuration
-frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+# CORS Configuration - разрешаем все нужные домены
+allowed_origins = [
+    "https://fin-gram.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+]
+
+# Добавляем FRONTEND_URL из переменных окружения если есть
+frontend_url = os.environ.get("FRONTEND_URL")
+if frontend_url and frontend_url not in allowed_origins:
+    allowed_origins.append(frontend_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
