@@ -594,3 +594,60 @@ body {
   .contact-info-box { border-right: 0; border-bottom: 1px solid var(--line); }
   .video-grid { grid-template-columns: 1fr; }
 }
+
+
+/* ---- Advantages: эмодзи в кругах ---- */
+.advantage-icon {
+  font-family: 'Inter', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--mint) !important;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  background: rgba(25,195,125,0.08);
+  transition: transform .25s ease, background .25s ease;
+}
+.advantage-card:hover .advantage-icon {
+  background: rgba(25,195,125,0.18);
+  transform: translateY(-2px);
+}
+
+/* ---- Contacts: эмодзи в квадратах ---- */
+.contact-icon {
+  font-family: 'Inter', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif !important;
+  font-size: 22px !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--cream) !important;
+  width: 48px !important;
+  height: 48px !important;
+  padding: 0 !important;
+  background: var(--bg-3) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color .2s ease;
+}
+.contact-item-modern:hover .contact-icon {
+  border-color: var(--accent);
+}
+
+/* контакт-айтемы теперь flex, а не grid (чтобы иконка-квадрат смотрелась рядом с текстом) */
+.contact-item-modern {
+  display: flex !important;
+  gap: 16px !important;
+  align-items: flex-start;
+}

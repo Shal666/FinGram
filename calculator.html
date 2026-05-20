@@ -7,6 +7,163 @@
     <link rel="stylesheet" href="css/mycss.css" />
     <link rel="stylesheet" href="css/pricing.css" />
     <link rel="stylesheet" href="css/advanced.css" />
+    <style>
+      .calculator-page {
+        padding: 110px 24px 80px;
+        background:
+          radial-gradient(
+            ellipse at 75% 25%,
+            rgba(25, 195, 125, 0.14) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse at 15% 90%,
+            rgba(31, 138, 95, 0.18) 0%,
+            transparent 50%
+          ),
+          var(--bg);
+        min-height: 100vh;
+      }
+
+      .calc-wrap {
+        max-width: 720px;
+        margin: 0 auto;
+        text-align: left;
+      }
+
+      .calc-eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+      .calc-wrap h1 {
+        font-family: "Fraunces", serif;
+        text-align: left;
+        background: none;
+        -webkit-text-fill-color: var(--cream);
+        color: var(--cream);
+        font-size: clamp(40px, 6vw, 64px);
+        font-weight: 400;
+        margin: 0 0 16px;
+        letter-spacing: -0.035em;
+        line-height: 1;
+      }
+      .calc-wrap h1 em {
+        font-style: italic;
+        color: var(--mint);
+        font-weight: 400;
+      }
+      .calc-wrap > .subtitle {
+        text-align: left;
+        font-size: 17px;
+        color: var(--cream-dim);
+        margin: 0 0 40px;
+        max-width: 560px;
+        line-height: 1.55;
+      }
+
+      .calc-form {
+        max-width: 720px;
+        margin: 0;
+        background: var(--bg-2);
+        border: 1px solid var(--line);
+        padding: 40px;
+        border-radius: var(--radius-lg);
+        box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .calc-form label {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-weight: 500;
+      }
+      .calc-form input {
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--bg-3);
+        color: var(--cream);
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+      .calc-form input::placeholder {
+        color: var(--muted);
+      }
+      .calc-form input:focus {
+        outline: 0;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(25, 195, 125, 0.18);
+      }
+      .calc-form button.btn.primary {
+        margin-top: 8px;
+        padding: 15px;
+        font-size: 14px;
+        justify-content: center;
+      }
+
+      #result.result-box {
+        margin: 28px 0 0;
+        max-width: 720px;
+        background: var(--bg-3);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        padding: 30px 28px;
+        box-shadow: none;
+        color: var(--cream);
+        position: relative;
+      }
+      #result.result-box::before {
+        content: "OUTPUT";
+        top: 16px;
+        right: 20px;
+      }
+      #result h3 {
+        font-family: "Fraunces", serif;
+        font-weight: 500;
+        font-size: 22px;
+        color: var(--cream);
+        margin: 0 0 16px;
+        letter-spacing: -0.02em;
+      }
+      #result p {
+        color: var(--cream-dim);
+        font-size: 15px;
+        line-height: 1.65;
+        margin: 0 0 12px;
+      }
+      #result p#summary {
+        color: var(--accent);
+        font-family: "Fraunces", serif;
+        font-size: 22px;
+        font-weight: 400;
+        letter-spacing: -0.015em;
+        line-height: 1.4;
+      }
+      #result button {
+        margin-top: 16px;
+      }
+
+      @media (max-width: 640px) {
+        .calc-form {
+          padding: 28px 22px;
+        }
+      }
+    </style>
   </head>
   <body>
     <header class="site-header">
@@ -20,9 +177,7 @@
         </div>
 
         <button class="burger" id="burger" aria-label="Toggle menu">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </button>
 
         <nav class="nav" id="nav">
@@ -42,102 +197,41 @@
       </div>
     </header>
 
-    <main>
-      <section
-        class="section calculator"
-        style="min-height: 70vh; display: flex; align-items: center"
-      >
-        <div class="container">
-          <h1
-            data-i18n="calcTitle"
-            style="
-              text-align: center;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              font-size: 48px;
-              margin-bottom: 20px;
-            "
-          >
-            Financial Calculator
-          </h1>
-          <p
-            data-i18n="calcSubtitle"
-            style="
-              text-align: center;
-              font-size: 18px;
-              color: #666;
-              margin-bottom: 40px;
-            "
-          >
-            Find out how much you can save and how to improve your finances 💰
-          </p>
+    <main class="calculator-page">
+      <div class="calc-wrap">
+        <div class="calc-eyebrow">BAYQADAM / CALC — 01</div>
+        <h1 data-i18n="calcTitle">Financial <em>Calculator</em></h1>
+        <p class="subtitle" data-i18n="calcSubtitle">
+          Find out how much you can save and how to improve your finances.
+        </p>
 
-          <form
-            id="calcForm"
-            class="form"
-            style="
-              max-width: 600px;
-              margin: 0 auto;
-              background: white;
-              padding: 40px;
-              border-radius: 20px;
-              box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            "
-          >
-            <label
-              ><span data-i18n="monthlyIncome">Monthly Income (₸)</span>
-              <input
-                type="number"
-                id="income"
-                placeholder="300000"
-                required
-                style="margin-top: 8px"
-              />
-            </label>
-            <label
-              ><span data-i18n="monthlyExpenses">Monthly Expenses (₸)</span>
-              <input
-                type="number"
-                id="expenses"
-                placeholder="200000"
-                required
-                style="margin-top: 8px"
-              />
-            </label>
-            <label
-              ><span data-i18n="currentDebt">Current Debt (₸)</span>
-              <input
-                type="number"
-                id="debt"
-                placeholder="150000"
-                required
-                style="margin-top: 8px"
-              />
-            </label>
-            <button type="submit" class="btn primary" data-i18n="calculate">
-              Calculate
-            </button>
-          </form>
+        <form id="calcForm" class="calc-form">
+          <label>
+            <span data-i18n="monthlyIncome">Monthly Income (₸)</span>
+            <input type="number" id="income" placeholder="300 000" required />
+          </label>
+          <label>
+            <span data-i18n="monthlyExpenses">Monthly Expenses (₸)</span>
+            <input type="number" id="expenses" placeholder="200 000" required />
+          </label>
+          <label>
+            <span data-i18n="currentDebt">Current Debt (₸)</span>
+            <input type="number" id="debt" placeholder="150 000" required />
+          </label>
+          <button type="submit" class="btn primary" data-i18n="calculate">
+            Calculate
+          </button>
+        </form>
 
-          <div
-            id="result"
-            class="result-box"
-            style="display: none; max-width: 600px; margin: 30px auto 0"
-          >
-            <h3 data-i18n="result">Result</h3>
-            <p id="summary"></p>
-            <p id="advice"></p>
-            <button
-              id="resetCalc"
-              class="btn outline"
-              data-i18n="newCalculation"
-            >
-              New Calculation
-            </button>
-          </div>
+        <div id="result" class="result-box" style="display: none">
+          <h3 data-i18n="result">Result</h3>
+          <p id="summary"></p>
+          <p id="advice"></p>
+          <button id="resetCalc" class="btn outline" data-i18n="newCalculation">
+            New Calculation
+          </button>
         </div>
-      </section>
+      </div>
     </main>
 
     <footer class="site-footer">
@@ -158,10 +252,8 @@
         const income = parseFloat(document.getElementById("income").value);
         const expenses = parseFloat(document.getElementById("expenses").value);
         const debt = parseFloat(document.getElementById("debt").value);
-
         const savings = income - expenses;
         const savingsPercent = ((savings / income) * 100).toFixed(1);
-
         document.getElementById("result").style.display = "block";
 
         const lang = localStorage.getItem("language") || "en";
@@ -170,40 +262,34 @@
           ru: `Вы можете откладывать ${savings.toLocaleString()} ₸ в месяц (${savingsPercent}% от дохода).`,
           kk: `Сіз айына ${savings.toLocaleString()} ₸ жинай аласыз (табыстың ${savingsPercent}%).`,
         };
-
         document.getElementById("summary").textContent = summaryTexts[lang];
 
         let advice = "";
         if (savings < 0) {
-          const adviceTexts = {
-            en: "⚠️ Your expenses exceed your income! Review your spending and find ways to reduce costs.",
-            ru: "⚠️ Ваши расходы превышают доход! Пересмотрите траты и найдите способы сократить расходы.",
-            kk: "⚠️ Шығындарыңыз табысыңыздан асып түсті! Шығындарыңызды қарап шығыңыз және азайту жолдарын табыңыз.",
-          };
-          advice = adviceTexts[lang];
+          advice = {
+            en: "⚠ Your expenses exceed your income. Review your spending and find ways to reduce costs.",
+            ru: "⚠ Расходы превышают доход. Пересмотрите траты и найдите способы сократить расходы.",
+            kk: "⚠ Шығындарыңыз табысыңыздан асып түсті. Шығындарыңызды қарап шығыңыз.",
+          }[lang];
         } else if (savings < income * 0.1) {
-          const adviceTexts = {
-            en: "💡 Try to save at least 10-20% of your income. Start with small steps!",
-            ru: "💡 Старайтесь откладывать минимум 10-20% дохода. Начните с малого!",
-            kk: "💡 Табысыңыздың кемінде 10-20%-ын жинауға тырысыңыз. Кішкентай қадамнан бастаңыз!",
-          };
-          advice = adviceTexts[lang];
+          advice = {
+            en: "→ Try to save at least 10–20% of your income. Start small.",
+            ru: "→ Старайтесь откладывать минимум 10–20% дохода. Начните с малого.",
+            kk: "→ Табысыңыздың кемінде 10–20%-ын жинауға тырысыңыз.",
+          }[lang];
         } else if (debt > income * 3) {
-          const adviceTexts = {
-            en: "📊 Your debt is high. Consider debt consolidation and prioritize paying it off.",
-            ru: "📊 Ваш долг велик. Рассмотрите консолидацию долга и приоритизируйте его погашение.",
-            kk: "📊 Қарызыңыз жоғары. Қарызды біріктіруді қарастырыңыз және оны төлеуге басымдық беріңіз.",
-          };
-          advice = adviceTexts[lang];
+          advice = {
+            en: "→ Your debt is high. Consider consolidation and prioritize paying it off.",
+            ru: "→ Долг велик. Рассмотрите консолидацию и приоритизируйте погашение.",
+            kk: "→ Қарызыңыз жоғары. Қарызды біріктіруді қарастырыңыз.",
+          }[lang];
         } else {
-          const adviceTexts = {
-            en: "✅ Great job! Keep tracking your expenses and increasing your savings.",
-            ru: "✅ Отличная работа! Продолжайте отслеживать расходы и увеличивать сбережения.",
-            kk: "✅ Жақсы жұмыс! Шығындарды қадағалауды және жинақтарды арттыруды жалғастырыңыз.",
-          };
-          advice = adviceTexts[lang];
+          advice = {
+            en: "✓ Great job. Keep tracking expenses and growing your savings.",
+            ru: "✓ Отлично. Продолжайте отслеживать расходы и увеличивать сбережения.",
+            kk: "✓ Жақсы жұмыс. Шығындарды қадағалауды жалғастырыңыз.",
+          }[lang];
         }
-
         document.getElementById("advice").textContent = advice;
       });
 
