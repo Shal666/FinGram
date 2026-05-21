@@ -3,366 +3,413 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Урок — BayQadam</title>
+    <title>Lesson — BayQadam</title>
     <link rel="stylesheet" href="css/mycss.css" />
     <link rel="stylesheet" href="css/advanced.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="stylesheet" href="css/forms.css" />
     <style>
-      .lesson-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
+      .lesson-page {
+        padding: 110px 24px 80px;
+        background:
+          radial-gradient(
+            ellipse at 80% 15%,
+            rgba(25, 195, 125, 0.14) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse at 10% 90%,
+            rgba(31, 138, 95, 0.16) 0%,
+            transparent 50%
+          ),
+          var(--bg);
+        min-height: 100vh;
       }
-
-      .lesson-header {
-        margin-bottom: 30px;
+      .lesson-container {
+        max-width: 860px;
+        margin: 0 auto;
       }
 
       .back-link {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        color: #667eea;
+        color: var(--accent);
         text-decoration: none;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
         font-weight: 600;
-        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        margin-bottom: 28px;
+        transition: color 0.2s;
       }
-
       .back-link:hover {
-        text-decoration: underline;
+        color: var(--mint);
       }
 
       .lesson-meta-top {
         display: flex;
-        gap: 15px;
-        margin-bottom: 15px;
+        gap: 10px;
+        margin-bottom: 16px;
         flex-wrap: wrap;
       }
-
       .lesson-badge {
         display: inline-block;
-        padding: 5px 12px;
-        border-radius: 20px;
-        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 100px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
         font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        border: 1px solid;
       }
-
       .badge-category {
-        background: #e3f2fd;
-        color: #1976d2;
+        color: var(--accent);
+        border-color: var(--accent);
       }
       .badge-xp {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
+        color: var(--gold);
+        border-color: var(--gold);
       }
       .badge-completed {
-        background: #e8f5e9;
-        color: #388e3c;
+        color: var(--mint);
+        border-color: var(--mint);
+        background: rgba(25, 195, 125, 0.1);
       }
 
       .lesson-title {
-        font-size: 32px;
-        font-weight: 900;
-        color: #333;
+        font-family: "Fraunces", serif;
+        font-size: clamp(34px, 5vw, 52px);
+        font-weight: 400;
+        color: var(--cream);
+        margin: 0 0 32px;
+        letter-spacing: -0.035em;
+        line-height: 1.05;
+      }
+      .lesson-title em {
+        font-style: italic;
+        color: var(--mint);
+      }
+
+      /* Video */
+      .lesson-video {
+        margin-bottom: 28px;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: var(--bg-2);
+      }
+      .video-label {
+        background: var(--bg-3);
+        color: var(--accent);
+        padding: 12px 22px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        border-bottom: 1px solid var(--line);
+      }
+      .lesson-video video {
+        width: 100%;
+        height: auto;
+        max-height: 460px;
+        background: var(--bg);
+        display: block;
+        outline: none;
+      }
+      .video-description {
+        padding: 20px 22px;
+        background: var(--bg-2);
+        border-top: 1px solid var(--line);
+      }
+      .video-description-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        color: var(--accent);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 600;
         margin-bottom: 10px;
       }
-
-      /* Video Section */
-      .lesson-video {
-        margin-bottom: 30px;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        background: #000;
-      }
-
-      .lesson-video iframe {
-        width: 100%;
-        height: 450px;
-        border: none;
-      }
-
-      .video-label {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        padding: 10px 20px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+      .video-description p {
+        color: var(--cream-dim);
+        font-size: 14px;
+        line-height: 1.65;
+        margin: 0;
       }
 
       .lesson-content {
-        background: white;
-        border-radius: 20px;
+        background: var(--bg-2);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
         padding: 40px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        margin-bottom: 30px;
+        margin-bottom: 32px;
       }
-
+      .lesson-content h1,
+      .lesson-content h2,
+      .lesson-content h3 {
+        font-family: "Fraunces", serif;
+        color: var(--cream);
+        margin: 26px 0 14px;
+        letter-spacing: -0.02em;
+        font-weight: 500;
+      }
       .lesson-content h1 {
-        font-size: 28px;
-        color: #333;
-        margin: 30px 0 20px 0;
-        padding-bottom: 10px;
-        border-bottom: 3px solid #667eea;
+        font-size: 26px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--line);
       }
       .lesson-content h2 {
         font-size: 22px;
-        color: #667eea;
-        margin: 25px 0 15px 0;
+        color: var(--mint);
       }
       .lesson-content h3 {
         font-size: 18px;
-        color: #333;
-        margin: 20px 0 10px 0;
       }
       .lesson-content p {
-        color: #555;
-        line-height: 1.8;
-        margin-bottom: 15px;
+        color: var(--cream-dim);
+        line-height: 1.75;
+        margin-bottom: 14px;
+        font-size: 15px;
       }
       .lesson-content ul,
       .lesson-content ol {
-        margin: 15px 0;
-        padding-left: 25px;
+        margin: 14px 0;
+        padding-left: 22px;
       }
       .lesson-content li {
-        color: #555;
-        line-height: 1.8;
-        margin-bottom: 8px;
+        color: var(--cream-dim);
+        line-height: 1.7;
+        margin-bottom: 6px;
       }
       .lesson-content strong {
-        color: #333;
+        color: var(--cream);
+        font-weight: 600;
       }
       .lesson-content code {
-        background: #f5f5f5;
+        background: var(--bg-3);
+        border: 1px solid var(--line);
         padding: 2px 6px;
-        border-radius: 4px;
-        font-family: monospace;
+        border-radius: var(--radius);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        color: var(--accent);
       }
-
       .lesson-content blockquote {
-        background: linear-gradient(135deg, #f0f4ff, #e8f5e9);
-        border-left: 4px solid #667eea;
-        padding: 20px;
-        margin: 20px 0;
-        border-radius: 0 12px 12px 0;
+        background: rgba(25, 195, 125, 0.08);
+        border-left: 3px solid var(--accent);
+        padding: 18px 22px;
+        margin: 22px 0;
+        border-radius: var(--radius);
         font-style: italic;
-        color: #333;
+        color: var(--cream);
       }
-
       .lesson-content table {
         width: 100%;
         border-collapse: collapse;
-        margin: 20px 0;
-        border-radius: 10px;
+        margin: 22px 0;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
         overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
-
       .lesson-content th {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        padding: 12px 15px;
+        background: var(--bg-3);
+        color: var(--accent);
+        padding: 12px 16px;
         text-align: left;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
         font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        border-bottom: 1px solid var(--line);
       }
-
       .lesson-content td {
-        padding: 12px 15px;
-        border-bottom: 1px solid #eee;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--line);
+        color: var(--cream-dim);
       }
-
-      .lesson-content tr:nth-child(even) {
-        background: #f9f9f9;
-      }
-
-      .lesson-content tr:hover {
-        background: #f0f4ff;
+      .lesson-content tr:last-child td {
+        border-bottom: 0;
       }
 
       .lesson-actions {
         display: flex;
-        gap: 15px;
-        justify-content: center;
+        gap: 12px;
         flex-wrap: wrap;
       }
-
-      .btn-complete {
-        background: linear-gradient(135deg, #4caf50, #45a049);
-        color: white;
-        border: none;
-        padding: 15px 40px;
-        border-radius: 50px;
-        font-size: 18px;
-        font-weight: 700;
+      .btn-complete,
+      .btn-quiz,
+      .btn-secondary {
+        padding: 14px 26px;
+        border-radius: var(--radius);
+        font-family: "Inter", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition:
+          background 0.2s,
+          color 0.2s,
+          border-color 0.2s,
+          transform 0.15s,
+          box-shadow 0.2s;
+        border: 1px solid transparent;
       }
-
+      .btn-complete {
+        background: var(--accent);
+        color: var(--bg);
+        border-color: var(--accent);
+      }
       .btn-complete:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+        background: var(--mint);
+        border-color: var(--mint);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px -8px rgba(25, 195, 125, 0.6);
       }
-
       .btn-complete:disabled {
-        background: #ccc;
+        background: var(--bg-3);
+        color: var(--muted);
+        border-color: var(--line);
         cursor: not-allowed;
         transform: none;
+        box-shadow: none;
       }
-
       .btn-quiz {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        border: none;
-        padding: 15px 40px;
-        border-radius: 50px;
-        font-size: 18px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s;
-        text-decoration: none;
-        display: inline-block;
+        background: transparent;
+        color: var(--cream);
+        border-color: var(--line-strong);
       }
-
       .btn-quiz:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        color: white;
+        color: var(--accent);
+        border-color: var(--accent);
       }
-
       .btn-secondary {
-        background: #f5f5f5;
-        color: #333;
-        border: 2px solid #ddd;
-        padding: 15px 40px;
-        border-radius: 50px;
-        font-size: 18px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s;
-        text-decoration: none;
-        display: inline-block;
+        background: transparent;
+        color: var(--cream-dim);
+        border-color: var(--line);
       }
-
       .btn-secondary:hover {
-        background: #eee;
-        border-color: #667eea;
-        color: #667eea;
+        color: var(--accent);
+        border-color: var(--accent);
       }
 
       /* Reward Popup */
-      .reward-popup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        background: white;
-        border-radius: 20px;
-        padding: 40px;
-        text-align: center;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-        transition: transform 0.3s ease;
-        max-width: 400px;
-        width: 90%;
-      }
-
-      .reward-popup.active {
-        transform: translate(-50%, -50%) scale(1);
-      }
-
-      .reward-popup h2 {
-        color: #4caf50;
-        margin-bottom: 20px;
-        font-size: 28px;
-      }
-
-      .reward-xp {
-        font-size: 48px;
-        font-weight: 900;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 20px;
-      }
-
-      .reward-message {
-        color: #666;
-        margin-bottom: 10px;
-      }
-
-      .reward-achievements {
-        margin: 20px 0;
-        padding: 15px;
-        background: #fff8e1;
-        border-radius: 10px;
-      }
-
-      .reward-achievements span {
-        font-size: 24px;
-        margin: 0 5px;
-      }
-
       .overlay {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
+        inset: 0;
+        background: rgba(6, 19, 16, 0.78);
+        backdrop-filter: blur(6px);
         z-index: 999;
         opacity: 0;
         visibility: hidden;
-        transition: all 0.3s;
+        transition:
+          opacity 0.25s,
+          visibility 0.25s;
       }
-
       .overlay.active {
         opacity: 1;
         visibility: visible;
       }
 
-      /* Progress indicator */
-      .lesson-progress {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 20px;
-        padding: 15px 20px;
-        background: #f0f4ff;
-        border-radius: 12px;
+      .reward-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translateY(12px);
+        background: var(--bg-2);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        padding: 40px 36px;
+        text-align: left;
+        box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.25s,
+          transform 0.25s,
+          visibility 0.25s;
+        max-width: 460px;
+        width: 90%;
       }
-
-      .progress-text {
-        font-size: 14px;
-        color: #667eea;
+      .reward-popup.active {
+        transform: translate(-50%, -50%) translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+      .reward-eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
         font-weight: 600;
+        margin-bottom: 14px;
+      }
+      .reward-popup h2 {
+        font-family: "Fraunces", serif;
+        color: var(--cream);
+        font-size: 28px;
+        font-weight: 500;
+        margin: 0 0 12px;
+        letter-spacing: -0.02em;
+      }
+      .reward-popup h2 em {
+        font-style: italic;
+        color: var(--mint);
+      }
+      .reward-xp {
+        font-family: "Fraunces", serif;
+        font-size: 56px;
+        font-weight: 400;
+        color: var(--accent);
+        letter-spacing: -0.03em;
+        margin: 16px 0 6px;
+        line-height: 1;
+      }
+      .reward-message {
+        color: var(--cream-dim);
+        margin-bottom: 16px;
+      }
+      .reward-achievements {
+        margin: 18px 0;
+        padding: 14px 16px;
+        background: rgba(212, 184, 120, 0.08);
+        border: 1px solid rgba(212, 184, 120, 0.25);
+        border-radius: var(--radius);
+      }
+      .reward-achievements p {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--gold);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-weight: 600;
+        margin: 0 0 8px;
+      }
+      .reward-achievements span {
+        font-size: 22px;
+        margin-right: 6px;
       }
 
       @media (max-width: 768px) {
         .lesson-content {
-          padding: 25px;
+          padding: 28px 22px;
         }
-
-        .lesson-title {
-          font-size: 24px;
-        }
-
-        .lesson-video iframe {
-          height: 250px;
-        }
-
         .lesson-actions {
           flex-direction: column;
         }
-
-        .btn-complete,
-        .btn-quiz,
-        .btn-secondary {
+        .lesson-actions a,
+        .lesson-actions button {
           width: 100%;
-          text-align: center;
+          justify-content: center;
         }
       }
     </style>
@@ -384,81 +431,85 @@
 
         <nav class="nav" id="nav">
           <ul>
-            <li><a href="dashboard.html" data-i18n="dashboard">Дашборд</a></li>
-            <li>
-              <a href="transactions.html" data-i18n="transactions"
-                >Транзакции</a
-              >
-            </li>
-            <li><a href="goals.html" data-i18n="goals">Цели</a></li>
-            <li>
-              <a href="learning.html" data-i18n="learning" class="active"
-                >Обучение</a
-              >
-            </li>
-            <li><a href="tools.html" data-i18n="tools">Инструменты</a></li>
-            <li><a href="profile.html" data-i18n="profile">Профиль</a></li>
-            <li><a href="#" onclick="logout()" data-i18n="logout">Выйти</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="transactions.html">Transactions</a></li>
+            <li><a href="goals.html">Goals</a></li>
+            <li><a href="learning.html" class="active">Learning</a></li>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="#" onclick="logout()">Log out</a></li>
           </ul>
         </nav>
       </div>
     </header>
 
-    <main>
+    <main class="lesson-page">
       <div class="lesson-container">
-        <div class="lesson-header">
-          <a href="learning.html" class="back-link"
-            >← <span data-i18n="backToLessons">Назад к урокам</span></a
-          >
+        <a href="learning.html" class="back-link">← Back to lessons</a>
 
-          <div class="lesson-meta-top" id="lessonMeta"></div>
-          <h1 class="lesson-title" id="lessonTitle">Загрузка...</h1>
-        </div>
+        <div class="lesson-meta-top" id="lessonMeta"></div>
+        <h1 class="lesson-title" id="lessonTitle">Loading…</h1>
 
         <!-- Video Section -->
         <div class="lesson-video" id="lessonVideo" style="display: none">
-          <div class="video-label">
-            <span>🎬</span>
-            <span data-i18n="watchVideo">Посмотри видео</span>
+          <div class="video-label">→ Watch the lesson</div>
+          <video id="lessonVideoPlayer" controls preload="metadata">
+            <source id="lessonVideoSource" src="" type="video/mp4" />
+          </video>
+          <div
+            class="video-description"
+            id="videoDescription"
+            style="display: none"
+          >
+            <div class="video-description-label">About this video</div>
+            <p id="videoDescriptionText"></p>
           </div>
-          <iframe id="videoFrame" src="" allowfullscreen></iframe>
         </div>
 
-        <!-- Lesson Content -->
         <div class="lesson-content" id="lessonContent">
-          <p style="text-align: center; color: #999">Загрузка содержимого...</p>
+          <p
+            style="
+              color: var(--muted);
+              font-family: &quot;JetBrains Mono&quot;, monospace;
+              font-size: 12px;
+              text-transform: uppercase;
+              letter-spacing: 0.14em;
+            "
+          >
+            Loading content…
+          </p>
         </div>
 
-        <!-- Actions -->
         <div class="lesson-actions" id="lessonActions"></div>
       </div>
     </main>
 
-    <!-- Reward Popup -->
     <div class="overlay" id="overlay"></div>
     <div class="reward-popup" id="rewardPopup">
-      <h2>🎉 Отлично!</h2>
+      <div class="reward-eyebrow">REWARD / COMPLETED</div>
+      <h2>Lesson <em>completed</em></h2>
       <div class="reward-xp" id="rewardXP">+50 XP</div>
-      <p class="reward-message" id="rewardMessage">Урок пройден!</p>
+      <p class="reward-message" id="rewardMessage">Great job. Keep learning.</p>
       <div
         class="reward-achievements"
         id="rewardAchievements"
         style="display: none"
       >
-        <p>🏆 Новое достижение!</p>
+        <p>→ New achievement</p>
         <span id="achievementIcons"></span>
       </div>
-      <button class="btn-quiz" onclick="closeReward()" style="margin-top: 20px">
-        Продолжить
+      <button
+        class="btn-complete"
+        onclick="closeReward()"
+        style="margin-top: 12px"
+      >
+        Continue →
       </button>
     </div>
 
     <footer class="site-footer">
       <div class="container">
-        <p>
-          &copy; 2025 BayQadam.
-          <span data-i18n="allRights">Все права защищены.</span>
-        </p>
+        <p>&copy; 2025 BayQadam. All rights reserved.</p>
       </div>
     </footer>
 
@@ -469,249 +520,156 @@
     <script src="js/auth.js"></script>
     <script>
       let currentLesson = null;
+      const categoryNames = {
+        basics: "Basics",
+        saving: "Saving",
+        credit: "Credit",
+        goals: "Goals",
+        investing: "Investing",
+      };
 
       async function init() {
         const user = await requireAuth();
         if (!user) return;
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const lessonId = urlParams.get("id");
-
-        if (!lessonId) {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+        if (!id) {
           window.location.href = "learning.html";
           return;
         }
-
-        await loadLesson(lessonId);
+        await loadLesson(id);
       }
 
-      async function loadLesson(lessonId) {
-        const lang = localStorage.getItem("language") || "ru";
-
+      async function loadLesson(id) {
         try {
-          currentLesson = await apiFetch(`/api/learning/lessons/${lessonId}`);
-
-          // Title
-          const title =
-            lang === "en"
-              ? currentLesson.title_en
-              : lang === "kk"
-                ? currentLesson.title_kk
-                : currentLesson.title;
+          currentLesson = await apiFetch(`/api/learning/lessons/${id}`);
+          const title = currentLesson.title_en || currentLesson.title;
           document.getElementById("lessonTitle").textContent = title;
           document.title = `${title} — BayQadam`;
 
-          // Meta badges
-          const categoryNames = {
-            basics: { ru: "Основы", en: "Basics", kk: "Негіздер" },
-            saving: { ru: "Сбережения", en: "Saving", kk: "Жинақ" },
-            credit: { ru: "Кредиты", en: "Credit", kk: "Несие" },
-            goals: { ru: "Цели", en: "Goals", kk: "Мақсаттар" },
-            investing: {
-              ru: "Инвестиции",
-              en: "Investing",
-              kk: "Инвестициялар",
-            },
-          };
+          const cat =
+            categoryNames[currentLesson.category] || currentLesson.category;
+          document.getElementById("lessonMeta").innerHTML = `
+            <span class="lesson-badge badge-category">${cat}</span>
+            <span class="lesson-badge badge-xp">+${currentLesson.xp_reward} XP</span>
+            ${currentLesson.is_completed ? '<span class="lesson-badge badge-completed">✓ Completed</span>' : ""}
+          `;
 
-          const catName =
-            categoryNames[currentLesson.category]?.[lang] ||
-            currentLesson.category;
-
-          const metaHtml = `
-                    <span class="lesson-badge badge-category">${catName}</span>
-                    <span class="lesson-badge badge-xp">+${currentLesson.xp_reward} XP</span>
-                    ${currentLesson.is_completed ? '<span class="lesson-badge badge-completed">✓ Пройден</span>' : ""}
-                `;
-          document.getElementById("lessonMeta").innerHTML = metaHtml;
-
-          // Video
+          // Video: local file. video_url could be either a YT url (legacy) or local path
           if (currentLesson.video_url) {
-            document.getElementById("videoFrame").src = currentLesson.video_url;
+            const url = currentLesson.video_url;
+            const isLocal = url.endsWith(".mp4") || url.startsWith("videos/");
+            const source = document.getElementById("lessonVideoSource");
+            if (isLocal) {
+              source.src = url;
+            } else {
+              // fallback for legacy YouTube — try to derive local path
+              source.src = url;
+            }
+            document.getElementById("lessonVideoPlayer").load();
             document.getElementById("lessonVideo").style.display = "block";
-          } else {
-            document.getElementById("lessonVideo").style.display = "none";
+
+            if (
+              currentLesson.video_description_en ||
+              currentLesson.video_description
+            ) {
+              document.getElementById("videoDescription").style.display =
+                "block";
+              document.getElementById("videoDescriptionText").textContent =
+                currentLesson.video_description_en ||
+                currentLesson.video_description;
+            }
           }
 
-          // Content
-          const content =
-            lang === "en"
-              ? currentLesson.content_en
-              : lang === "kk"
-                ? currentLesson.content_kk
-                : currentLesson.content;
+          const content = currentLesson.content_en || currentLesson.content;
           document.getElementById("lessonContent").innerHTML =
             formatContent(content);
 
-          // Actions
           let actionsHtml = "";
-
           if (!currentLesson.is_completed) {
-            actionsHtml += `
-                        <button class="btn-complete" onclick="completeLesson()" id="completeBtn">
-                            ✓ Завершить урок
-                        </button>
-                    `;
+            actionsHtml += `<button class="btn-complete" onclick="completeLesson()" id="completeBtn">✓ Complete lesson</button>`;
           }
-
           if (currentLesson.has_quiz) {
-            actionsHtml += `
-                        <a href="quiz.html?lesson=${currentLesson.id}" class="btn-quiz">
-                            📝 Пройти квиз
-                        </a>
-                    `;
+            actionsHtml += `<a href="quiz.html?lesson=${currentLesson.id}" class="btn-quiz">Take the quiz →</a>`;
           }
-
-          actionsHtml += `
-                    <a href="learning.html" class="btn-secondary">
-                        ← К урокам
-                    </a>
-                `;
-
+          actionsHtml += `<a href="learning.html" class="btn-secondary">← Back to lessons</a>`;
           document.getElementById("lessonActions").innerHTML = actionsHtml;
         } catch (error) {
           document.getElementById("lessonContent").innerHTML =
-            `<p style="color: #c33; text-align: center;">Ошибка загрузки: ${error.message}</p>`;
+            `<p style="color: #ffb4b4; font-family: 'JetBrains Mono', monospace; font-size: 13px;">ERR — ${error.message}</p>`;
         }
       }
 
       function formatContent(text) {
-        if (!text) return "<p>Содержимое урока загружается...</p>";
-
+        if (!text) return "<p>Lesson content is loading…</p>";
         let html = text
-          // Headers
           .replace(/^### (.+)$/gm, "<h3>$1</h3>")
           .replace(/^## (.+)$/gm, "<h2>$1</h2>")
           .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-          // Bold
           .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-          // Blockquotes
           .replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>")
-          // Lists
           .replace(/^- (.+)$/gm, "<li>$1</li>")
-          .replace(/^(\d+)\. (.+)$/gm, "<li>$2</li>")
-          // Emojis styling
-          .replace(/✅/g, '<span style="color: #4caf50;">✅</span>')
-          .replace(/❌/g, '<span style="color: #f44336;">❌</span>')
-          .replace(/💡/g, '<span style="font-size: 1.2em;">💡</span>')
-          .replace(/⚠️/g, '<span style="color: #ff9800;">⚠️</span>');
-
-        // Tables
-        html = html.replace(/\|(.+)\|/g, (match) => {
-          const cells = match.split("|").filter((c) => c.trim());
-          if (cells.some((c) => c.includes("---"))) {
-            return ""; // Skip separator row
-          }
-          const isHeader =
-            match.includes("**") || cells[0].trim().startsWith("**");
-          const tag = isHeader ? "th" : "td";
-          const row = cells
-            .map((c) => `<${tag}>${c.trim().replace(/\*\*/g, "")}</${tag}>`)
-            .join("");
-          return `<tr>${row}</tr>`;
-        });
-
-        // Wrap table rows
-        if (html.includes("<tr>")) {
-          html = html.replace(/(<tr>.*<\/tr>)+/gs, "<table>$&</table>");
-        }
-
-        // Wrap consecutive <li> in <ul>
+          .replace(/^(\d+)\. (.+)$/gm, "<li>$2</li>");
         html = html.replace(/(<li>.*?<\/li>\n?)+/g, "<ul>$&</ul>");
-
-        // Clean up multiple blockquotes
-        html = html.replace(/<\/blockquote>\s*<blockquote>/g, "<br>");
-
-        // Paragraphs
         const lines = html.split("\n\n");
-        html = lines
+        return lines
           .map((p) => {
             p = p.trim();
             if (!p) return "";
             if (
               p.startsWith("<h") ||
               p.startsWith("<ul") ||
-              p.startsWith("<ol") ||
-              p.startsWith("<table") ||
               p.startsWith("<blockquote") ||
               p.startsWith("<li")
-            ) {
+            )
               return p;
-            }
             return `<p>${p}</p>`;
           })
           .join("\n");
-
-        // Clean up empty paragraphs
-        html = html.replace(/<p>\s*<\/p>/g, "");
-        html = html.replace(/<p>(<h[123]>)/g, "$1");
-        html = html.replace(/(<\/h[123]>)<\/p>/g, "$1");
-
-        return html;
       }
 
       async function completeLesson() {
         const btn = document.getElementById("completeBtn");
         btn.disabled = true;
-        btn.textContent = "⏳ Сохранение...";
-
+        btn.textContent = "Saving…";
         try {
-          const result = await apiFetch(
+          const r = await apiFetch(
             `/api/learning/lessons/${currentLesson.id}/complete`,
-            {
-              method: "POST",
-            },
+            { method: "POST" },
           );
-
-          // Show reward popup
           document.getElementById("rewardXP").textContent =
-            `+${result.xp_earned} XP`;
-
-          let message = "Урок успешно пройден!";
-          if (result.streak > 1) {
-            message += ` 🔥 ${result.streak} дней подряд!`;
-          }
-          document.getElementById("rewardMessage").textContent = message;
-
-          // Show achievements if any
-          if (result.new_achievements && result.new_achievements.length > 0) {
+            `+${r.xp_earned} XP`;
+          let msg = "Lesson successfully completed.";
+          if (r.streak > 1) msg += ` ${r.streak} days in a row.`;
+          document.getElementById("rewardMessage").textContent = msg;
+          if (r.new_achievements && r.new_achievements.length) {
             document.getElementById("rewardAchievements").style.display =
               "block";
             document.getElementById("achievementIcons").textContent =
-              result.new_achievements.join(" ");
+              r.new_achievements.join(" ");
           } else {
             document.getElementById("rewardAchievements").style.display =
               "none";
           }
-
           document.getElementById("overlay").classList.add("active");
           document.getElementById("rewardPopup").classList.add("active");
-
-          // Update button
-          btn.textContent = "✓ Пройден";
-          btn.style.background = "#4caf50";
+          btn.textContent = "✓ Completed";
         } catch (error) {
-          alert("Ошибка: " + error.message);
+          alert("Error: " + error.message);
           btn.disabled = false;
-          btn.textContent = "✓ Завершить урок";
+          btn.textContent = "✓ Complete lesson";
         }
       }
 
       function closeReward() {
         document.getElementById("overlay").classList.remove("active");
         document.getElementById("rewardPopup").classList.remove("active");
-
-        if (currentLesson.has_quiz) {
+        if (currentLesson.has_quiz)
           window.location.href = `quiz.html?lesson=${currentLesson.id}`;
-        } else {
-          window.location.href = "learning.html";
-        }
+        else window.location.href = "learning.html";
       }
 
-      // Close popup on overlay click
       document.getElementById("overlay").addEventListener("click", closeReward);
-
-      // Initialize
       init();
     </script>
   </body>
