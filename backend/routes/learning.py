@@ -1,6 +1,3 @@
-Готово. Полностью переписываю файл под твои 9 видеоуроков: новые заголовки, описания под видео (RU/EN/KK), контент уроков на 3 языках, квизы строго по темам видео. Локальные пути к видео + автоматические постеры через фронт.
-
-```python
 from fastapi import APIRouter, HTTPException, Request
 from datetime import datetime, timezone, timedelta
 from bson import ObjectId
