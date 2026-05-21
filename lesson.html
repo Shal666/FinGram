@@ -540,6 +540,17 @@
         await loadLesson(id);
       }
 
+      // Derive local poster path from a lesson video url.
+      // Example: "videos/lesson3.mp4" -> "videos/posters/lesson3.png"
+      function derivePosterPath(videoUrl) {
+        if (!videoUrl) return "";
+        const match = videoUrl.match(/lesson(\d+)\.mp4$/i);
+        if (match) {
+          return `videos/posters/lesson${match[1]}.png`;
+        }
+        return "";
+      }
+
       async function loadLesson(id) {
         try {
           currentLesson = await apiFetch(`/api/learning/lessons/${id}`);
@@ -558,15 +569,19 @@
           // Video: local file. video_url could be either a YT url (legacy) or local path
           if (currentLesson.video_url) {
             const url = currentLesson.video_url;
-            const isLocal = url.endsWith(".mp4") || url.startsWith("videos/");
             const source = document.getElementById("lessonVideoSource");
-            if (isLocal) {
-              source.src = url;
-            } else {
-              // fallback for legacy YouTube — try to derive local path
-              source.src = url;
+            const player = document.getElementById("lessonVideoPlayer");
+
+            source.src = url;
+
+            // Set local .png poster (videos/posters/lessonN.png)
+            const posterPath =
+              currentLesson.video_poster || derivePosterPath(url);
+            if (posterPath) {
+              player.setAttribute("poster", posterPath);
             }
-            document.getElementById("lessonVideoPlayer").load();
+
+            player.load();
             document.getElementById("lessonVideo").style.display = "block";
 
             if (
