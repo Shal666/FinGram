@@ -7,6 +7,64 @@
     <link rel="stylesheet" href="css/mycss.css" />
     <link rel="stylesheet" href="css/pricing.css" />
     <link rel="stylesheet" href="css/advanced.css" />
+    <style>
+      /* ---- Local video player overrides ---- */
+      .video-section {
+        background:
+          radial-gradient(
+            ellipse at 80% 10%,
+            rgba(25, 195, 125, 0.12) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse at 10% 90%,
+            rgba(31, 138, 95, 0.16) 0%,
+            transparent 50%
+          ),
+          var(--bg);
+        min-height: 100vh;
+        padding-top: 110px !important;
+      }
+      .video-eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+      .video-section h1 em {
+        font-style: italic;
+        color: var(--mint);
+        font-weight: 400;
+      }
+
+      .video-card video {
+        width: 100%;
+        height: 220px;
+        background: var(--bg);
+        display: block;
+        object-fit: cover;
+        outline: none;
+      }
+      .video-card video::-webkit-media-controls-panel {
+        background: linear-gradient(transparent, rgba(6, 19, 16, 0.85));
+      }
+      .video-card h3 {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+      }
+      .video-card h3 .num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: 0.14em;
+        font-weight: 600;
+        flex-shrink: 0;
+      }
+    </style>
   </head>
   <body>
     <header class="site-header">
@@ -20,9 +78,7 @@
         </div>
 
         <button class="burger" id="burger" aria-label="Toggle menu">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </button>
 
         <nav class="nav" id="nav">
@@ -45,7 +101,8 @@
     <main>
       <section class="video-section">
         <div class="container">
-          <h1 data-i18n="videoTitle">Video Lessons on Financial Literacy</h1>
+          <div class="video-eyebrow">BAYQADAM / LESSONS — 09</div>
+          <h1 data-i18n="videoTitle">Video <em>Lessons</em></h1>
           <p data-i18n="videoSubtitle">
             Short and clear lessons that will help you manage money, save, and
             invest wisely.
@@ -53,93 +110,142 @@
 
           <div class="video-grid">
             <div class="video-card">
-              <iframe
-                src="https://www.youtube.com/embed/sVKQn2I4HDM"
-                allowfullscreen
-              ></iframe>
-              <h3 data-i18n="video1">How to Create a Personal Budget</h3>
-              <p class="video-duration">⏱️ 12 min</p>
+              <video
+                controls
+                preload="metadata"
+                poster="videos/posters/lesson1.png"
+              >
+                <source src="videos/lesson1.mp4" type="video/mp4" />
+              </video>
+              <h3>
+                <span class="num">01</span
+                ><span data-i18n="video1">Why The Rich Are Getting Richer</span>
+              </h3>
+              <p class="video-duration">→ 15 sec</p>
             </div>
 
             <div class="video-card">
-              <iframe
-                src="https://www.youtube.com/embed/HQzoZfc3GwQ"
-                allowfullscreen
-              ></iframe>
-              <h3 data-i18n="video2">Understanding Credit Scores</h3>
-              <p class="video-duration">⏱️ 10 min</p>
+              <video
+                controls
+                preload="metadata"
+                poster="videos/posters/lesson2.png"
+              >
+                <source src="videos/lesson2.mp4" type="video/mp4" />
+              </video>
+              <h3>
+                <span class="num">02</span
+                ><span data-i18n="video2">The 50/30/20 Rule</span>
+              </h3>
+              <p class="video-duration">→ 15 sec</p>
             </div>
 
             <div class="video-card">
-              <iframe
-                src="https://www.youtube.com/embed/V9E7r5sGv1A"
-                allowfullscreen
-              ></iframe>
-              <h3 data-i18n="video3">Saving Money: The 50/30/20 Rule</h3>
-              <p class="video-duration">⏱️ 8 min</p>
+              <video
+                controls
+                preload="metadata"
+                poster="videos/posters/lesson3.png"
+              >
+                <source src="videos/lesson3.mp4" type="video/mp4" />
+              </video>
+              <h3>
+                <span class="num">03</span
+                ><span data-i18n="video3">Why Credits Make People Poorer</span>
+              </h3>
+              <p class="video-duration">→ 15 sec</p>
             </div>
 
             <div class="video-card">
-              <iframe
-                src="https://www.youtube.com/embed/WEDIj9JBTC8"
-                allowfullscreen
-              ></iframe>
-              <h3 data-i18n="video4">Introduction to Investing</h3>
-              <p class="video-duration">⏱️ 15 min</p>
+              <video
+                controls
+                preload="metadata"
+                poster="videos/posters/lesson4.png"
+              >
+                <source src="videos/lesson4.mp4" type="video/mp4" />
+              </video>
+              <h3>
+                <span class="num">04</span
+                ><span data-i18n="video4">How Compound Interest Works</span>
+              </h3>
+              <p class="video-duration">→ 15 sec</p>
             </div>
 
             <div class="video-card">
-              <iframe
-                src="https://www.youtube.com/embed/y6yCmdIkw_E"
-                allowfullscreen
-              ></iframe>
-              <h3 data-i18n="video5">How to Get Out of Debt</h3>
-              <p class="video-duration">⏱️ 14 min</p>
+              <video
+                controls
+                preload="metadata"
+                poster="videos/posters/lesson5.png"
+              >
+                <source src="videos/lesson5.mp4" type="video/mp4" />
+              </video>
+              <h3>
+                <span class="num">05</span
+                ><span data-i18n="video5"
+                  >People Buy Things to Appear Wealthy</span
+                >
+              </h3>
+              <p class="video-duration">→ 15 sec</p>
             </div>
 
             <div class="video-card">
-              <iframe
-                src="https://www.youtube.com/embed/WcEylCwkSxE"
-                allowfullscreen
-              ></iframe>
-              <h3 data-i18n="video6">Building an Emergency Fund</h3>
-              <p class="video-duration">⏱️ 9 min</p>
+              <video
+                controls
+                preload="metadata"
+                poster="videos/posters/lesson6.png"
+              >
+                <source src="videos/lesson6.mp4" type="video/mp4" />
+              </video>
+              <h3>
+                <span class="num">06</span
+                ><span data-i18n="video6"
+                  >The Biggest Mistake Of The Young Generation</span
+                >
+              </h3>
+              <p class="video-duration">→ 15 sec</p>
             </div>
 
             <div class="video-card">
-              <iframe
-                src="https://www.youtube.com/embed/8Y2z7Gk3j6Y"
-                allowfullscreen
-              ></iframe>
-              <h3 data-i18n="video7">Understanding Compound Interest</h3>
-              <p class="video-duration">⏱️ 11 min</p>
+              <video
+                controls
+                preload="metadata"
+                poster="videos/posters/lesson7.png"
+              >
+                <source src="videos/lesson7.mp4" type="video/mp4" />
+              </video>
+              <h3>
+                <span class="num">07</span
+                ><span data-i18n="video7">Smart Savings</span>
+              </h3>
+              <p class="video-duration">→ 8 sec</p>
             </div>
 
             <div class="video-card">
-              <iframe
-                src="https://www.youtube.com/embed/c0H8R7pR8P0"
-                allowfullscreen
-              ></iframe>
-              <h3 data-i18n="video8">Smart Shopping & Avoiding Impulse Buys</h3>
-              <p class="video-duration">⏱️ 10 min</p>
+              <video
+                controls
+                preload="metadata"
+                poster="videos/posters/lesson8.png"
+              >
+                <source src="videos/lesson8.mp4" type="video/mp4" />
+              </video>
+              <h3>
+                <span class="num">08</span
+                ><span data-i18n="video8">Assets vs Liabilities</span>
+              </h3>
+              <p class="video-duration">→ 8 sec</p>
             </div>
 
             <div class="video-card">
-              <iframe
-                src="https://www.youtube.com/embed/fwe-PjrX23o"
-                allowfullscreen
-              ></iframe>
-              <h3 data-i18n="video9">Retirement Planning for Beginners</h3>
-              <p class="video-duration">⏱️ 16 min</p>
-            </div>
-
-            <div class="video-card">
-              <iframe
-                src="https://www.youtube.com/embed/6b4q8xP9v8k"
-                allowfullscreen
-              ></iframe>
-              <h3 data-i18n="video10">Passive Income Ideas</h3>
-              <p class="video-duration">⏱️ 13 min</p>
+              <video
+                controls
+                preload="metadata"
+                poster="videos/posters/lesson9.png"
+              >
+                <source src="videos/lesson9.mp4" type="video/mp4" />
+              </video>
+              <h3>
+                <span class="num">09</span
+                ><span data-i18n="video9">Impulse Spending Traps</span>
+              </h3>
+              <p class="video-duration">→ 8 sec</p>
             </div>
           </div>
         </div>
